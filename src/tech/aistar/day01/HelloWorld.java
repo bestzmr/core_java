@@ -30,6 +30,6 @@ public class HelloWorld {//类的简称 - 自定义对象
        多行注释
        多行注释
         */
-       System.out.println("HelloWorld");
+       System.out.println("你好世界");
    }
 }
