@@ -3,6 +3,9 @@ package tech.aistar.day02;
 /**
  * 本类用来演示:基本数类型的使用和定义
  *
+ * java是属于强类型的语言,javascript和python都是属于弱类型的语言
+ * 强类型的语言在编译期间就要确定数据的类型 - java是类型安全的语言 - 安全性.
+ *
  * @author: success
  * @date: 2020/7/17 9:02 上午
  */
@@ -78,9 +81,21 @@ public class TypeBaseDemo {
         System.out.println("f2:"+f2);//0.34567845
 
         int n = 123456789;
+        //int类型是不会自动转换成float类型
         float ft = n;
         System.out.println("ft:"+ft);//1.23456792E8
 
         System.out.println(0.1 + 0.2);//0.30000000000000004
+
+        //定义一个双精度的浮点数
+        double d = 89.34;
+
+        //定义一个boolean - true/false
+        boolean flag = true;
+        System.out.println("flag:"+flag);
+
+        //char类型 - 单独讲解.
+        char c = 48;//why?????
+
     }
 }
