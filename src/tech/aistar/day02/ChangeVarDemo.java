@@ -44,5 +44,13 @@ public class ChangeVarDemo {
         System.out.println("x:"+x);//600
         System.out.println("y:"+y);//500
 
+        System.out.println(~9);//-10
+
+        System.out.println(-10 >>> 2);
+
+        System.out.println(-10 >> 2);
+
+        System.out.println(2 << 2);
+
     }
 }
