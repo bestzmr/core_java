@@ -82,7 +82,5 @@ public class TypeBaseDemo {
         System.out.println("ft:"+ft);//1.23456792E8
 
         System.out.println(0.1 + 0.2);//0.30000000000000004
-
-
     }
 }
