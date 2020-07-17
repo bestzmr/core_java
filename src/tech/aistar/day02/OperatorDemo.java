@@ -103,5 +103,14 @@ public class OperatorDemo {
         int b1 = 1;
         System.out.println(false && (b1++)>0);
         System.out.println("b1:"+b1);//1
+
+        //按位与 - 非短路与
+        int b2 = 1;
+        System.out.println(false & (b2++)>0);
+        System.out.println("b2:"+b2);//2
+
+        System.out.println(10 & 8);//8
+
+        System.out.println(10 | 8);//10
     }
 }
