@@ -4,39 +4,29 @@ package tech.aistar.day03;
  * 本类用来演示:
  *
  * @author: success
- * @date: 2020/7/18 1:42 下午
+ * @date: 2020/7/18 3:05 下午
  */
 public class User {
+    //Oo - 类是抽象的,对象是具体的.
+    private int id = 100;
 
-    //非静态成员
-    public int id = 1;
+    //对象是共享静态变量的.
+    private static int guid = 100;
 
-    //静态成员 - 初始化了一次
-    public static int guid = 100;
-
-    //构造方法
     public User(){
-        //System.out.println("User...");
-        //id = ++id;
+        //guid = guid++;
         id = ++guid;
-
     }
 
     public static void main(String[] args) {
-        //创建一个User对象
-        User u1 = new User();
-        //非静态 - 对象.成员
-        System.out.println(u1.id);//2
-
-
+        User u1 = new User();//guid = guid++ = 100
+        System.out.println(User.guid+"===");
+        System.out.println(u1.id);
         User u2 = new User();
-        System.out.println(u2.id);//2
-
-
-
+        System.out.println(User.guid+"===");//guid=100
+        System.out.println(u2.id);
         User u3 = new User();
-        System.out.println(u3.id);//2
-
-
+        System.out.println(User.guid+"===");
+        System.out.println(u3.id);
     }
 }
