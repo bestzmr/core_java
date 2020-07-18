@@ -8,6 +8,7 @@ package tech.aistar.day02;
  */
 public class CharDemo {
     public static void main(String[] args) {
+
         //char类型可以用来存储特殊符号
         // \n和\r
         // \n = 换行 - 当输入完毕之后,光标是停在下一行的起始位置
