@@ -25,5 +25,22 @@ public class NaiTeaDemo {
         int cup = 5;
 
         //写一段程序 - 计算出总价.
+        //定义一个变量,用来保存总价
+        double total = price/2*(cup/2) + price*(cup/2);
+
+        //位运算 - 性能是最高的.
+        //10 - 1 0 1 0
+        //9 - 1 0 0 1
+        //    0 0 0 1
+
+        if((cup & 1) == 1){
+            total+=price;
+        }
+
+        //判断是否为奇数
+//        if(cup % 2 != 0)
+//            total+=price;
+
+        System.out.println(total);
     }
 }
