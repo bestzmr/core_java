@@ -113,3 +113,82 @@ static public void main(String[] args) {
 * 实参 - 调用方法的时候,实际传入的值 - 实际的值
 
 * 可变长列表
+
+
+
+# 导包操作
+
+**调用其他包下的类中的方法的时候**,第一步需要先导包,通过import语句.
+
+**导包的目的是为了告诉程序具体使用的是哪个包中的哪个类!!!**
+
+* ```java
+  import tech.aistar.day03.imports.c.Demo01;//导入的具体的包下的类.
+  ```
+
+* import tech.aistar.day03.imports.c.*;
+
+
+
+## 找包的顺序
+
+* 本包 - 不需要导入
+* java.lang包下的类在使用的时候,不需要导包,默认搜索的.
+
+
+
+## 认识jdk中的包
+
+* java.lang - java核心包 - 无需手动导包.
+
+  比如System,String
+
+* java.util - java工具包
+
+  比如Date
+
+* java.sql
+* java.net
+* java.text
+* java.io
+
+
+
+# 总结方法
+
+* 看是否需要导包
+
+* 看方法有没有权限被访问的 - 防止是一个私有的.
+
+* 看方法的是否为静态的和非静态的.
+
+* 考虑方法的参数列表
+
+* 看方法是否带有返回类型.
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
