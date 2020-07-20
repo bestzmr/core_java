@@ -8,7 +8,7 @@ package tech.aistar.day04;
  */
 public class IfElseIfDemo {
     public static void main(String[] args) {
-        int maxDays = getMaxDay(2020,7);
+        int maxDays = getMaxDay(2021,2);
         System.out.println(maxDays);
 
         System.out.println(isLeapYear(2021));
@@ -25,7 +25,30 @@ public class IfElseIfDemo {
      * @return 该年该月最大的天数
      */
     public static int getMaxDay(int year,int month){
-        return 0;
+        int day = -1;//定义一个变量,用来保存最大天数.
+
+        if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12)
+            day = 31;
+        else if(month == 2){
+            //判断是否为闰年
+            //boolean flag = isLeapYear(year);
+//            if(flag)
+//                day = 29;
+//            else
+//                day = 28;
+
+//            day = 28;
+//            if(flag)
+//                day++;
+
+//            使用三元运算符
+            //day = flag?29:28;
+
+            day = isLeapYear(year)?29:28;
+
+        }else
+            day = 30;
+        return day;
     }
 
     /**

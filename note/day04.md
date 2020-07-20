@@ -88,5 +88,13 @@
 
   
 
+# 三元运算符
 
+* 表达式(或者boolean)?result1:result2;
+
+  如果表达式为true,则执行result1,否则执行result2
+
+* 嵌套使用的 - 不推荐
+
+  表达式1?(表达式2?result1:result2):表达式3
 
