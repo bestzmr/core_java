@@ -151,7 +151,65 @@ for(int i=0,j=0;i<=5 && j<=5;i++,j++){
 
 
 
+## 嵌套for循环
 
+for循环中继续嵌套for循环,但是在实际开发中一般不允许超过三层.嵌套越多,性能越低.
+
+* **外层循环和内层循环无关(优先推荐使用)**
+
+  内层循环可以单独运行 - 内层循环并没有使用到外层循环的变量因子i
+
+  ~~~java
+   public static void square(int n){
+     //外层循环执行一次,内层循环执行全部.
+  
+     for (int i = 0; i < n; i++) {//外层for循环 - 控制行数
+  
+       //内层循环是作为外层循环的循环体存在的
+       for (int j = 0; j < n; j++) {//内层循环 - 控制列数
+         System.out.print("#");
+  
+         //格式化输出
+         // System.out.printf("%2s","#");
+       }
+  
+       //换行...
+       //System.out.println();
+       System.out.print("\n");
+     }
+   }
+  ~~~
+
+  
+
+* 外层循环和内层循环相关
+
+  内层循环使用到了外层循环的变量因子
+
+  ~~~java
+  /**
+       * 内层循环和外层循环相关
+       * *
+       * * *
+       * * * *
+       * * * * *
+       * * * * * *
+       * * * * * * *
+       * @param n
+       */
+      public static void triangle(int n){
+          for (int i = 0; i < n; i++) {
+  
+              for (int j = 0; j <=i; j++) {
+                  System.out.print("#  ");
+              }
+  
+              System.out.println();
+          }
+      }
+  ~~~
+
+  
 
 
 
