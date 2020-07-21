@@ -263,9 +263,133 @@ while(true){
 
 * 输出101-199之间的所有的质数,每7个换一行
 
-* 给定一个十进制的数(正整数),输出这个十进制数的最精简的二进制
+* **给定一个十进制的数(正整数),输出这个十进制数的最精简的二进制**
 
   比如10 -> 1010
+
+* **杨辉三角**
+
+  ~~~java
+  1
+  1 1
+  1 2 1
+  1 3 3 1
+  1 4 6 4 1
+  ~~~
+
+* **递归算法 - 阶乘**
+
+* ***求某年某月最大天数 - switch..case语法***
+
+* **猜数字**
+
+  ~~~java
+  //1 . 产生一个随机的整数[1-100] - 假装不知道  80
+  
+  //游戏的界面
+  //       =====猜数字游戏=====
+  //请你输入数字[1-100]> 50
+  //小了,[50-100]> 90
+  //大了,[50-90]> 80
+  //恭喜你,中奖了.总共猜了3次!
+  ~~~
+
+  
+
+# doWhile循环
+
+前置循环 - 优先先进入到循环体中执行一次,然后才会进行条件判断,如果成立,继续循环,否则退出.
+
+~~~java
+do{
+  //循环体...
+}while(条件表达式);
+~~~
+
+
+
+# switch..case
+
+简介:switch...case能够解决的业务,if...else if...else if..else[灵活]
+
+~~~java
+switch(变量){//此处的变量的类型只能是byte short int char enum(枚举类型),String
+    				//									Byte Short  Integer Character  - 基本类型对应的包装类型 
+  case 值:
+    //statement;
+    [break];//此处的break是可以省略不写的.
+  case 值2:
+    //code...
+    [break];
+  ...
+  ...
+  [default:
+  	//code
+    //[break];
+  ]
+}
+1. switch括号中的变量能够和某个case后面的值匹配(相等),那么就会进入这个case块中去执行
+2. 进入到case块中执行完之后,如果遇到break语句,跳出switch块.如果没有遇到break语句的话
+    那么会自动进入到下一个case块执行.直到遇到break语句或者运行到末尾
+3. 如果switch括号中的变量没有能够匹配到任何一个case后面的值的时候,那么就会进入到default块中去执行
+    前提是提供了default块.
+4. default块可以省略,出现的位置可以是任意的.只是推荐放入到末尾.
+~~~
+
+
+
+## 笔试题
+
+~~~java
+switch(n){
+  case 值:
+    i++;
+    --j;
+  case 值:
+    ++i;
+    ++j;
+}
+i=?  j=?
+~~~
+
+
+
+# 获取键盘输入Scanner
+
+简介:java.util.Scanner
+
+* 导包 - import java.util.Scanner;
+
+* 创建Scanner对象
+
+  ~~~java
+  Scanner(InputStream source);//创建scanner对象的时候,要传入一个InputStream对象
+  
+  //1 - 创建InputStream对象
+  InputStream in = System.in;
+  
+  Scanner sc = new Scanner(System.in);
+  ~~~
+
+## 常用方法
+
+* int nextInt();//从键盘获取输入的整数
+
+* double nextDouble();//从键盘获取输入的小数
+
+* String nextLine();//从键盘获取输入的字符串
+  * 接受字符串,数字
+  * 在使用nextLine之前如果使用了nextInt/nextDouble.导致nextLine失效.
+
+## 学会如何使用API
+
+* 观察调用的方法是静态的还是非静态的.
+* 查看如何创建对象 - 构造方法
+* 调用方法.
+
+
+
+
 
 
 

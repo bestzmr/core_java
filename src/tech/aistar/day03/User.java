@@ -13,6 +13,7 @@ public class User {
     //对象是共享静态变量的.
     private static int guid = 100;
 
+    //构造方法 - 空参
     public User(){
         //guid = guid++;
         id = ++guid;
