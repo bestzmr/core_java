@@ -60,6 +60,24 @@ public class ArrayDemo {
         for (int i : arr2) {//i不是代表下标,就是代表实际的遍历到的数组中的元素
             System.out.println(i);
         }
+
+        System.out.println("====");
+        //4. 自定义输出方式
+        int[] arr5 = {500,600,600};
+        String srr = toArrayString(arr5);
+        System.out.println(srr);
+
+        //细节
+        int[] arr6 = null;//java.lang.NullPointerException - 空指针异常 - null.东西
+        //int[] arr6 = null;//java.lang.NullPointerException - 空指针异常 - null.东西
+
+        //int[] arr6 = new int[0];
+        String arr6Str = toArrayString(arr6);
+        System.out.println(arr6Str);
+
+//        String str = null;
+//       // System.out.println(str.equals("tom"));
+//        System.out.println("tom".equals(str));
     }
 
     /**
@@ -68,6 +86,22 @@ public class ArrayDemo {
      * @return
      */
     public static String toArrayString(int[] arr){
-        return null;
+        //1. 进行数组的参数有效性判断
+//        if(arr.length == 0 || null == arr){
+//            return "[]";
+//        }
+        if(null == arr || arr.length == 0){
+            return "[]";
+        }
+
+        String str = "[";
+
+        //遍历数组
+        for (int i = 0; i < arr.length; i++) {
+            str+=(i!=arr.length-1)?(arr[i]+","):arr[i];
+        }
+
+        str+="]";
+        return str;
     }
 }

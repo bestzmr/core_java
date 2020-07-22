@@ -116,5 +116,9 @@ int[] arr = new int[10];
   }
   ~~~
 
-  
+
+
+# 空指针异常
+
+java.lang.NullPointerException - null.东西(属性或者方法)
 
