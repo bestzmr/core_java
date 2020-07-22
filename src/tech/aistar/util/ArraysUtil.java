@@ -8,9 +8,10 @@ import java.util.Arrays;
  * @author: success
  * @date: 2020/7/22 2:22 下午
  */
+@SuppressWarnings("all")
 public class ArraysUtil {
     public static void main(String[] args) {
-        int[] arr = {5,4,5,7,2,1,5};
+        int[] arr = {5,4,5,7,2,7,5,2,4};
 
         //System.out.println(getMaxElement(arr));
 
@@ -18,15 +19,17 @@ public class ArraysUtil {
        // System.out.println(Arrays.toString(pos));
 
 
-        int[] temp = delByIndex(arr,3);
-
-        System.out.println(Arrays.toString(temp));
-
-        //System.out.println(Arrays.toString(sort(arr)));
+//        int[] temp = delByPos(arr,3);
+//
+//        System.out.println(Arrays.toString(temp));
+//
+//        System.out.println(Arrays.toString(arr));
 
         //arr = temp;
 
        // System.out.println(Arrays.toString(arr));
+
+        System.out.println(Arrays.toString(delDoubleElement01(arr)));
     }
 
     /**
@@ -85,6 +88,52 @@ public class ArraysUtil {
         }
 
         return temp;
+    }
+
+    /**
+     * 操作数组的原则 - 尽量不要对原来的数组进行直接的操作.
+     *
+     * 根据下标进行删除操作
+     *  {5,4,5,7,2,1,5};
+     *
+     *  假设index = 3
+     *
+     *  思路:从index位置开始,后面的覆盖前面的 - arr[i] = arr[i+1]
+     *  {5,4,5,2,1,5,5};
+     *
+     * main arr -> [......]  <- 方法arr
+     *
+     *      temp-> [.....]
+     *
+     * @param arr
+     * @param index
+     * @return
+     */
+    public static int[] delByPos(int[] arr,int index){
+        if(null == arr || arr.length==0 || index<0 || index>arr.length-1)
+            return new int[0];
+
+        int[] temp = new int[arr.length];
+        //数组的拷贝.arr数据全部拷贝到temp数组中
+        for (int i = 0; i < arr.length; i++) {
+            temp[i] = arr[i];
+        }
+
+        for (int i = index; i < temp.length-1; i++) {
+            temp[i] = temp[i+1];
+        }
+
+        //继续创建一个数组 - 去除最后一个重复的数据
+        int[] news = new int[temp.length-1];
+        for (int i = 0; i < temp.length - 1; i++) {
+            news[i] = temp[i];
+        }
+
+        //temp = Arrays.copyOf(temp,temp.length-1);
+
+        return news;
+
+      //  return temp;
     }
 
     /**
@@ -149,20 +198,100 @@ public class ArraysUtil {
      * @return
      */
     public static int[] delByTarget(int[] arr,int target){
+        if(null == arr || arr.length == 0)
+            return new int[0];
 
-        return null;
+        //1. 确定target是否存在
+        int count = 0;
+
+        //2. 遍历arr
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] == target)
+                count++;
+        }
+
+        if(count==0)
+            return new int[0];
+
+        //3. target肯定是存在
+        //确定新的数组的长度 - 新的数组就是不包含target元素的数组
+        int[] temp = new int[arr.length - count];
+
+        //定义下标计数器
+        int pos = 0;
+
+        //4. 遍历原来的数组
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] != target){
+                temp[pos++] = arr[i];
+            }
+        }
+
+        return temp;
     }
 
     /**
      * 数组排重 - 去除数组中重复的数据,只保留1个.
+     *
+     * 思路:
+     * arr = {5,4,5,7,2,1,5};
+     *
+     * 定义数组
+     * temps= {0,0,0,0,0,0,0};
+     *
+     * 永远将arr[0]放入到temp中 -> temp[0] = 5
+     * temps= {5,0,0,0,0,0,0};
+     *
+     * 调用根据元素删除的方法->立即到arr中将刚刚的arr[0]全部删除
+     * temp -> {4,7,2,4,1};
+     *
+     * arr = temp;
+     *
+     * temps[1] = arr[0] = 4
+     * temps= {5,4,7,2,0,0,0};
+     *
+     * arr->{1}
+     *
+     *
      * @param arr
      * @return
      */
     public static int[] delDoubleElement01(int[] arr){
-        return null;
+        if(null == arr || arr.length == 0)
+            return new int[0];
+
+        //定义一个新的数组
+        int[] temp = new int[arr.length];//默认都是0
+
+        //定义一个下标计数器
+        int pos = 0;
+
+        do{
+            //永远将arr[0]放入到新的数组中去
+            temp[pos++] = arr[0];
+
+            arr = delByTarget(arr,arr[0]);
+
+            if(arr.length == 0)
+                break;
+        }while(true);
+
+        temp = Arrays.copyOf(temp,pos);
+        return temp;
     }
 
     /**
+     * 思路:
+     * arr = {5,4,5,7,2,1,5};
+     *
+     * i=0,接下来遍历j=i+1位置开始->数组的最后
+     *
+     * if(arr[i] == arr[j]){
+     *     //根据下标删除
+     * }
+     *
+     *
+     *
      * 数组排重 - 去除数组中重复的数据,只保留1个.
      * @param arr
      * @return
