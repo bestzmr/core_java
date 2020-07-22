@@ -270,7 +270,7 @@ public class ArraysUtil {
             //永远将arr[0]放入到新的数组中去
             temp[pos++] = arr[0];
 
-            arr = delByTarget(arr,arr[0]);
+            arr = delByTarget(arr,arr[0]);//背后藏的东西
 
             if(arr.length == 0)
                 break;
@@ -306,6 +306,17 @@ public class ArraysUtil {
      * @return
      */
     public static int[] delDoubleElement03(int[] arr){
+        return null;
+    }
+
+    /**
+     * 在arr数组的指定pos下标处插入一个指定的值target
+     * @param arr
+     * @param pos
+     * @param target
+     * @return
+     */
+    public static int[] insertOneElement(int[] arr,int pos,int target){
         return null;
     }
 }
