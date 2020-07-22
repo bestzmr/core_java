@@ -116,9 +116,39 @@ int[] arr = new int[10];
   }
   ~~~
 
-
+* 利用java.util.Arrays数组工具类中提供的数组输出方法.
 
 # 空指针异常
 
 java.lang.NullPointerException - null.东西(属性或者方法)
 
+
+
+# Arrays数组工具类
+
+* static String toString(int[] arr);//重载的方法,输出数组
+
+  ~~~java
+  public static String toString(int[] a) {
+    if (a == null)
+      return "null";
+    int iMax = a.length - 1;
+    if (iMax == -1)
+      return "[]";
+  
+    StringBuilder b = new StringBuilder();
+    b.append('[');
+    for (int i = 0; ; i++) {
+      b.append(a[i]);
+      if (i == iMax)
+        return b.append(']').toString();
+      b.append(", ");
+    }
+  }
+  ~~~
+
+
+
+# 数组练习
+
+* 数组长度5个,里面存放1~6之间的随机整数.要求是不能有重复的数据.

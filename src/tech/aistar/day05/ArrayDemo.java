@@ -1,5 +1,7 @@
 package tech.aistar.day05;
 
+import java.util.Arrays;
+
 /**
  * 本类用来演示:数组的基本语法
  *
@@ -78,6 +80,10 @@ public class ArrayDemo {
 //        String str = null;
 //       // System.out.println(str.equals("tom"));
 //        System.out.println("tom".equals(str));
+
+        //5. 利用java.util.Arrays数组工具类 - 提供的重载的关于数组输出的方法
+        //static String toString(int[] arr);
+        System.out.println(Arrays.toString(arr5));
     }
 
     /**
