@@ -319,4 +319,15 @@ public class ArraysUtil {
     public static int[] insertOneElement(int[] arr,int pos,int target){
         return null;
     }
+
+    /**
+     * 在arr数组的指定pos下标处插入N个指定的值target
+     * @param arr
+     * @param pos
+     * @param target
+     * @return
+     */
+    public static int[] insertOneElement02(int[] arr,int pos,int... target){
+        return null;
+    }
 }
