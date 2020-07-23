@@ -15,7 +15,7 @@ public class ArraysUtil {
 
        // System.out.println(Arrays.toString(insertOneElement(arr,2,100)));
 
-        System.out.println(Arrays.toString(delDoubleElement03(arr)));
+        System.out.println(Arrays.toString(delDoubleElement02(arr)));
 
         //System.out.println(Arrays.toString(arr));
 
@@ -308,13 +308,22 @@ public class ArraysUtil {
         }
         // 1 2 2 2 5 6 7
         // 1 2 2 5 6 7 -> arr
+//        for (int i = 0; i < arr.length; i++) {
+//            for (int j = i+1; j < arr.length; j++) {
+//                //如果后面的下标对应的值 = 当前下标对应的值
+//                if(arr[i] == arr[j]){
+//                    //删除j下标对应的数据
+//                    arr = delByIndex(arr,j);
+//                    j--;
+//                }
+//            }
+//        }
+
+        // {5,4,5,5,8,2,4}
         for (int i = 0; i < arr.length; i++) {
-            for (int j = i+1; j < arr.length; j++) {
-                //如果后面的下标对应的值 = 当前下标对应的值
+            for (int j = arr.length-1; j >=i+1 ; j--) {
                 if(arr[i] == arr[j]){
-                    //删除j下标对应的数据
                     arr = delByIndex(arr,j);
-                    j--;
                 }
             }
         }
