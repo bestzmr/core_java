@@ -68,7 +68,6 @@ public class ArrayBinarySearchDemo {
                 endIndex = centerIndex - 1;
             }
         }
-
         return -1;
     }
 }
