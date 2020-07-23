@@ -254,3 +254,133 @@ public static native void arraycopy(Object src,  int  srcPos,
 
     endIndex = centerIndex-1;
 
+
+
+# 二维数组
+
+~~~java
+二维数组的本质 - 二维数组中的每个元素都是一维数组
+
+元素类型[][] 变量 = new 元素类型[rows][cols];
+元素类型 变量[][] = new 元素类型[rows][cols];
+
+//定义一个三行两列的整数型二维数组
+int[][] arr = new int[3][2];
+~~~
+
+## 赋值方式
+
+* 普通for循环进行赋值.
+
+* 下标一一赋值
+
+  ~~~java
+  arr[0][0] = 10;
+  ~~~
+
+* 定义二维数组的同时进行赋值
+
+  ~~~java
+  int[][] arr = {{1,2,3},{3,4,5},{6,7,8}};
+  或者
+  int[][] arr = new int[][]{{1,2,3},{3,4,5},{6,7,8}};
+  ~~~
+
+* 先声明一个数组,然后一行一行进行赋值
+
+  ~~~java
+  int[][] arr = new int[3][3];
+  arr[0] = new int[]{3,3,3};
+  arr[1] = new int[]{6,7,8};
+  arr[2] = new int[]{9,9,9};
+  //arr[0] = {4,5,6};//error
+  ~~~
+
+## 遍历方式
+
+* 通过下标一一遍历
+
+* 通过普通for循环进行遍历
+
+  ~~~java
+  for(int i=0;i<arr.length;i++){
+    System.out.println(Arrays.toString(arr[i]));
+  }
+  ~~~
+
+  ~~~java
+  for(int i=0;i<arr.length;i++){
+    for(int j=0;j<arr[i].length;j++){
+      System.out.print(arr[i][j]+"\t");
+    }
+    System.out.println();
+  }
+  ~~~
+
+* 增强for循环
+
+  ~~~java
+  for(int[] trr:arr){
+    for(int ele:trr){
+      System.out.println(ele);
+    }
+  }
+  ~~~
+
+* java.util.Arrays 提供的Arrays.deepToString(二维数组对象);
+
+## 不规则的二维数组
+
+定义二维数组的时候,可以省略列,但是在使用之前一定要进行初始化.
+
+
+
+# 二维数组的练习
+
+* 打印直角三角形的杨辉三角.
+
+* 统计随机数出现的次数,并且降序排
+
+  ~~~java
+  1~5的随机数 -> 放在长度为15的整数型数组中.
+  
+  arr -> 1 2 1 4 3 1 2 3 4 1 2 3 1 2 3 
+    
+  思路:
+  1. 对arr进行数组排重 - 个数就是二维数组的行数
+    
+  2. temp -> 1 2 3 4
+    
+  3. 每个随机数->次数 -> 二维数组.
+    
+  写程序
+  1 4
+  2 ?
+  3 ?
+  4 ?
+  5 ?
+  统计的结果放入到二维数组中.
+    
+  继续根据出现的次数进行降序排
+  5 5
+  2 4
+  3 1
+  1 1
+  ~~~
+
+* 行列调换
+
+  ~~~java
+  String[][] arr = {{"","",""},{},{},{}};
+  白日依山尽,
+  黄河入海流.
+  欲穷千里目,
+  更上一层楼.
+    
+  写一个程序,竖过来
+  白
+  日
+  依
+  ~~~
+
+  
