@@ -20,10 +20,10 @@ public class ArraySortDemo {
     public static int[] fastSort(int[] arr,int start,int end){
         if(start<end){
             //1. 确定重合的位置 - 分区
-            int pos = getPos(arr,0,end);
+            int pos = getPos(arr,start,end);
 
             //2. 递归调用
-            fastSort(arr,0,pos-1);
+            fastSort(arr,start,pos-1);
             fastSort(arr,pos+1,end);
         }
         return arr;
