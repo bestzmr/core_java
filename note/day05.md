@@ -188,3 +188,69 @@ public static native void arraycopy(Object src,  int  srcPos,
   * @param      length   从原数组中拷贝的个数
 ~~~
 
+
+
+# 数组元素查找
+
+* 挨个查找
+
+  ~~~java
+  public static int[] getIndexByTarget(int[] arr,int target){
+    if(null == arr || arr.length == 0)
+      //return null;
+      return new int[0];
+  
+    //1. 思考target在数组中存不存在!
+    //1-1. 定义一个变量,用来统计target出现的次数
+    int count = 0;
+  
+    for (int i = 0; i < arr.length; i++) {
+      if(arr[i] == target)
+        count++;
+    }
+  
+    if(count == 0)//说明数组中不存在target元素.
+      return new int[0];
+  
+    //2.确定新数组 - 元素类型以及数组的长度.
+    int[] temp = new int[count];//存储target对应的所有的下标的数组
+  
+    //定义一个下标计数器
+    int pos = 0;
+  
+    //3. 遍历原来的数组
+    for (int i = 0; i < arr.length; i++) {
+      if(arr[i] == target)
+        temp[pos++] = i;
+    }
+  
+    return temp;
+  }
+  ~~~
+
+* 二分查找 - 二分搜索法 - 每次比较完之后,都会减少一半的数据.
+
+  业务中有的数据是唯一的.
+
+  **找出数组中某个元素第一次出现的位置.**
+
+  前提:对排好序的数组可以采用二分查找.
+
+  1,2,3,4,5,6,7,8
+
+  * 起始索引 - startIndex - 0
+  * 结束索引 - endIndex - 1
+  * 中间索引 - centerIndex = (startIndex + endIndex)/2 = 3
+
+  确定中间索引的值是4.
+
+  * 正好找的值就是4,直接返回centerIndex.
+
+  * 如果找的目标值比中间索引处的值大.
+
+    startIndex = centerIndex+1;
+
+  * 如果找的目标值比中间索引处的值小.
+
+    endIndex = centerIndex-1;
+
