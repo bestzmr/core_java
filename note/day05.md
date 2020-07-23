@@ -152,3 +152,39 @@ java.lang.NullPointerException - null.东西(属性或者方法)
 # 数组练习
 
 * 数组长度5个,里面存放1~6之间的随机整数.要求是不能有重复的数据.
+
+
+
+# 数组的拷贝和扩容
+
+## java.util.Arrays数组工具类
+
+~~~java
+public static int[] copyOf(int[] original, int newLength) {
+        int[] copy = new int[newLength];
+  		  //数组本身也是属于对象类型.而所有的对象类型都拥有一个根类[基类,超类,父类]
+  			//所有的对象如果没有明确指定父类,那么都是默认直接继承java.lang.Object
+  
+        //面向父类编程 - 方法的参数类型定义成父类.那么调用方法的时候,可以传入这个父类的子类对象.
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+~~~
+
+
+
+## java.lang.System
+
+~~~java
+public static native void arraycopy(Object src,  int  srcPos,
+                                        Object dest, int destPos,
+                                        int length);
+
+  * @param      src      原数组对象
+  * @param      srcPos   从原数组中的srcPos下标处开始取数据.
+  * @param      dest     目标数组对象
+  * @param      destPos  放入到目标数组中的destPos下标处.
+  * @param      length   从原数组中拷贝的个数
+~~~
+

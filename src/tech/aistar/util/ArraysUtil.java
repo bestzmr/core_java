@@ -11,7 +11,13 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class ArraysUtil {
     public static void main(String[] args) {
-        int[] arr = {5,4,5,7,2,7,5,2,4};
+        int[] arr = {5,4,5,5,5,8,5,2,4};
+
+       // System.out.println(Arrays.toString(insertOneElement(arr,2,100)));
+
+        System.out.println(Arrays.toString(delDoubleElement03(arr)));
+
+        //System.out.println(Arrays.toString(arr));
 
         //System.out.println(getMaxElement(arr));
 
@@ -29,7 +35,7 @@ public class ArraysUtil {
 
        // System.out.println(Arrays.toString(arr));
 
-        System.out.println(Arrays.toString(delDoubleElement01(arr)));
+        //System.out.println(Arrays.toString(delDoubleElement01(arr)));
     }
 
     /**
@@ -282,13 +288,13 @@ public class ArraysUtil {
 
     /**
      * 思路:
-     * arr = {5,4,5,7,2,1,5};
+     * {5,4,5,7,2,1,5};
      *
-     * i=0,接下来遍历j=i+1位置开始->数组的最后
+     * temp -> {5,4,7,2,1,5} <- arr
      *
-     * if(arr[i] == arr[j]){
-     *     //根据下标删除
-     * }
+     * 每次拿当前下标对应的值和这个下标后面的所有的值进行比较
+     * 如果后面的下标对应的值 = 当前下标对应的值
+     * 那么就调用根据下标删除后面的值
      *
      *
      *
@@ -297,16 +303,77 @@ public class ArraysUtil {
      * @return
      */
     public static int[] delDoubleElement02(int[] arr){
-        return null;
+        if(null == arr || arr.length==0){
+            return new int[]{-1};
+        }
+        // 1 2 2 2 5 6 7
+        // 1 2 2 5 6 7 -> arr
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                //如果后面的下标对应的值 = 当前下标对应的值
+                if(arr[i] == arr[j]){
+                    //删除j下标对应的数据
+                    arr = delByIndex(arr,j);
+                    j--;
+                }
+            }
+        }
+
+        return arr;
     }
 
     /**
+     * 经典小孩报数
+     *
+     * 1 2 3 4 5 6 7 8 9 10
+     *
+     * t f f t t f t t f t
+     *
+     * 每次报到3的小孩出列,打印出列的顺序
+     *
      * 数组排重 - 去除数组中重复的数据,只保留1个.
      * @param arr
      * @return
      */
     public static int[] delDoubleElement03(int[] arr){
-        return null;
+        if(null == arr || arr.length==0)
+            return null;
+
+        //1. 布尔类型的数组
+        boolean[] flags = new boolean[arr.length];
+
+        //2. 全部设置成true;
+        for (int i = 0; i < flags.length; i++) {
+            flags[i] = true;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if(arr[i] == arr[j]){
+                    flags[j] = false;
+                }
+            }
+        }
+
+        //System.out.println(Arrays.toString(flags));
+
+        //定义一个计数器 - 新数组的长度
+        int count = 0;
+        for (int i = 0; i < flags.length; i++) {
+            if(flags[i])
+                count++;
+        }
+
+        int[] temp = new int[count];
+
+        int pos = 0;//下标计数器
+
+        for (int i = 0; i < arr.length; i++) {
+            if(flags[i]){
+                temp[pos++] = arr[i];
+            }
+        }
+        return temp;
     }
 
     /**
@@ -317,7 +384,21 @@ public class ArraysUtil {
      * @return
      */
     public static int[] insertOneElement(int[] arr,int pos,int target){
-        return null;
+        //参数有效性判断....
+
+        //1. 定义一个新的目标数组
+        int[] temp = new int[arr.length+1];
+
+        // {1,2,34,4,5};
+
+        //2. pos之前
+        System.arraycopy(arr,0,temp,0,pos);
+        //3. pos处
+        temp[pos] = target;
+        //4. pos之后
+        System.arraycopy(arr,pos,temp,pos+1,arr.length-pos);
+
+        return temp;
     }
 
     /**
