@@ -16,7 +16,44 @@ public class ArraySortDemo {
 
         //System.out.println(Arrays.toString(fastSort(arr,0,arr.length-1)));
 
-        System.out.println(Arrays.toString(directInsertSort(arr)));
+        System.out.println(Arrays.toString(selectSort(arr))+"===");
+    }
+
+    /**
+     * 选择算法
+     * @param arr
+     * @return
+     */
+    public static int[] selectSort(int[] arr){
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if(arr[i]>arr[j]){
+                    arr[i] = arr[i]^arr[j];
+                    arr[j] = arr[i]^arr[j];
+                    arr[i] = arr[i]^arr[j];
+                }
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * 冒泡算法
+     * 思路:每次都是从头开始进行俩俩比较.每次都会确定一个最值.
+     * @param arr
+     * @return
+     */
+    public static int[] bubbleSort(int[] arr){
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length-1-i; j++) {
+                if(arr[j]>arr[j+1]){
+                    arr[j] = arr[j]^arr[j+1];
+                    arr[j+1] = arr[j]^arr[j+1];
+                    arr[j] = arr[j]^arr[j+1];
+                }
+            }
+        }
+        return arr;
     }
 
     /**
