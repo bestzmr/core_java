@@ -383,4 +383,101 @@ int[][] arr = new int[3][2];
   依
   ~~~
 
+
+
+# char类型数组
+
+~~~java
+int[] arr = {1,2,3};
+System.out.println(arr);//内存地址 - [I@330bedb4
+
+PrintStream类中提供的println方法
   
+//java.lang.Object类是所有对象类型的父类.
+//面向父类编程思想 - 方法的参数类型写成父类,那么可以传入该父类的子类对象.
+//数组也是属于对象类型的 - 数组也是继承java.lang.Object,数组的父类也是Object
+public void println(Object x) {
+  String s = String.valueOf(x);
+  synchronized (this) {
+    print(s);
+    newLine();
+  }
+}
+ 
+String s = String.valueOf(x);
+
+public static String valueOf(Object obj) {
+  return (obj == null) ? "null" : obj.toString();
+}
+
+obj.toString();
+
+public String toString() {
+  return getClass().getName() + "@" + Integer.toHexString(hashCode());
+}
+
+char[] crr = {'a','b','c'};
+System.out.println(crr);//abc
+
+//PrintStream类中专门提供了输出char[]
+public void println(char x[]) {
+  synchronized (this) {
+    print(x);
+    newLine();
+  }
+}
+
+print(x)的底层源码
+ public void print(char s[]) {
+  write(s);
+}
+
+wirte(s)底层的源码
+private void write(char buf[]) {
+  try {
+    synchronized (this) {
+      ensureOpen();
+      textOut.write(buf);
+      textOut.flushBuffer();
+      charOut.flushBuffer();
+      if (autoFlush) {
+        for (int i = 0; i < buf.length; i++)
+          if (buf[i] == '\n')
+            out.flush();
+      }
+    }
+  }
+  catch (InterruptedIOException x) {
+    Thread.currentThread().interrupt();
+  }
+  catch (IOException x) {
+    trouble = true;
+  }
+}
+~~~
+
+
+
+# 数组工具类
+
+java.util.Arrays
+
+* static String toString(int[] arr);//重载方法,用来输出数组
+
+* 打印二维数组
+
+  ~~~java
+  static String deepToString(Object[] arr);
+  ~~~
+
+* ```
+  public static int binarySearch(int[] a, int key);//二分搜索法
+  ```
+
+* ```
+  public static int[] copyOf(int[] original, int newLength);//数组的拷贝
+  ```
+
+* static void fill(boolean[] flags,boolean val);//统一进行赋值
+* static boolean equals(int[] arr1,int[] arr2);//只要数组中的元素高度保持一致,就返回true
+* static void sort(int[] arr);//从小到大排序.底层会对arr进行直接的操作

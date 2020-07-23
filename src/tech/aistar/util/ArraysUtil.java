@@ -352,9 +352,11 @@ public class ArraysUtil {
         boolean[] flags = new boolean[arr.length];
 
         //2. 全部设置成true;
-        for (int i = 0; i < flags.length; i++) {
-            flags[i] = true;
-        }
+//        for (int i = 0; i < flags.length; i++) {
+//            flags[i] = true;
+//        }
+
+        Arrays.fill(flags,true);//统一进行赋值
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = i+1; j < arr.length; j++) {
