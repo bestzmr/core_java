@@ -14,7 +14,30 @@ public class ArraySortDemo {
 
         //System.out.println(getPos(arr,0,arr.length-1));
 
-        System.out.println(Arrays.toString(fastSort(arr,0,arr.length-1)));
+        //System.out.println(Arrays.toString(fastSort(arr,0,arr.length-1)));
+
+        System.out.println(Arrays.toString(directInsertSort(arr)));
+    }
+
+    /**
+     * 将数组中剩余的值(从数组中第2个位置开始)依次直接插入到前面,
+     * **保证前面的序列仍然是一个有序的序列**
+     * @param arr
+     * @return
+     */
+    public static int[] directInsertSort(int[] arr){
+        //从第二个位置,假设的是第一个位置就是有序序列
+
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = i; j >0 ; j--) {
+                if(arr[j]<arr[j-1]){
+                    arr[j] = arr[j]^arr[j-1];
+                    arr[j-1] = arr[j]^arr[j-1];
+                    arr[j] = arr[j]^arr[j-1];
+                }
+            }
+        }
+        return arr;
     }
 
     public static int[] fastSort(int[] arr,int start,int end){
