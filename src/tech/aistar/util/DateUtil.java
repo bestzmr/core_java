@@ -1,5 +1,7 @@
 package tech.aistar.util;
 
+import java.util.Calendar;
+
 /**
  * 本类用来演示:日期工具类
  *
@@ -47,5 +49,22 @@ public class DateUtil {
      */
     public static boolean isLeapYear(int year){
         return (year % 4==0 && year % 100 !=0) || year % 400 == 0;
+    }
+
+    /**
+     * 获取某年某月某日是周几
+     * @param year
+     * @param month
+     * @param date
+     * @return
+     */
+    public static int getDayOfWeek(int year,int month,int date){
+        Calendar calendar = Calendar.getInstance();
+
+        //对日历对象进行重新设置值
+        calendar.set(year,month-1,date);
+
+        int week = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        return week;
     }
 }

@@ -109,8 +109,32 @@ Calendar cal = Calendar.getInstance();
 ## 常用方法
 
 * int get(int field);//根据传入的field来返回指定的日历字段.
+* void set(int field,int value);//给日历指定的字段设置值.
+* **[set](https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Calendar.html#set-int-int-int-)**(int year, int month, int date);//统一进行赋值.
 
 
+
+## 日历字段和日期字段相互转换
+
+* Date getTime();//日历对象调用getTime方法就可以转换成日期类型.
+* void setTime(Date date);//Date->Calendar
+
+~~~java
+//日期<->long
+//long->Date
+//1. Date(long time);
+//2. void setTime(long time);
+
+//Date->long
+//1. void setTime(long time);
+
+
+//日历->日期
+//Date getTime();//java.util.Calendar
+
+//日期->日历
+//void setTime(Date d);//java.util.Calendar;
+~~~
 
 # 作业
 
