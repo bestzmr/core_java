@@ -68,7 +68,7 @@ public abstract class CalendarDemo {
         //2. void setTime(long time);
 
         //Date->long
-        //1. void setTime(long time);
+        //1. long getTime(long time);
 
 
         //日历->日期
