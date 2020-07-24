@@ -1,6 +1,9 @@
 package tech.aistar.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 本类用来演示:日期工具类
@@ -66,5 +69,44 @@ public class DateUtil {
 
         int week = calendar.get(Calendar.DAY_OF_WEEK)-1;
         return week;
+    }
+
+    /**
+     * 日期格式化成指定模板的字符串表现形式
+     * @param date
+     * @param pattern
+     * @return
+     */
+    public static String format(Date date,String pattern){
+        //1. 构建SimpleDateFormat对象
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+        if(null == date)
+            return null;
+
+        String sdate = sdf.format(date);
+
+        return sdate;
+    }
+
+    /**
+     * 将字符串解析成日期对象
+     * @param sdate
+     * @param pattern
+     * @return
+     */
+    public static Date parse(String sdate,String pattern){
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+        if(null == sdate || sdate.trim().length() == 0)
+            return null;
+
+        Date date = null;
+        try {
+            date = sdf.parse(sdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }
