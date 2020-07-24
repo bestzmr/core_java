@@ -72,13 +72,43 @@ jdk8.x中提供了新的关于日期的API
 
   简介:获取日期的毫秒数,距离1970年1月1日.
 
-  long getTime();
+  **long getTime();**
 
 * long类型来构建Date类型
 
   Date(long time);
 
-  void setTime(long time);
+  **void setTime(long time);**
+
+
+
+# java.util.Calendar
+
+简介:java中提供的日历类,它是用来替代Date日期类的使用.
+
+~~~java
+public abstract class Calendar {
+  
+}
+abstract - 关键字,抽象的,抽象的类是不能够被实例化的[不能通过new关键字来进行创建对象].
+Calendar cal = new Calendar();//error
+~~~
+
+
+
+## 如何构建对象
+
+static Calendar getInstance();
+
+~~~java
+Calendar cal = Calendar.getInstance();
+~~~
+
+
+
+## 常用方法
+
+* int get(int field);//根据传入的field来返回指定的日历字段.
 
 
 
