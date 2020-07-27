@@ -1,5 +1,7 @@
 package tech.aistar.day07;
 
+import tech.aistar.util.DateUtil;
+
 import java.util.Date;
 
 /**
@@ -114,5 +116,33 @@ public class User {
 
     public Date getRegisterDate() {
         return registerDate;
+    }
+
+    /**
+     * 重写方法,父类中提供了,子类中重新提供
+     *
+     * 1. 当子类User类没有手动提供toString方法的时候,那么默认就去调用它的父类Object中提供的
+     *    toString方法,而父类中提供的这个方法是用来打印对象的内存地址
+     *
+     * 2. 当子类User手动提供了toString方法的时候,那么调用该方法的时候,就会采取"就近原则",
+     *    调用子类中重写之后的这个toString方法来满足实际的打印属性的需求.
+     *
+     * @return
+     */
+//    @Override
+//    public String toString(){
+//        return "id:"+id+",username:"+username+",password:"+password+",registerDate:"+ DateUtil.format(registerDate,"yyyy-MM-dd");
+//    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", registerDate=").append(registerDate);
+        sb.append('}');
+        return sb.toString();
     }
 }
