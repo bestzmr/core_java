@@ -180,4 +180,134 @@
   | 1    | 2    |
   | 2    | 2    |
 
-  
+
+
+# 业务类和实体类
+
+作业中的**Employee类** - 定位的角色 - 实体类(**描述对象**的,现阶段实体类中应该就只包含属性,构造,getter.setter,toString),但是实体类中出现了addEmp等方法,而这些方法都是属于**业务方法**.
+
+应该要遵守软件开发的设计原则(SRP - 单一职责原则 - 不要让一个类的"压力"太多 - 类的任务比较"多")
+
+
+
+## 业务类和实体类合二为一
+
+简介:实体类包含了业务方法.
+
+~~~java
+package tech.aistar.day08.relation;
+
+/**
+ * 本类用来演示:银行账户实体类
+ *
+ * 实体类和业务类要合二为一
+ *
+ * 实体类中包含了业务方法
+ *
+ * @author: success
+ * @date: 2020/7/28 10:51 上午
+ */
+public class Account {
+    private int id;
+
+    private double balance;//账户余额
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Account{");
+        sb.append("id=").append(id);
+        sb.append(", balance=").append(balance);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    /**
+     * 存钱
+     * @param money
+     */
+    public void deposite(double money){
+        if(money<=0){
+            System.out.println("sorry,存入的金额不能是负数!");
+            return;
+        }
+        this.balance += money;
+    }
+
+    /**
+     * 取钱
+     * @param money
+     */
+    public void withdraw(double money){
+        //参数有效性判断
+        if(money > this.balance){
+            System.out.println("sorry,余额不足!");
+            return;
+        }
+        this.balance-=money;
+    }
+}
+
+~~~
+
+
+
+## 业务类和实体类分开
+
+* 实体类 - 描述对象 - **数据在内存中的载体.**强调的是数据的存储
+
+* 业务类 -  操作对象中的数据的.强调的是数据的操作.
+
+  推荐业务方法放在业务类中.
+
+~~~java
+
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
