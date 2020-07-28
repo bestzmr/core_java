@@ -22,10 +22,17 @@ public class TestDog {
         dog.setName("哮天犬");
         dog.setAge(7);
 
+        System.out.println(dog.toString());
+
         //子类可以调用父类中提供好的非私有的方法
         dog.sleeping();
 
         //子类可以调用自己独有的方法
         dog.watchDoor();
+
+        System.out.println("===华丽丽的分割线==");
+
+        //调用重写的方法
+        dog.spark();
     }
 }

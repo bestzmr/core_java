@@ -6,7 +6,7 @@ package tech.aistar.day08.relation.extend;
  * @author: success
  * @date: 2020/7/28 2:25 下午
  */
-public class Animal {
+public class Animal {//当一个类没有指定父类的时候,那么这个类的直接父类是Object
     //各个子类中共同的属性放在父类
     private String name;
 
@@ -42,5 +42,19 @@ public class Animal {
     //存放子类共同的行为
     public void sleeping(){
         System.out.println(name+"在睡觉!");
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Animal{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", age=").append(age);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public void spark(){
+        System.out.println("动物在叫...");
     }
 }

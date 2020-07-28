@@ -33,4 +33,10 @@ public class Cat extends Animal{
     public void catchMouse(){
         System.out.println(getName()+"会捉老鼠!");
     }
+
+    //重写了父类中的方法
+    @Override
+    public void spark() {
+        System.out.println("喵喵~~~");
+    }
 }
