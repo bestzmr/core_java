@@ -20,7 +20,21 @@ public class AccountBiz {
         acc.setBalance(acc.getBalance()+money);
     }
 
-    public void withdraw(){
 
+    /**
+     * 一线城市 - 买不起
+     *
+     * 取钱
+     */
+    public void withdraw(Account acc,double money){
+        if(acc.getBalance()<money){
+            System.out.println("sorry,余额不足!");
+            return;
+        }
+        //acc.setBalance(acc.getBalance()-money);
+
+        double balance = acc.getBalance();
+        balance-=money;
+        acc.setBalance(balance);
     }
 }

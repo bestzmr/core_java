@@ -17,5 +17,9 @@ public class TestAccountBiz {
         biz.deposite(account,100.0d);
 
         System.out.println(account.getBalance());
+
+        biz.withdraw(account,200.0d);
+
+        System.out.println(account.getBalance());
     }
 }
