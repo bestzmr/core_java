@@ -33,4 +33,16 @@ public class Dog extends Animal{
     public void watchDoor(){
         System.out.println(getName()+"会看门!");
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ",loyalty:"+loyalty;
+    }
+
+    //子类可以重写父类中的方法
+
+//    @Override
+   public void spark() {
+        System.out.println("汪汪~~~");
+    }
 }
