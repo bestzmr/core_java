@@ -121,10 +121,41 @@ public class Employee {//员工类
     /**
      * 上司开除下属...
      * 开除的是比上司工资还要高的员工!!!
-     * @param salary
      */
-    public void delBySalary(double salary){
+    public void delBySalary(){
+        if(null == emps){
+            System.out.println("sorry,您是下属!没有下属了");
+            return;
+        }
+        if(emps.length == 0){
+            System.out.println("抱歉,您暂时还未拥有下属!不能开除了!");
+            return;
+        }
 
+        //统计开除的人数
+        int count = 0;
+
+        for (Employee e : emps) {//下属的
+            if(e.getSalary()>this.salary){
+                count++;
+            }
+        }
+        if(count==0){
+            System.out.println("抱歉!所有下属工资都很低!");
+            return;
+        }
+        //确定新的数组的长度 - 保留留下来的员工.
+        Employee[] temps = new Employee[emps.length - count];
+        //定义一个下标计数器
+        int pos = 0;
+
+        //遍历原来的数组
+        for (Employee e : emps) {
+            if(e.getSalary()<this.salary){
+                temps[pos++] = e;
+            }
+        }
+
+        this.emps = temps;
     }
-
 }
