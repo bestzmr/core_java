@@ -24,6 +24,8 @@ public class TestEmployee {
         boss.addEmp(e2);
         boss.addEmp(e3);
 
+        boss.delBySalary();
+
         //4. 输出下属的个数
         boss.findEmpCount();
 
