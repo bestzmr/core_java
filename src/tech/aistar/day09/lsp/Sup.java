@@ -68,7 +68,5 @@ class TestSub{
         //2. 子类对父类进行了拓展,并且没有改变父类的功能.
         Father father = new FatherSub();
         sub2.tests(father);//Sub...
-
-
     }
 }
