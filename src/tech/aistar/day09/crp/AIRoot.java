@@ -19,10 +19,8 @@ public class AIRoot {
 //        this.root = root;
 //    }
 
-    public AIRoot() {
-    }
 
-    public AIRoot(Root root) {
+    public AIRoot() {
         this.root = new Root();//聚合
     }
 
