@@ -7,7 +7,7 @@ package tech.aistar.day09.lsp;
  * @date: 2020/7/29 10:46 上午
  */
 public class Sup {
-    public void test(Father father){
+    public void test(Father father){//多态的应用2 - 方法的参数类型写成父类,传入可以是子类.
         System.out.println("Sup...");
     }
 
@@ -31,25 +31,44 @@ class Sub extends Sup{
 
 class TestSub{
     public static void main(String[] args) {
-        Father father = new Father();//定义一个父类对象
-        Father fatherSub = new FatherSub();//定义一个father的子类
+        //继承带来的缺陷 - 一旦使用到了继承,增加了父子模块之间的耦合性.
+        //降低了程序代码的灵活度,修改父类,可能会影响到子类.
 
+        //子类是允许拓展父类的功能,但是不建议子类去修改父类的功能.
+        //子类重写父类方法是违背这个思想 - 降低了代码的复用性.
+        //所以父类一旦定义好了的结构,子类尽量不要去破坏.
+        //基于上面的思想 - "里氏替换原则" - 凡是可以使用父类的地方,也是允许使用子类.
+        //人话: 父类修改功能的时候,尽量不要影响子类.
+        //1. 子类不要重写父类的非抽象方法.
+        //2. 子类方法的形参要比父类形参要更加宽松.
+
+        FatherSub fatherSub = new FatherSub();
+
+        //此处代码使用父类...
+        Sup sup = new Sup();
+        sup.test(fatherSub);//不推荐...   Sup...
+
+        //"里氏替换原则" - 凡是可以使用父类的地方,也是允许使用子类.
+        //一旦使用子类Sub来替代Sup父类,期望得到的效果是一样的,但是实际上不一样 - 不能够替换.
         Sub sub = new Sub();
-        //不符合"里氏替换原则"
-        //核心 - 凡是可以出现父类的地方,都可以使用子类来替代.
+        sub.test(fatherSub);//Sub..
 
-        //不行的结果:一旦使用子类替代父类之后,执行的结果是不一样的.
+        System.out.println("====里氏替换原则=====");
 
-        //子类是不推荐重写父类的普通方法的 - 因为父类中已经定义好了结构,子类不要轻易去破坏这个结构.
+        //又在使用父类...
+        Sup sup1 = new Sup();
+        sup1.tests(fatherSub);//Sup...
 
-        //继承缺点 - 父子类耦合高,灵活性就会降低,一旦修改了父类,有可能会影响到子类.
-        //继承要慎用 - 合成/复用原则来替代继承关系.
-        sub.test(father);//Sup...
-        sub.test(fatherSub);//Sub...
+        //使用子类Sub来替换
+        Sub sub2 = new Sub();
+        sub2.tests(fatherSub);//Sup... - 还是在调用父类的定义好的东西
 
-        System.out.println("===");
-        //使用子类来替代父类,不影响执行的结果
-        sub.tests(father);//Sub..
-        sub.tests(fatherSub);//Sub...
+        //Sub子类中也提供了tests(Father Father)
+        //1. 子类依然可以使用父类提供好的结构
+        //2. 子类对父类进行了拓展,并且没有改变父类的功能.
+        Father father = new FatherSub();
+        sub2.tests(father);//Sub...
+
+
     }
 }
