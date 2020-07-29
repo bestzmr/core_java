@@ -527,7 +527,7 @@ public class AIRobot extends Robot{
 
 
 
-多态的应用之一:
+[**多态的应用之一 - 面向父类编程**]()
 
 * 对象的编译时类型可以写成父类,对象的运行时类型可以写成子类.
 
@@ -550,6 +550,8 @@ public class AIRobot extends Robot{
     ~~~
 
 * 方法的参数类型可以写成父类,调用方法的时候,可以传入这个类的任何一个子类的对象.
+
+* 方法的返回类型是父类,方法的的返回值可以是这个父类的任何一个子类对象.
 
 
 
@@ -649,6 +651,45 @@ public class AIRobot extends Robot{
 ## 接口隔离原则
 
 
+
+# instanceof关键字
+
+补充多态知识点.判断类型的归属的.
+
+对象 instanceof 类型
+
+应用场景:程序代码中出现了将父类类型强制转换成子类类型的时候,为了避免出现**java.lang.ClassCastException**类型转换失败异常,需要在类型转换之前,先进行类型的判断.
+
+~~~java
+ Animal[] animals = new Animal[2];
+
+animals[0] = dog;
+animals[1] = cat;
+
+//animal中既包含狗,又包含猫
+for (Animal animal : animals) {
+  //调用Animal类中提供的公共的方法...
+  animal.sleeping();
+
+  //继续调用子类中特有的方法..
+  //解决方案: 强制类型转换.
+
+  //java.lang.ClassCastException 类型转换失败异常
+  //为了避免类型转换失败异常的出现 - 在进行强制类型转换的时候
+  //需要先进行类型的判断
+  if(animal instanceof Dog) {
+    Dog dogs = (Dog) animal;
+    dogs.watchDoor();
+  }
+
+  if(animal instanceof Cat) {
+    Cat cats = (Cat) animal;
+    cats.catchMouse();
+  }
+
+  System.out.println("=====");
+}
+~~~
 
 
 
