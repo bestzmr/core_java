@@ -10,9 +10,9 @@ public class TestAIRoot {
     public static void main(String[] args) {
 
 
-        Root root = new Root();
+       // Root root = new Root();
 
-        AIRoot aiRoot = new AIRoot(root);
+        AIRoot aiRoot = new AIRoot();
 
        // aiRoot.setRoot(root);
 
