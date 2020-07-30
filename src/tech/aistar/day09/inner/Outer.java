@@ -40,4 +40,46 @@ public class Outer {
     public MemberInner createMemberInner(){
         return new MemberInner();
     }
+
+    //2. 静态内部类
+    public static class staticInner{
+        private int id = 100;
+
+        private static int guid = 200;
+
+        public void test(){
+            System.out.println("内部类id:"+id);//就近原则.
+
+            //不能访问外部类中的非静态属性
+            //System.out.println("外部类id:"+Outer.this.id);
+
+            //外部类的guid
+            System.out.println("外部类guid:"+Outer.guid);
+
+            //内部类的guid
+            System.out.println("内部类guid:"+guid);
+        }
+    }
+
+    //3. 局部内部类
+    public void testLocalInner(){
+        //局部内部类的作用域就只能改方法内部被使用..
+        class LocalInner{
+            private int id = 100;
+
+            //private static int guid = 200;//error
+
+            public void test(){
+                System.out.println("内部类id:"+id);
+                System.out.println("外部类id:"+Outer.this.id);
+
+                System.out.println("外部类guid:"+guid);
+                System.out.println("外部类guid:"+Outer.guid);
+            }
+        }
+
+        //只能在方法体中去创建这个局部内部类对象
+        LocalInner localInner = new LocalInner();
+        localInner.test();
+    }
 }
