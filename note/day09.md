@@ -544,7 +544,63 @@ public class Singleton05Demo {
 
 
 
+## 登记式/静态内部类
 
+号称:懒汉模式下的优雅的写法 - 同时也能保证线程安全.
+
+~~~java
+package tech.aistar.design.singleton.singleton06;
+
+/**
+ * 本类用来演示: 登记式/静态内部类.
+ *
+ * 加载外部类,但是没有使用到静态内部类的时候,静态内部类是不会被加载 - 懒
+ * 
+ * 多线程安全
+ *
+ * @author: success
+ * @date: 2020/7/30 4:30 下午
+ */
+public class Singleton06 {
+
+    //私有化构造
+    private Singleton06(){
+        System.out.println("构造..");
+    }
+
+    //静态内部类
+    public static class SingletonHelper{
+       
+        private static Singleton06 instance = new Singleton06();
+    }
+
+    public static Singleton06 getInstance(){
+        return SingletonHelper.instance;
+    }
+}
+~~~
+
+
+
+## 单例模式优缺点
+
+主要优点：
+
+1. 提供了对唯一实例的受控访问。
+
+2. 由于在系统内存中只存在一个对象，因此可以节约系统资源，对于一些需要频繁创建和销毁的对象单例模式无疑可以提高系统的性能。
+
+3. 允许可变数目的实例。
+
+ 
+
+主要缺点：
+
+1. 由于单利模式中没有抽象层，因此单例类的扩展有很大的困难。
+
+2. 单例类的职责过重，**在一定程度上违背了“单一职责原则”。**
+
+3. 滥用单例将带来一些负面问题，如为了节省资源将数据库连接池对象设计为的单例类，可能会导致共享连接池对象的程序过多而出现连接池溢出；如果实例化的对象长时间不被利用，系统会认为是垃圾而被回收，这将导致对象状态的丢失。
 
 
 
