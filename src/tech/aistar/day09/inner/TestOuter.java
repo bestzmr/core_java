@@ -22,5 +22,13 @@ public class TestOuter {
         Outer.MemberInner m2 = outer.createMemberInner();
 
         m2.test();
+
+        System.out.println("====2. 静态内部类===");
+        //如果静态内部类是public,那么它可以上升成为"顶级类".
+        Outer.staticInner s = new Outer.staticInner();
+        s.test();
+
+        System.out.println("====3. 局部内部类====");
+        outer.testLocalInner();
     }
 }
