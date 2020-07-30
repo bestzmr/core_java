@@ -421,11 +421,126 @@ public class Singleton04Demo {
 
 
 
+## volatile
+
+~~~java
+package tech.aistar.design.singleton.singleton05;
+
+/**
+ * 本类用来演示:单例模式 - 懒汉模式(线程安全) - 双重检测
+ * 类加载进内存的时候,不会立即对该类进行初始化工作
+ * 第一次执行getInstance方法的时候,才会进行初始化.
+ *
+ * @author: success
+ * @date: 2020/7/30 2:21 下午
+ */
+public class Singleton05Demo {
+    //2. 提供本类的一个唯一实例,但是赋值为null
+    private static volatile Singleton05Demo instance = null;
+
+    //1. 私有化构造
+    private Singleton05Demo(){
+        System.out.println("构造...");
+    }
+
+    //3. 提供一个公开的方法来返回这个类的唯一实例
+    public static Singleton05Demo getInstance(){
+        //是存在程序的 - 不需要控制多线程安全的,是所有的线程都是允许同时执行的.为了不影响整个性能
+        //没有必要锁住整个getInstance方法的.
+
+        if(null == instance){//第一个判断的目的是避免产生太多的昂贵的"锁资源"对象.
+
+            //synchronize代码块中的程序在同一个时刻仍然只能由单个线程去执行.
+
+            //哪个线程抢到这个锁资源,那么就由这个线程进去执行.其他线程依然处于等待阻塞状态
+            synchronized (Singleton05Demo.class){
+
+                //如果A线程进来之后,对instance赋值完毕之后,A线程一旦执行完毕之后,将会释放锁资源
+                //一旦A释放了锁资源之后,其他等待的线程,将会继续抢锁,假设被C抢到了,由线程C进来执行了.
+
+                if(null == instance){//第二个判断的目的,保证再次抢到锁资源进来的这个线程不会去进行初始化了.
+                    instance = new Singleton05Demo();
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+~~~
 
 
 
+* 人理解的顺序
+  * 申请区域①
+  * 调用构造方法② - 完成对象的初始化的工作
+  * 把这个对象的内存地址赋值给了引用,放到栈③
 
+* JVM内部会进行编译指令优化,所以它会进行指令的重排.
 
+  * 申请区域①
+
+  * 把这个对象的内存地址赋值给了引用,放到栈③
+
+  * 调用构造方法② - 完成对象的初始化的工作
+
+    构造对象的过程比较繁重,比较费时.
+
+* JVM的本地缓存协议
+
+  每个线程都拥有一个独立的线程空间[每个线程都有一个本地缓存区域].
+
+  那么这个线程就会从JVM的主存中把使用到的这个变量拉取到自己的本地缓存中.
+
+  然后在本地缓存中对这个变量进行修改,修改完毕之后,还需由当前修改的线程把自己本地缓存中的
+
+  此次的修改同步到JVM的主存中.
+
+  ~~~java
+  public static Singleton05Demo getInstance(){
+    if(null == instance){①
+      synchronized (Singleton05Demo.class){②
+        if(null == instance){③
+          instance = new Singleton05Demo();④
+        }
+      }
+    }
+    return instance;
+  }
+  ~~~
+
+  JVM会对指令进行优化.
+
+  * A从主存中拉取instance到自己本地缓存中.
+  * 其他线程也会从主存中拉取instance到自己本地缓存中.
+
+  * A到达第④,就有可能在构造对象还没完毕之前,就已经把这个对象的内存地址赋值给了instance,
+
+    A会将instance写到主存中去了.
+
+    * 灾难1
+
+      * 后面的其他线程仍然会执行① - 从主存中拿instance
+
+        instance是不为null,指向的有可能是一个尚未完成初始化工作的对象.
+
+        .其他线程就可能使用到了一个不完整的instance指向的对象.出现bug
+
+    * volatile
+
+      * 其他线程拿到了一个不完整的instance指向的对象.每个线程在使用这个变量的时候
+
+        都会从本地缓存拿到instance接着使用.
+
+        在其他线程仍然使用这个错误的instance的时候,我们A线程有可能已经完成了构造工作.
+
+        构造好的对象->主存.
+
+        对于其他线程来说,并不知道主存中已经修改了,还是会继续错误的使用instance.
+
+      * 目的:只要主存中的数据发生了改变,那么涉及到的线程在使用数据的时候,就会强制
+
+        从主存中再次拉取.
 
 
 
