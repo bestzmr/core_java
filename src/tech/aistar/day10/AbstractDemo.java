@@ -15,6 +15,11 @@ public abstract class AbstractDemo {//抽象类天生就是用来被子类继承
         System.out.println("add...");
     }
 
+    //定义静态方法
+    public static void test3(){
+        System.out.println("test3...");
+    }
+
     //抽象方法 - 天生就是用来被子类重写
     public abstract void test();
 
