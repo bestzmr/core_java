@@ -160,7 +160,35 @@
 
   java.io.Serializable - 可序列化接口.
 
-
+  ~~~java
+  public interface ICheckSpeed{//检查速度
+    //标记的接口
+  }
+  public interface IVehicle{
+    int getSpeend();
+  }
+  public class Car implements IVehicle,ICheckSpeed{
+      //...
+  }
+  public class Plane implements IVehicle{
+      //...
+  }
+  
+  IVehicle[] vs = new IVehicle[2];
+  IVehile car = new Car();
+  IVehicle plane = new Plane();
+  vs[0] = car;
+  vs[1] = plane;
+  
+  for(IVehicle v:vs){
+    if(vs instanceof ICheckSpeed){
+      //需要先获取速度
+      //判断速度<120
+    }else{
+      //不需要判断速度.
+    }
+  }
+  ~~~
 
 # 抽象类和接口有什么区别
 
@@ -168,6 +196,25 @@
 * 不同点
 
 
+
+# 回调接口
+
+Callback - you call me , i will call you back.
+
+* 小明去买口罩.
+
+* 小店没货,小明交代老板一旦到货,请联系我.
+
+  小明就留下类自己的***手机号码[回调接口]***
+
+* 货到了[触发回调方法的事件],老板就开始拨打电话
+* 接通,小明开始回应,不买!!!
+
+使用回调接口来代替模板设计模式.
+
+~~~java
+
+~~~
 
 
 
