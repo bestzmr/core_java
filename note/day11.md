@@ -409,7 +409,69 @@ hashcode存在的意义在于去重.配合我们以后学习的集合框架来�
 
 [当hash值产生哈希碰撞的时候,还需要进一步还是用equals来判断是否为同一个对象.]
 
+~~~java
+//无序不可重复
+Set<Book> sets = new HashSet<>();
 
+Book b1 = new Book(1,"1001","java");
+Book b2 = new Book(2,"1002","java");
+Book b3 = new Book(3,"1003","java");
+Book b4 = new Book(1,"1004","java");
+
+sets.add(b1);
+sets.add(b2);
+sets.add(b3);
+sets.add(b4);
+
+System.out.println(sets.size());
+
+如果没有hashcode方法存在的话,那么每次调用add方法都会执行equals方法,比较消耗时间的.提供hashCode的目的在于提供程序的性能.
+
+当每次调用add方法的时候,会调用该对象的hashCode()方法来得到一个哈希值.根据这个哈希值来确定一个地址.然后
+将这个对象放入到该地址对应的区域中.
+  
+当第二次调用add方法的时候,仍然还是会先调用该对象的hashCode方法来得到一个哈希值
+如果这个哈希值在这之前没有出现过,说明可以直接得到一个新的地址,然后直接把对象扔进去
+如果这个哈希值在这之前曾经出现过,说明这个位置可能被占用了,但是由于哈希值是通过计算得来的,它有可能存在哈希碰撞
+[哈希冲突],因此还不能判断这个对象和之前的那个对象是同一个对象,这个时候才会要再次调用equals方法来进一步判断
+如果equals返回true,说明这个位置真的被占用了,真的是同一个对象了,如果equals返回false,还是允许直接放.
+~~~
+
+
+
+经典的四句话:
+
+* 当俩个对象相同的时候[equals返回true],hashCode一定是一样的.
+* 当俩个对象不相同的时候,hashCode不一定不相等.
+* HashCode如果不一样,俩个对象肯定不同.
+* HashCode一样,俩个对象不一定相等.
+
+
+
+# 任务
+
+* java.lang.String类中提供的常用的方法自己敲一遍.
+* java.lang.StringBuilder类中提供的常用的方法自己也敲一遍
+
+* 有基础的,自我感觉特别棒棒棒的!!!
+
+  ~~~java
+  1. 根据指定的字符串到原来的字符串中进行删除操作!//送分题
+     //helloworld
+    
+    //del("ow","hellorld")
+     public static String del(String delStr,String oldStr){
+      
+      }
+  
+  2. 第一个串: abcdededeffffffoo
+     第二个串: ffffffpopodededekkk
+       
+     找俩个字符串中的最大长度的公串.
+     dedede ffffff
+  ~~~
+
+  
 
 
 
