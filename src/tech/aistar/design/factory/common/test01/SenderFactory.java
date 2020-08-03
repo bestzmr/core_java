@@ -1,6 +1,7 @@
 package tech.aistar.design.factory.common.test01;
 
 /**
+ * 可以允许出现笔试题...
  * 本类用来演示:普通简单工厂
  * 作用:根据传入的参数,来返回具体的某个产品
  *
