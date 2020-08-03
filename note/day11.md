@@ -250,3 +250,35 @@ public class SenderFactory {
 - 任何”东西“的子类都可以被生产，负担太重。当所要生产产品种类非常多时，工厂方法的代码量可能会很庞大
 - **在遵循开闭原则（对拓展开放，对修改关闭）的条件下，简单工厂对于增加新的产品，无能为力。因为增加新产品只能通过修改工厂方法来实现。**
 
+
+
+### 拓展
+
+开发中的简单工厂设计模式的应用 - **反射工厂**
+
+* ***反射创建对象***
+
+  * 获取的类的class实例
+
+  * 调用newInstance方法
+
+  * 代码
+
+    ~~~java
+    //1. 获取类的class实例
+    try {
+      Class<?> c = Class.forName("tech.aistar.design.factory.common.test04.QQSender");
+    
+      //2. 反射创建对象
+      Sender qq = (Sender) c.newInstance();
+    
+    } catch (ClassNotFoundException e) {//类的全限定名不能写错
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    }
+    ~~~
+
+    
