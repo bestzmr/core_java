@@ -407,6 +407,8 @@ public native int hashCode();
 
 hashcode存在的意义在于去重.配合我们以后学习的集合框架来使用的.
 
+[当hash值产生哈希碰撞的时候,还需要进一步还是用equals来判断是否为同一个对象.]
+
 
 
 
