@@ -31,7 +31,8 @@ public class TestBookBiz {
         biz.add(b6);
 
         //删除..
-        biz.deleteByName("丰乳肥臀");
+        //biz.deleteByName("丰乳肥臀");
+        biz.delById(5);
 
         //调用输出所有的图书
         biz.outputAllBooks();

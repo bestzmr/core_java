@@ -61,7 +61,25 @@ public class BookBizImpl implements IBookBiz{
 
     @Override
     public void delById(int id) {
-
+        //1. 确定id对应的图书在books数组的下标
+        int pos = -1;
+        for (int i = 0; i < count; i++) {
+            if(books[i].getId() == id){// 基本数据类型直接使用 == 比较值即可.
+                pos = i;
+                break;//id是唯一的
+            }
+        }
+        if(pos == -1){
+            System.out.println("sorry,图书不存在!");
+            return;
+        }
+        //2.从左到右...
+        //1 2 4 5 5
+        for (int i = pos; i < count-1; i++) {
+            books[i] = books[i+1];
+        }
+        books = Arrays.copyOf(books,count-1);
+        count = count - 1;
     }
 
     @Override
