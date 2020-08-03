@@ -22,6 +22,8 @@ public class Book {
 
     private Date publishDate;//出版时间
 
+    private BookInfo info;//图书的详细信息
+
     public Book() {
     }
 
@@ -38,6 +40,15 @@ public class Book {
         this.price = price;
         this.author = author;
         this.publishDate = publishDate;
+    }
+
+    public void setInfo(BookInfo info) {
+        System.out.println("info:"+info);
+        this.info = info;
+    }
+
+    public BookInfo getInfo() {
+        return info;
     }
 
     public int getId() {
@@ -88,28 +99,43 @@ public class Book {
         this.publishDate = publishDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        System.out.println("equals...");
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return id == book.id;
+    }
 
     @Override
-    public boolean equals(Object obj){
-        //1. 非空性
-        if(null == obj)
-            return false;
-        //2. 自反性
-        if(this == obj)
-            return true;
-        //3. 类型判断
-        if(obj instanceof Book){
-            Book b = (Book) obj;
-            //需求1 - 只要俩个图书的id是一样的,就认为是同一个对象
-            //return this.id == b.getId();
-
-            //需求2 - id以及isbn同时一致的时候,才认为是同一个对象
-            return this.id == b.getId() && this.isbn.equals(b.getIsbn());
-        }
-
-        return false;
-
+    public int hashCode() {
+        System.out.println("hashcode...");
+        return id;
     }
+//    @Override
+//    public boolean equals(Object obj){
+//        //1. 非空性
+//        if(null == obj)
+//            return false;
+//        //2. 自反性
+//        if(this == obj)
+//            return true;
+//        //3. 类型判断
+//        if(obj instanceof Book){
+//            Book b = (Book) obj;
+//            //需求1 - 只要俩个图书的id是一样的,就认为是同一个对象
+//            //return this.id == b.getId();
+//
+//            //需求2 - id以及isbn同时一致的时候,才认为是同一个对象
+//            return this.id == b.getId() && this.isbn.equals(b.getIsbn()) && this.info.equals(b.info);
+//        }
+//
+//        return false;
+//
+//    }
 
 
     @Override

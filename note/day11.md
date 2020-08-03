@@ -386,6 +386,29 @@ public boolean equals(Object obj){
 
 
 
+## 关于hashcode
+
+equals方法通常和hashcode同时出现,"好哥俩".出现在equals方法中的属性肯定也会出现在hashcode方法里.
+
+java.lang.Object中提供的
+
+~~~java
+public native int hashCode();
+~~~
+
+把一个对象放到内存之前,先是调用hashcode方法来得到hash值,简单理解 - 一个hash值对应一个内存地址.
+
+* 当对象比较多的时候,hash值要尽可能不重复,尽可能散列.
+* 计算这个hash值的时候,速度要很快.
+
+选用了一个非常好的质数31 - 反复验证,质数*N,是最有可能不重复的.
+
+31*N = (N << 5)-N;
+
+hashcode存在的意义在于去重.配合我们以后学习的集合框架来使用的.
+
+
+
 
 
 
