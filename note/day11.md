@@ -321,6 +321,104 @@ public class SenderFactory {
 
 
 
+# java.lang.Object
+
+它是所有的类的根类,一个类都是直接或者间接继承这个Object对象的.它里面提供的API方法,应该就是所有对象都是可能使用的.
+
+* String toString();//输出对象的内存地址.
+
+  ~~~java
+  public String toString(){
+    return getClass().getName()+"@"+Integer.toHexString(hashcode());
+  }
+  ~~~
+
+* equals方法
+
+  boolean equals();//比较俩个对象
+
+  基本类型使用 == 比较,对象类型一般使用equals比较.
+
+  ==比较方式
+
+  两种说法***:基本类型使用 == 比较的是值,对象类型使用 == 比较的是内存地址.***
+
+  第二种说法: ***== 比较的就是值.***
+
+  java.lang.Object中提供的equals方法的底层:
+
+  底层实际上仍然是使用了 == 进行了比较.
+
+  ~~~java
+  public boolean equals(Object obj) {
+    return (this == obj);
+    //return b1 == b2;
+  }
+  
+  Book b1 = new Book(1,"1001","java");
+  Book b2 = new Book(1,"1001","java");
+  System.out.println(b1 == b2);//false
+  
+  System.out.println(b1.equals(b2));//false
+  ~~~
+
+## 重写equals方法
+
+~~~java
+@Override
+public boolean equals(Object obj){
+  //1. 非空性
+  if(null == obj)
+    return false;
+  //2. 自反性
+  if(this == obj)
+    return true;
+  //3. 比较对象中具体的属性的值
+  //比如假设只要俩个对象的id是一致的,那么就认为是同一个对象
+  //是同一个对象,就返回true
+  if(obj instanceof Book){
+    Book b = (Book)obj;
+    return this.id == b.getId();
+  }
+  return false;
+}
+~~~
+
+
+
+## 关于hashcode
+
+equals方法通常和hashcode同时出现,"好哥俩".出现在equals方法中的属性肯定也会出现在hashcode方法里.
+
+java.lang.Object中提供的
+
+~~~java
+public native int hashCode();
+~~~
+
+把一个对象放到内存之前,先是调用hashcode方法来得到hash值,简单理解 - 一个hash值对应一个内存地址.
+
+* 当对象比较多的时候,hash值要尽可能不重复,尽可能散列.
+* 计算这个hash值的时候,速度要很快.
+
+选用了一个非常好的质数31 - 反复验证,质数*N,是最有可能不重复的.
+
+31*N = (N << 5)-N;
+
+hashcode存在的意义在于去重.配合我们以后学习的集合框架来使用的.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
