@@ -183,5 +183,70 @@ public class SenderFactory {
 
 
 
+### 多方法简单工厂
 
+~~~java
+package tech.aistar.design.factory.common.test02;
+
+/**
+ * 多方法简单工厂 - 每个产品对应一个创建方法
+ *
+ * 当新增一个产品的时候,还是动工厂类 - 不符合"开闭原则"
+ * 
+ *
+ * @author: success
+ * @date: 2020/8/3 9:58 上午
+ */
+public class SenderFactory {
+
+    public Sender produceQQ(){
+        return new QQSender();
+    }
+
+    public Sender produceWX(){
+        return new WXSender();
+    }
+}
+~~~
+
+
+
+### 静态方法简单工厂
+
+~~~java
+package tech.aistar.design.factory.common.test03;
+
+/**
+ * 静态方法简单工厂 - 每个产品对应一个创建方法
+ *
+ * 当新增一个产品的时候,还是动工厂类 - 不符合"开闭原则"
+ *
+ *
+ * @author: success
+ * @date: 2020/8/3 9:58 上午
+ */
+public class SenderFactory {
+
+    public static Sender produceQQ(){
+        return new QQSender();
+    }
+
+    public static Sender produceWX(){
+        return new WXSender();
+    }
+}
+~~~
+
+
+
+### 简单工厂优缺点
+
+优点：
+
+- 很明显，简单工厂的特点就是“简单粗暴”，通过一个含参的工厂方法，我们可以实例化任何产品类，上至飞机火箭，下至土豆面条，无所不能。所以简单工厂有一个别名：上帝类。
+
+缺点：
+
+- 任何”东西“的子类都可以被生产，负担太重。当所要生产产品种类非常多时，工厂方法的代码量可能会很庞大
+- **在遵循开闭原则（对拓展开放，对修改关闭）的条件下，简单工厂对于增加新的产品，无能为力。因为增加新产品只能通过修改工厂方法来实现。**
 
