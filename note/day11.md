@@ -321,6 +321,81 @@ public class SenderFactory {
 
 
 
+# java.lang.Object
+
+它是所有的类的根类,一个类都是直接或者间接继承这个Object对象的.它里面提供的API方法,应该就是所有对象都是可能使用的.
+
+* String toString();//输出对象的内存地址.
+
+  ~~~java
+  public String toString(){
+    return getClass().getName()+"@"+Integer.toHexString(hashcode());
+  }
+  ~~~
+
+* equals方法
+
+  boolean equals();//比较俩个对象
+
+  基本类型使用 == 比较,对象类型一般使用equals比较.
+
+  ==比较方式
+
+  两种说法***:基本类型使用 == 比较的是值,对象类型使用 == 比较的是内存地址.***
+
+  第二种说法: ***== 比较的就是值.***
+
+  java.lang.Object中提供的equals方法的底层:
+
+  底层实际上仍然是使用了 == 进行了比较.
+
+  ~~~java
+  public boolean equals(Object obj) {
+    return (this == obj);
+    //return b1 == b2;
+  }
+  
+  Book b1 = new Book(1,"1001","java");
+  Book b2 = new Book(1,"1001","java");
+  System.out.println(b1 == b2);//false
+  
+  System.out.println(b1.equals(b2));//false
+  ~~~
+
+## 重写equals方法
+
+~~~java
+@Override
+public boolean equals(Object obj){
+  //1. 非空性
+  if(null == obj)
+    return false;
+  //2. 自反性
+  if(this == obj)
+    return true;
+  //3. 比较对象中具体的属性的值
+  //比如假设只要俩个对象的id是一致的,那么就认为是同一个对象
+  //是同一个对象,就返回true
+  if(obj instanceof Book){
+    Book b = (Book)obj;
+    return this.id == b.getId();
+  }
+  return false;
+}
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
