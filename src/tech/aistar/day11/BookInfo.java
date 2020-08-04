@@ -58,7 +58,6 @@ public class BookInfo implements Cloneable{
         sb.append('}');
         return sb.toString();
     }
-
 //    @Override
 //    protected Object clone() throws CloneNotSupportedException {
 //        return super.clone();

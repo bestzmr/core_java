@@ -16,6 +16,12 @@ public class StringDelete {
      * <p>
      * }
      */
+    /**
+     * 第一种
+     * @param delStr
+     * @param oldStr
+     * @return
+     */
     public static String del(String delStr, String oldStr) {
         if (delStr.length() > oldStr.length()) {//要删除的字符串长度大于原字符串时，返回原字符串
             return oldStr;
@@ -26,6 +32,19 @@ public class StringDelete {
         StringBuilder stringBuilder = new StringBuilder(oldStr);
         int startIndex = stringBuilder.indexOf(delStr);
         return stringBuilder.delete(startIndex, startIndex + delStr.length()).toString();
+    }
+
+    public static String del2(String delStr, String oldStr) {
+        StringBuilder stringBuilder = new StringBuilder(oldStr);
+        int startIndex = stringBuilder.indexOf(delStr);
+        if (startIndex == -1) {
+            return stringBuilder.toString();
+        } else {
+            oldStr = stringBuilder.delete(startIndex, startIndex + delStr.length()).toString();
+            del2(delStr, oldStr);
+        }
+        return null;
+
     }
     @Test
     public void stringDeleteTest() {
