@@ -6,6 +6,7 @@ package tech.aistar.day11;
  * @author: success
  * @date: 2020/7/31 9:12 上午
  */
+
 public class StringCompareDemo {
     public static void main(String[] args) {
         String s1 = "a";

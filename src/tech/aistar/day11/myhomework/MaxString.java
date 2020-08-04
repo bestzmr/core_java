@@ -21,7 +21,7 @@ public class MaxString {
         Arrays.fill(strings, null);
         int max = 0;
         for (int i = 0; i < str1.length(); i++) {
-            for (int j = i+1; j < str1.length(); j++) {
+            for (int j = i+1; j < str1.length()+1; j++) {
                 if (str2.contains(str1.substring(i, j))) {
                     if (max < j - i) {
                         max = j - i;
@@ -31,21 +31,29 @@ public class MaxString {
         }
         int pos = 0;
         for (int i = 0; i < str1.length(); i++) {
-            for (int j = i+1; j < str1.length(); j++) {
+            for (int j = i+1; j < str1.length()+1; j++) {
                 if (str2.contains(str1.substring(i, j))) {
                     if (max == j - i) {
                         String string = str1.substring(i, j);
-                        strings[pos++] = string;
+                        boolean flag = false;
+                        for (int k = 0; k <pos ; k++) {
+                            if (strings[k].equals(string)) {
+                                flag = true;
+                            }
+                        }
+                        if (!flag) {
+                            strings[pos++] = string;
+                        }
+
                     }
                 }
             }
         }
 
-        System.out.println(max);
         return Arrays.copyOf(strings, pos);
     }
     @Test
     public void maxStringTest() {
-        System.out.println(Arrays.deepToString(maxString("abcdededefff2fffoo", "ffffffpopodededekkk")));
+        System.out.println(Arrays.deepToString(maxString("abcdededeffffffoo", "ffffffpopodededekkk")));
     }
 }
