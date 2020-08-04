@@ -474,7 +474,7 @@ System.out.println(sets.size());
   重写clone方法,实现自己的业务逻辑.
 
   ~~~java
-  /**
+  		/**
        * 深拷贝 - 所有的类型都不共享,原来的对象和副本对象是俩个完全独立的对象.
        * @return
        * @throws CloneNotSupportedException
@@ -517,6 +517,29 @@ System.out.println(sets.size());
 * clone实现:调用该方法,没有走构造,但是拷贝出来的对象是存在属性值,绝对不是通过构造方法来进行赋值的.
 
   直接在内存区域中,肯定创建一个块区域的,但是是直接将原来对象的所有的属性的值直接拷贝一份到这个新的区域,省却了通过构造方法来对属性进行赋值的过程,所以相对速度会快一点.
+
+
+
+## getClass
+
+简介:获取类的class实例,每个类都是经过***类加载器***,每个类都会映射成Class类的对象.
+
+Class类是用来描述类的类.未来,***它是我们学习的反射技术的基础类.***
+
+特点:一个类无论被实例化多少次,那么它在内存中的class实例永远只有1个.
+
+~~~java
+public final native Class<?> getClass();
+~~~
+
+
+
+获取类的class实例的几种方式:
+
+* 对象.getClass();
+* 类名.class;
+* Class.forName("类的全限定名");
+* 基本数据类型.class
 
 
 
