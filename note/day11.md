@@ -474,7 +474,7 @@ System.out.println(sets.size());
   重写clone方法,实现自己的业务逻辑.
 
   ~~~java
-  /**
+  		/**
        * 深拷贝 - 所有的类型都不共享,原来的对象和副本对象是俩个完全独立的对象.
        * @return
        * @throws CloneNotSupportedException
@@ -520,6 +520,41 @@ System.out.println(sets.size());
 
 
 
+## getClass
+
+简介:获取类的class实例,每个类都是经过***类加载器***,每个类都会映射成Class类的对象.
+
+Class类是用来描述类的类.未来,***它是我们学习的反射技术的基础类.***
+
+特点:一个类无论被实例化多少次,那么它在内存中的class实例永远只有1个.
+
+~~~java
+public final native Class<?> getClass();
+~~~
+
+
+
+获取类的class实例的几种方式:
+
+* 对象.getClass();
+* 类名.class;
+* Class.forName("类的全限定名");
+* 基本数据类型.class
+
+
+
+## finalize()
+
+~~~java
+protected void finalize() throws Throwable { }
+~~~
+
+"不确定性很大",当GC垃圾回收线程想要回收一个垃圾对象之前,会调用这个对象的finalize(重写),来进行"垂死"之前的"挣扎".
+
+***笔试题:final和finally和finalize三者区别!!!***
+
+
+
 # 访问修饰符
 
 |                    | 所有类 | 子类中 | 同包中 | 本类中 |
@@ -557,7 +592,11 @@ System.out.println(sets.size());
 
 
 
+# 字符串处理类
 
+* java.lang.String类 - 不可变的字符串,多线程安全的.
+* java.lang.StringBuilder类 - 可变的字符串,多线程不安全,效率高
+* java.lang.StringBuffer类 - 可变的字符串,多线程安全,效率低
 
 
 
