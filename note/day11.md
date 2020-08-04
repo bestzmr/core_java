@@ -543,6 +543,18 @@ public final native Class<?> getClass();
 
 
 
+## finalize()
+
+~~~java
+protected void finalize() throws Throwable { }
+~~~
+
+"不确定性很大",当GC垃圾回收线程想要回收一个垃圾对象之前,会调用这个对象的finalize(重写),来进行"垂死"之前的"挣扎".
+
+***笔试题:final和finally和finalize三者区别!!!***
+
+
+
 # 访问修饰符
 
 |                    | 所有类 | 子类中 | 同包中 | 本类中 |
@@ -580,7 +592,11 @@ public final native Class<?> getClass();
 
 
 
+# 字符串处理类
 
+* java.lang.String类 - 不可变的字符串,多线程安全的.
+* java.lang.StringBuilder类 - 可变的字符串,多线程不安全,效率高
+* java.lang.StringBuffer类 - 可变的字符串,多线程安全,效率低
 
 
 
