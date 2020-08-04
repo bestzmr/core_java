@@ -7,7 +7,7 @@ package tech.aistar.day11;
  * @date: 2020/8/4 11:01 上午
  */
 public class StringSafeDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //当启动JVM的时候,JVM是一个进程.
         //当启动JVM进程的时候,后台会启动俩个线程
         //一个是主线程main线程 - 用来执行main方法的
@@ -15,28 +15,26 @@ public class StringSafeDemo {
 
         //创建一个StringBuffer对象
         //多线程安全的...
-        StringBuffer buffer = new StringBuffer();
-        //StringBuilder buffer = new StringBuilder();
+        //StringBuilder buffer = new StringBuilder();//9992465
+
+         StringBuffer buffer = new StringBuffer();
 
         //开启10个线程...
-        for (int i = 0; i < 10; i++) {
-            Thread t = new Thread(()->{
-                System.out.println(Thread.currentThread().getName()+"=正在执行...");
-
-                for (int j = 0; j < 100; j++) {
-                    buffer.append(1);
+        for (int i = 0; i < 10000; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int j = 0; j < 1000; j++){
+                       // System.out.println("===");
+                        buffer.append("a");
+                    }
                 }
-
-            });
-
-            t.start();//启动线程...
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            }).start();
         }
-        System.out.println(buffer.length());
+
+        Thread.sleep(100L);
+
+        System.out.println(buffer.length());// 10000000
 
     }
 }
