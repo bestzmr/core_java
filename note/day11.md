@@ -456,13 +456,67 @@ System.out.println(sets.size());
 ~~~
 
 * 浅拷贝 - java.lang.Object类中默认提供的clone方法就是浅拷贝(浅克隆,浅复制,浅层复制)
-  * 修改原来对象的基本数据类型以及String类型以及Date类型,是不会对克隆出来的对象造成任何影响的
+
+  * 修改原来对象的基本数据类型以及***String类型以及Date类型***,是不会对克隆出来的对象造成任何影响的
   * 修改原来对象中的对象类型的时候,那么会对拷贝出来的对象造成影响的.
+  * 总结:基本数据类型不共享,对象类型共享.
+
 * 深拷贝
+
+  并不高效,可以多次使用,提高代码的复用性.
+
+  ***所有的类型都不共享.***
+
+  应用场景:应用程序中存在A对象,然后需要一个**[独立的B对象](
+              //特点:修改原对象b1,看是否对拷贝出来的副本对象b2造成影响.
+              b1.setId(100);)**.B对象和A对象中所有的属性值高度保持一致.
+
+  重写clone方法,实现自己的业务逻辑.
+
+  ~~~java
+  /**
+       * 深拷贝 - 所有的类型都不共享,原来的对象和副本对象是俩个完全独立的对象.
+       * @return
+       * @throws CloneNotSupportedException
+       */
+      @Override
+      public Object clone() throws CloneNotSupportedException {
+          Book newBook = new Book();//副本对象
+  
+          //副本对象中要重新设置原来对象中的所有的值.
+          newBook.setId(id);
+          newBook.setIsbn(isbn);
+          newBook.setBookName(bookName);
+          //其余属性一一设置..
+  
+          //设置关联的属性
+          if(null!=info){
+              BookInfo bookInfo = new BookInfo();
+              newBook.setInfo(bookInfo);
+              
+              newBook.getInfo().setId(info.getId());
+              newBook.getInfo().setRemark(info.getRemark());
+          }
+  
+          return newBook;
+      }
+  ~~~
+
+  
 
 
 
 需要克隆的对象所在的类一定更要实现java.lang.Cloneable接口.否则将会抛出java.lang.CloneNotSupportedException不能被克隆的异常.
+
+
+
+### clone和new的区别
+
+* new实现:在JVM中申请一块空的区域,然后通过构造方法来对属性进行赋值的.
+
+* clone实现:调用该方法,没有走构造,但是拷贝出来的对象是存在属性值,绝对不是通过构造方法来进行赋值的.
+
+  直接在内存区域中,肯定创建一个块区域的,但是是直接将原来对象的所有的属性的值直接拷贝一份到这个新的区域,省却了通过构造方法来对属性进行赋值的过程,所以相对速度会快一点.
 
 
 
