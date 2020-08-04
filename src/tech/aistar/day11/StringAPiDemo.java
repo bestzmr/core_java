@@ -1,12 +1,13 @@
 package tech.aistar.day11;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
  * 本类用来演示:字符串中常用的方法
+ * 1. 字符串底层 - 不可变的字符数组
+ * 2. 串池和new关键字
+ * 3. 各种==比较.
  *
  * @author: success
  * @date: 2020/8/4 2:23 下午
@@ -147,7 +148,27 @@ public class StringAPiDemo {
         System.out.println("abc".toUpperCase());
         System.out.println("BC".toLowerCase());
 
+        System.out.println("===============");
+
+        //12.String trim()
+        //清除字符串左右两边的空格
+        System.out.println("  a bc  ".trim().length());//4
 
 
+        //char[] toCharArray();//将字符串打散成字符数组
+        char[] arrs = "good".toCharArray();
+        System.out.println(arrs);
+
+        String m1 = "java";
+        for (int i = 0; i < m1.length(); i++) {
+            System.out.println(m1.charAt(i));
+        }
+
+        //将其他类型转成换成String类型
+
+        //1. int类型->字符串类型
+        int n = 10;
+        String nStr = String.valueOf(n);
+        System.out.println(nStr+2);//102
     }
 }

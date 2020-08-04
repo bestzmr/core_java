@@ -579,16 +579,22 @@ protected void finalize() throws Throwable { }
     
     //del("ow","hellorld")
      public static String del(String delStr,String oldStr){
-      
-      }
+      	//用递归算法来实现...
+        //abcedbceeebcwe -> bc整体
+    
+    		//1. 出口 - 判断字符串中是否包含bc
+    
+    		//2. delete->删除[start,end)
+    	  //del("aedeeewe","bc")
+     }
   
-  2. 第一个串: abcdededeffffffoo
+2. 第一个串: abcdededeffffffoo
      第二个串: ffffffpopodededekkk
        
      找俩个字符串中的最大长度的公串.
      dedede ffffff
   ~~~
-
+  
 
 
 
@@ -625,9 +631,72 @@ count+=len;
 
 
 
+# StringBuilder
+
+~~~java
+char[] value;//存放StringBuilder中的数据的
+int count;//真正的有效的数据
+capacity:容量,默认的容量是16个
+~~~
+
+~~~java
+StringBuilder builder = new StringBuilder("abc");//长度是3个,容量是19个
+//底层肯定是转换成了
+//char[] value = {'a','b','c','','','','','','','',''...};//19个..
+
+//调用append方法 - 学习过的数组的长度一旦确定了,将不能够改变.
+@Override
+public StringBuilder append(String str) {
+  super.append(str);
+  return this;
+}
+
+StringBuilder继承的一个抽象的父类AbstractStringBuilder类
+  
+public AbstractStringBuilder append(String str) {
+        if (str == null)
+            return appendNull();
+        int len = str.length();//len = 3
+        ensureCapacityInternal(count + len);
+        str.getChars(0, len, value, count);
+        count += len;
+        return this;
+    }
+
+private void ensureCapacityInternal(int minimumCapacity) {
+        // overflow-conscious code
+        if (minimumCapacity > value.length)
+            //扩容..
+            expandCapacity(minimumCapacity);
+    }
+
+void expandCapacity(int minimumCapacity) {
+        int newCapacity = value.length * 2 + 2;
+        if (newCapacity < minimumCapacity )
+            newCapacity = minimumCapacity;
+        if (newCapacity < 0) {
+            if (minimumCapacity < 0) // overflow
+                throw new OutOfMemoryError();
+            newCapacity = Integer.MAX_VALUE;
+        }
+        value = Arrays.copyOf(value, newCapacity);
+    }
+~~~
 
 
 
+## String和StringBuilder转换
+
+* String -> StringBuilder
+
+  通过StringBuilder提供的带参构造StringBuilder(String str);
+
+* StringBuilder -> String
+  * 调用StringBuilder类中提供的String toString();
+  * 调用String类型中提供的static String valueOf(Object obj);
+
+* int -> String
+  * 调用String类型中提供的static String valueOf(int i);
 
 
 
