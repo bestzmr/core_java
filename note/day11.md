@@ -600,6 +600,33 @@ protected void finalize() throws Throwable { }
 
 
 
+## 线程问题
+
+~~~java
+public AbstractStringBuilder append(String str) {
+        if (str == null)
+            return appendNull();
+        int len = str.length();
+        ensureCapacityInternal(count + len);
+        str.getChars(0, len, value, count);
+        count += len;
+        return this;
+    }
+StringBuilder中提供的append方法在同一个时刻会存在多个线程在同时执行.
+count+=len;
+假设count = 5,len = 1;
+但是+=不是一个原子性操作(++) - 线程演示案例.
+1. 把count加载寄存器
+2. 在寄存器中+1
+3. 写回内存
+  
+在某个时刻俩个线程拿到的count都是5,都执行+1操作,出来的结果是6
+~~~
+
+
+
+
+
 
 
 
