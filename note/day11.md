@@ -448,6 +448,35 @@ System.out.println(sets.size());
 
 
 
+## clone方法
+
+~~~java
+ protected native Object clone() throws CloneNotSupportedException;
+ native也是关键字 - 调用的是本地方法栈中的方法
+~~~
+
+* 浅拷贝 - java.lang.Object类中默认提供的clone方法就是浅拷贝(浅克隆,浅复制,浅层复制)
+  * 修改原来对象的基本数据类型以及String类型以及Date类型,是不会对克隆出来的对象造成任何影响的
+  * 修改原来对象中的对象类型的时候,那么会对拷贝出来的对象造成影响的.
+* 深拷贝
+
+
+
+需要克隆的对象所在的类一定更要实现java.lang.Cloneable接口.否则将会抛出java.lang.CloneNotSupportedException不能被克隆的异常.
+
+
+
+# 访问修饰符
+
+|                    | 所有类 | 子类中 | 同包中 | 本类中 |
+| ------------------ | ------ | ------ | ------ | ------ |
+| public 公开的      | √      | √      | √      | √      |
+| protected 受保护的 | ×      | √      | √      | √      |
+| 缺省的             | ×      | ×      | √      | √      |
+| private 私有的     | ×      | ×      | ×      | √      |
+
+
+
 # 任务
 
 * java.lang.String类中提供的常用的方法自己敲一遍.
@@ -471,7 +500,10 @@ System.out.println(sets.size());
      dedede ffffff
   ~~~
 
-  
+
+
+
+
 
 
 
