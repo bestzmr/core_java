@@ -8,7 +8,7 @@ import java.util.Date;
  * @author: success
  * @date: 2020/8/3 8:39 上午
  */
-public class Book {
+public class Book implements Cloneable{
     private int id;//对象的标志,不属于对象的属性
 
     //图书编号
@@ -149,5 +149,10 @@ public class Book {
         sb.append(", publishDate=").append(publishDate);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
