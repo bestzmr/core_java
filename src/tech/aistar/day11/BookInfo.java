@@ -6,7 +6,7 @@ package tech.aistar.day11;
  * @author: success
  * @date: 2020/8/3 3:40 下午
  */
-public class BookInfo {
+public class BookInfo implements Cloneable{
     private int id;
 
     private String remark;
@@ -58,4 +58,9 @@ public class BookInfo {
         sb.append('}');
         return sb.toString();
     }
+
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        return super.clone();
+//    }
 }

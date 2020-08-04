@@ -159,34 +159,42 @@ public class Book implements Cloneable{
      * @throws CloneNotSupportedException
      */
 //    @Override
-////    public Object clone() throws CloneNotSupportedException {
-////        return super.clone();
-////    }
+//    public Object clone() throws CloneNotSupportedException {
+//        Book book = (Book) super.clone();
+//        BookInfo bookInfo = (BookInfo) info.clone();
+//        book.setInfo(bookInfo);
+//        return book;
+//    }
 
+
+        @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
     /**
      * 深拷贝 - 所有的类型都不共享,原来的对象和副本对象是俩个完全独立的对象.
      * @return
      * @throws CloneNotSupportedException
      */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        Book newBook = new Book();//副本对象
-
-        //副本对象中要重新设置原来对象中的所有的值.
-        newBook.setId(id);
-        newBook.setIsbn(isbn);
-        newBook.setBookName(bookName);
-        //其余属性一一设置..
-
-        //设置关联的属性
-        if(null!=info){
-            BookInfo bookInfo = new BookInfo();
-            newBook.setInfo(bookInfo);
-
-            newBook.getInfo().setId(info.getId());
-            newBook.getInfo().setRemark(info.getRemark());
-        }
-
-        return newBook;
-    }
+//    @Override
+//    public Object clone() throws CloneNotSupportedException {
+//        Book newBook = new Book();//副本对象
+//
+//        //副本对象中要重新设置原来对象中的所有的值.
+//        newBook.setId(id);
+//        newBook.setIsbn(isbn);
+//        newBook.setBookName(bookName);
+//        //其余属性一一设置..
+//
+//        //设置关联的属性
+//        if(null!=info){
+//            BookInfo bookInfo = new BookInfo();
+//            newBook.setInfo(bookInfo);
+//
+//            newBook.getInfo().setId(info.getId());
+//            newBook.getInfo().setRemark(info.getRemark());
+//        }
+//
+//        return newBook;
+//    }
 }
