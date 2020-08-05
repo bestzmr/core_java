@@ -128,9 +128,91 @@
 
 
 
+## int和Integer之间的区别
+
+* int是基本数据类型,Integer是对象类型,int类型的包装类型
+
+* int类型的默认值是0,Integer的默认值是null
+
+* int类型通常使用==比较,保存的是值,Integer使用equals方法,变量中存储的是引用地址.
+
+* 以后推荐实体类中优先使用包装类型.
+
+  ~~~java
+  private Integer id;
+  private Double price;
+  ~~~
 
 
 
+# 大数字对象类型
+
+* java.math.BigInteger
+* java.math.BigDecimal
+
+
+
+## BigInteger
+
+* 构造BigInteger(String val);//数字形式的字符串
+* 观察方法,运算符号 -> api方法.
+
+了解一下即可.
+
+## 实现阶乘
+
+~~~java
+public class BigIntegerDemo {
+    public static void main(String[] args) {
+        System.out.println(fac(6));
+    }
+
+    public static BigInteger fac(int n){
+        //1. 构建一个BigInteger对象
+        BigInteger bigInteger = new BigInteger(String.valueOf(n));
+
+        //2. 判断递归的出口
+        if(n == 1){
+            return BigInteger.ONE;
+        }
+        //return n*fac(n-1);
+        return bigInteger.multiply(fac(n-1));
+    }
+}
+~~~
+
+
+
+## 小数精度丢失解决
+
+~~~java
+package tech.aistar.day12;
+
+import java.math.BigDecimal;
+
+/**
+ * 本类用来演示:可以使用BigDecimal对象来处理小数运行的时候精度丢失的问题
+ *
+ * @author: success
+ * @date: 2020/8/5 2:21 下午
+ */
+public class BigDecimalDemo {
+    public static void main(String[] args) {
+        double d = 0.1d;
+
+        //double -> String
+        String first = String.valueOf(d);
+        
+        //String -> double
+
+        BigDecimal b1 = new BigDecimal(first);
+        BigDecimal b2 = new BigDecimal("0.2");
+        System.out.println(b1.add(b2));
+
+        System.out.println(0.1 + 0.2);
+    }
+}
+~~~
 
 
 
