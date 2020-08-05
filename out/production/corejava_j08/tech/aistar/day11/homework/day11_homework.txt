@@ -26,4 +26,4 @@ builder.append("This is a log file,it was store at")
 
   注:截取时,尽可能不要取数字符串的下标
    StringBuilder和String类中找方法
- 
+
