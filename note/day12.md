@@ -62,6 +62,70 @@
 
 
 
+## 常用方法
+
+* static Integer valueOf(int i);//int -> Integer
+
+  发现在Integer内部存在一个静态的内部类IntegerCache - Integer的常量的缓冲池.
+
+  ~~~java
+      private static class IntegerCache {
+          static final int low = -128;
+          static final int high;//静态代码块中进行赋值127
+          static final Integer cache[];//一个缓冲池 - 维护了Integer类型的数组.
+      }
+  ~~~
+
+  
+
+  ~~~java
+   public static Integer valueOf(int i) {
+          if (i >= IntegerCache.low && i <= IntegerCache.high)
+              return IntegerCache.cache[i + (-IntegerCache.low)];
+          return new Integer(i);
+      }
+  ~~~
+
+  
+
+* static Integer vlaueOf(String s);// String -> Integer,必须是数字形式的字符串
+
+* static int parseInt(String s);//String -> int
+* 关于进制换算的三个方法
+
+
+
+## 类型转换
+
+* String类型和int类型
+
+  * int类型->String类型
+    * 调用java.lang.String类中提供的static String valueOf(int n);
+
+  * String类型 -> int类型
+    * 调用java.lang.Integer类中的static int parseInt(String s);
+
+* String类型和Integer类型
+
+  * String类型 -> Integer类型
+    * 调用Integer的构造方法Integer(String s);//必须是数字形式的字符串
+    * 调用Integer类中提供的static Integer valueOf(String s);
+
+  * Integer类型 -> String类型
+    * 调用String类中提供的static String valueOf(Object obj);
+    * 调用Integer类中提供的String toString();
+
+* int类型和Integer类型
+
+  * int -> Integer
+    * 调用Integer(int n)构造方法
+    * jdk5.0中开始提供的自动封箱的过程
+    * 调用Integer中提供的static Integer valueOf(int n);
+
+  * Integer -> int
+    * 调用java.lang.Number抽象父类中int intValue();
+    * jdk5.0开始提供的自动解箱的过程.
+
 
 
 

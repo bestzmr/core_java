@@ -42,7 +42,46 @@ public class IntegerDemo {
 
         System.out.println("====华丽丽的分割线 - 各种比较==");
 
+        Integer p1 = new Integer(200);
+        int p2 = 200;
+        //当包装类型和基本类型进行比较的时候,同样包装类型也会转成基本类型之后再进行比较.
+        System.out.println(p1 == p2);//true
 
+        //[-128,127]之间比较的结果是true,直接从Integer的常量池中直接拿的
+        // 否则返回的是false - 底层重新new了新的Integer
+        Integer t3 = Integer.valueOf(-129);
+        Integer t4 = Integer.valueOf(-129);
+        System.out.println(t3 == t4);
 
+        //自动封箱的过程实际上底层static Integer valueOf(int i);
+        Integer t5 = 128;
+        Integer t6 = 128;
+        System.out.println(t5 == t6);//false
+
+        //对象类型要想比较属性的值,推荐是使用equals比较
+        System.out.println(t5.equals(t6));//true
+
+        //String -> Integer
+        Integer o1 = Integer.valueOf("10");
+        System.out.println(o1);
+
+        //String -> int
+        int o2 = Integer.parseInt("120");
+        System.out.println(o2);
+
+        System.out.println("==进制换算==");
+
+        //转换成二进制
+        System.out.println(Integer.toBinaryString(10));//1010
+        //转换成十六进制
+        System.out.println(Integer.toHexString(176));//b0 -> 0x00b0
+        //转换成八进制
+        System.out.println(Integer.toOctalString(26));//032
+
+        //字段 - int类型的范围.
+        System.out.println(Integer.MAX_VALUE);//2147483647
+        System.out.println(Integer.MIN_VALUE);//-2147483648
+
+        System.out.println(o1.toString());
     }
 }
