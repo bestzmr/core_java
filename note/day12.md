@@ -216,13 +216,143 @@ public class BigDecimalDemo {
 
 
 
+# 枚举类型
+
+简介:使用enum关键字来定义的.也是JDK5.0开始提供的新的**比较特殊的类型(class)**.正是因为比较特殊,所以
+
+才造成了枚举类型具有这些特征:简洁,便捷,安全
+
+作用:枚举类型中是用来管理应用程序中的常量属性的.在JDK5.0之前是交给常量接口管理的.枚举类型
+
+中定义的常量 - 类型安全的常量.
 
 
 
+## 反编译
+
+~~~java
+public final class hello extends java.lang.Enum<hello> {
+  public static final hello SPRING;
+
+  public static final hello SUMMER;
+
+  public static hello[] values();
+    Code:
+       0: getstatic     #1                  // Field $VALUES:[Lhello;
+       3: invokevirtual #2                  // Method "[Lhello;".clone:()Ljava/lang/Object;
+       6: checkcast     #3                  // class "[Lhello;"
+       9: areturn
+
+  public static hello valueOf(java.lang.String);
+    Code:
+       0: ldc           #4                  // class hello
+       2: aload_0
+       3: invokestatic  #5                  // Method java/lang/Enum.valueOf:(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Enum;
+       6: checkcast     #4                  // class hello
+       9: areturn
+
+  static {};//静态代码块的意思
+    Code:
+       0: new           #4                  // class hello
+       3: dup
+       4: ldc           #7                  // String SPRING
+       6: iconst_0
+       7: invokespecial #8                  // Method "<init>":(Ljava/lang/String;I)V
+      10: putstatic     #9                  // Field SPRING:Lhello;
+      13: new           #4                  // class hello
+      16: dup
+      17: ldc           #10                 // String SUMMER
+      19: iconst_1
+      20: invokespecial #8                  // Method "<init>":(Ljava/lang/String;I)V
+      23: putstatic     #11                 // Field SUMMER:Lhello;
+      26: iconst_2
+      27: anewarray     #4                  // class hello
+      30: dup
+      31: iconst_0
+      32: getstatic     #9                  // Field SPRING:Lhello;
+      35: aastore
+      36: dup
+      37: iconst_1
+      38: getstatic     #11                 // Field SUMMER:Lhello;
+      41: aastore
+      42: putstatic     #1                  // Field $VALUES:[Lhello;
+      45: return
+}
+~~~
+
+* 自定义的枚举类型默认会去继承java.lang.Enum
+* public static hello[] values();//返回所有的枚举实例.
+* public static hello valueOf(String s)
 
 
 
+## 安全性
 
+为什么说枚举常量是类型安全的常量,为什么枚举类型是类型安全的.强调在多线程环境下是一种安全的状态.
+
+需要用到的类肯定都是通过类加载器加载到JVM内存的.类加载器核心代码:
+
+***本身类加载器加载类的过程就是多线程安全的过程.***ClassLoader.java
+
+~~~java
+protected Class<?> loadClass(String name, boolean resolve)
+        throws ClassNotFoundException
+    {
+        synchronized (getClassLoadingLock(name)) {
+            // First, check if the class has already been loaded
+            Class<?> c = findLoadedClass(name);
+            if (c == null) {
+                long t0 = System.nanoTime();
+                try {
+                    if (parent != null) {
+                        c = parent.loadClass(name, false);
+                    } else {
+                        c = findBootstrapClassOrNull(name);
+                    }
+                } catch (ClassNotFoundException e) {
+                    // ClassNotFoundException thrown if class not found
+                    // from the non-null parent class loader
+                }
+
+                if (c == null) {
+                    // If still not found, then invoke findClass in order
+                    // to find the class.
+                    long t1 = System.nanoTime();
+                    c = findClass(name);
+
+                    // this is the defining class loader; record the stats
+                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                    sun.misc.PerfCounter.getFindClasses().increment();
+                }
+            }
+            if (resolve) {
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+~~~
+
+枚举类被加载到JVM的过程肯定是安全的过程.但是通过反编译查看每个枚举实例(枚举常量) public static final hello SPRING;都是通过static关键字修饰的,在类进内存的时候,静态的资源都会立即被分配空间和初始化,并且
+
+只会初始化一次 . 保证了定义的这些枚举实例都是安全的.
+
+
+
+## 特点
+
+* 枚举类型中的每个枚举常量都是代表整个枚举类型的实例
+* 枚举类型是不能再外部实例化的
+* 枚举类型中是可以定义普通属性和普通方法的
+* 枚举类型中的枚举常量都是类型安全的常量.
+* 枚举类型中也是允许存在抽象方法,但是要求每个枚举类型都要重写这个抽象方法 - 了解即可.
+
+
+
+## 实战
+
+简介:一般具有特殊固定状态的属性 - 使用枚举类型.
 
 
 
