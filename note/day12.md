@@ -356,5 +356,182 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 
 
+# 再谈单例 - 拓展
+
+~~~java
+package tech.aistar.design.singleton.singleton04;
+
+/**
+ * 本类用来演示:单例模式 - 懒汉模式(线程安全) - 双重检测
+ * 类加载进内存的时候,不会立即对该类进行初始化工作
+ * 第一次执行getInstance方法的时候,才会进行初始化.
+ *
+ * @author: success
+ * @date: 2020/7/30 2:21 下午
+ */
+public class Singleton04Demo {
+    //2. 提供本类的一个唯一实例,但是赋值为null
+    private static Singleton04Demo instance = null;
+
+    //1. 私有化构造
+    private Singleton04Demo(){
+        System.out.println("构造...");
+    }
+
+    //3. 提供一个公开的方法来返回这个类的唯一实例
+    public static Singleton04Demo getInstance(){
+        //是存在程序的 - 不需要控制多线程安全的,是所有的线程都是允许同时执行的.为了不影响整个性能
+        //没有必要锁住整个getInstance方法的.
+
+        if(null == instance){//第一个判断的目的是避免产生太多的昂贵的"锁资源"对象.
+
+            //synchronize代码块中的程序在同一个时刻仍然只能由单个线程去执行.
+
+            //哪个线程抢到这个锁资源,那么就由这个线程进去执行.其他线程依然处于等待阻塞状态
+            synchronized (Singleton04Demo.class){
+
+                //如果A线程进来之后,对instance赋值完毕之后,A线程一旦执行完毕之后,将会释放锁资源
+                //一旦A释放了锁资源之后,其他等待的线程,将会继续抢锁,假设被C抢到了,由线程C进来执行了.
+
+                if(null == instance){//第二个判断的目的,保证再次抢到锁资源进来的这个线程不会去进行初始化了.
+                    instance = new Singleton04Demo();
+                }
+            }
+        }
+        return instance;
+    }
+}
+~~~
+
+***反射技术可以破坏这种单例的.***
+
+完全通过反射的技术来无限创建"单例"的多个实例对象了吧!
+
+~~~java
+package tech.aistar.design.singleton.enums;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ * 本类用来演示: 反射技术来破坏单例
+ *
+ * @author: success
+ * @date: 2020/8/5 3:36 下午
+ */
+public class TestSingleton04Demo {
+    public static void main(String[] args) {
+        Singleton04Demo s1 = Singleton04Demo.getInstance();
+        Singleton04Demo s2 = Singleton04Demo.getInstance();
+        System.out.println(s1 == s2);//true
+
+        System.out.println("========");
+
+        //java.lang.Class<T> 是反射技术的基础类
+        Class<?> c = Singleton04Demo.class;
+
+        try {
+            Constructor<?> constructor = c.getDeclaredConstructor();
+
+            //反射技术同时也是可以破坏封装性的.
+            constructor.setAccessible(true);
+
+            //反射的技术来构建一个类的对象
+            Singleton04Demo s3 = (Singleton04Demo) constructor.newInstance();
+
+            System.out.println(s1 == s3);//false
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+~~~
+
+
+
+## 枚举类单例模式
+
+第一个版本
+
+~~~java
+public enum Singleton07{
+   INSTANCE;
+  
+   public static Singleton07 getInstance(){
+       return INSTANCE;
+   }
+}
+~~~
+
+~~~java
+package tech.aistar.design.singleton.enums;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ * 本类用来演示:
+ *
+ * @author: success
+ * @date: 2020/8/5 3:45 下午
+ */
+public class TestSingleton07 {
+    public static void main(String[] args) {
+        Singleton07 s1 = Singleton07.getInstance();
+        Singleton07 s2 = Singleton07.getInstance();
+
+        System.out.println(s1 == s2);//true
+
+        //尝试使用反射技术来破坏...
+        //1. 获取class实例
+        Class<?> c = Singleton07.class;
+
+        try {
+            //每个构造方法都对应对应一个constructor实例.
+            //拿到的是一个空参构造...
+
+            //java.lang.NoSuchMethodException:
+            // tech.aistar.design.singleton.enums.Singleton07.<init>()
+
+            //父类java.lang.Enum
+            //protected Enum(String name, int ordinal) {
+            //        this.name = name;
+            //        this.ordinal = ordinal;
+            //    }
+
+            //调用两参构造
+            Constructor<?> constructor = c.getDeclaredConstructor(String.class,int.class);
+
+            constructor.setAccessible(true);
+
+            //仍然还是会继续报错....
+            
+            //newInstance方法的底层.. - Cannot reflectively create enum objects
+            
+            // if ((clazz.getModifiers() & Modifier.ENUM) != 0)
+            //            throw new IllegalArgumentException("Cannot reflectively create enum objects");
+            
+            //在底层会对类型进行判断,如果发现是枚举类型,则抛出异常...
+            Singleton07 s3 = (Singleton07) constructor.newInstance("INSTANCE",0);
+
+
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+~~~
+
+反射技术不会破坏枚举类型的单例形式.
+
 
 
