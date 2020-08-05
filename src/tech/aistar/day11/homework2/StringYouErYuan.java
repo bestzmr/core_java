@@ -1,7 +1,11 @@
 package tech.aistar.day11.homework2;
 
+import java.util.Arrays;
+
 /**
  * 本类用来演示:
+ *
+ *      "abcd2390302sdfdfd23232fdfd" -> 统计数字的个数.
  *
  * @author: success
  * @date: 2020/8/5 8:50 上午
@@ -58,5 +62,11 @@ public class StringYouErYuan {
 //        System.out.println(test01());
 
         System.out.println(test02());
+
+        System.out.println('2'<=50);
+
+        String[] arr = {"10","2","123","3"};
+        Arrays.sort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }
