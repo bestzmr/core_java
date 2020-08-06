@@ -1,5 +1,7 @@
 package tech.aistar.day13.exercise;
 
+import java.util.Arrays;
+
 /**
  * 本类用来演示:
  *
@@ -8,14 +10,21 @@ package tech.aistar.day13.exercise;
  */
 public class SuccessList<E> {
 
-    public Object[] datas = new Object[10];
+    private Object[] datas = new Object[10];
+
+    //有效数量
+    private int size;
 
     /**
      * 添加数据...
      * @param e
      */
     public void add(E e){
-
+        //判断是否要扩容...
+        if(size == datas.length){
+           datas = Arrays.copyOf(datas,datas.length<<1);
+        }
+        datas[size++] = e;
     }
 
     /**
@@ -24,11 +33,47 @@ public class SuccessList<E> {
      * @return
      */
     public E get(int index){
-        return null;
+        return (E) datas[index];
+    }
+
+    public int size(){
+        return size;
     }
 
     @Override
     public String toString() {
-       return "";
+        final StringBuilder sb = new StringBuilder("[");
+
+        for (int i = 0; i < size; i++) {
+            sb.append(i!=size-1?datas[i]+",":datas[i]);
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        SuccessList<String> list = new SuccessList<>();
+
+        list.add("ok");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+        list.add("good");
+
+        System.out.println(list.get(0));
+
+        System.out.println(list.size());
+
+        System.out.println(list);
     }
 }
