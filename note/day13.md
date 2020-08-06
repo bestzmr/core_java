@@ -210,7 +210,152 @@ class TestTools{
 
 ## 泛型方法
 
-我们可能就仅仅在**某一个方法上需要使用泛型**....**外界仅仅是关心该方法，不关心类其他的属性**...这样的话，我们在整个类上定义泛型，未免就有些大题小作了
+我们可能就仅仅在**某一个方法上需要使用泛型**....**外界仅仅是关心该方法，不关心类其他的属性**...这样的话，我们在整个类上定义泛型，未免就有些大题小作了.
+
+~~~java
+package tech.aistar.day13;
+
+/**
+ * 本类用来演示:泛型方法
+ *
+ * 假设某个类中就那么几个方法需要使用泛型,那么就没有必要设置成泛型类.
+ *
+ * @author: success
+ * @date: 2020/8/6 10:17 上午
+ */
+public class GenericDemo {
+
+    /**
+     * 无返回类型
+     */
+    public <E> void show(E e){
+        System.out.println(e);
+    }
+
+    /**
+     * 带返回类型
+     * @param t
+     * @param <T>
+     * @return
+     */
+    public <T> T add(T t){
+        return t;
+    }
+
+    /**
+     * 静态方法.
+     * @param t
+     * @param <T>
+     * @return
+     */
+    public static <T> T find(T t){
+        return t;
+    }
+}
+class GenericTest{
+    public static void main(String[] args) {
+        GenericDemo d1 = new GenericDemo();
+        d1.show("ok");
+
+        Integer n = d1.add(100);
+        System.out.println(n);
+
+        System.out.println(GenericDemo.find(3.14));
+    }
+}
+~~~
+
+
+
+### 拓展 - 改造反射工厂
+
+~~~java
+//没有使用泛型
+package tech.aistar.design.factory.generic;
+
+import tech.aistar.day08.relation.extend.Cat;
+import tech.aistar.day08.relation.extend.Dog;
+
+/**
+ * 本类用来演示:通用的工厂 - 可以用来创建任意对象
+ *
+ * @author: success
+ * @date: 2020/8/6 10:25 上午
+ */
+public class ObjectFactory {
+
+    public static Object getInstance(String className){
+        Object obj = null;
+
+        //1. 获取class实例
+        try {
+            Class<?> c = Class.forName(className);
+
+            //反射创建类的对象...
+            obj = c.newInstance();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+        return obj;
+    }
+
+    /**
+     * 泛型应用在工厂
+     * @param className
+     * @param <T>
+     * @return
+     */
+    public static <T> T createInstance(String className){
+        T t = null;
+        try {
+            Class<?> c = Class.forName(className);
+            t = (T) c.newInstance();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        return t;
+    }
+
+    public static <T> T createInstance2(T ts){
+       T t = null;
+       
+       Class<?> c = ts.getClass();
+
+        try {
+            t = (T) c.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return t;
+    }
+}
+
+class TestObjectFactory{
+    public static void main(String[] args) {
+       // Cat cat = (Cat) ObjectFactory.getInstance("tech.aistar.day08.relation.extend.Cat");
+
+        //Dog dog = (Dog) ObjectFactory.getInstance("tech.aistar.day08.relation.extend.Cat");
+
+        //Dog cat = ObjectFactory.createInstance("tech.aistar.day08.relation.extend.Cat");
+        Cat cat = ObjectFactory.createInstance2(new Cat());
+    }
+}
+~~~
+
+
 
 
 

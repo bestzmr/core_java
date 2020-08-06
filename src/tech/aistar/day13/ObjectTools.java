@@ -19,6 +19,8 @@ public class ObjectTools<T> {
 }
 class TestTools{
     public static void main(String[] args) {
+        //泛型 - 定义在类,定义方法时期并没有明确确定类型
+        //类型的确定延迟到创建对象或者调用方法的时候.
         ObjectTools<String> tools = new ObjectTools<>();
 
         String result01 = tools.get("ok");
