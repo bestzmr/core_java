@@ -50,8 +50,6 @@ public class JDK5BeforeDemo {
 
         list03.add("good");
 
-
-
         System.out.println(list03);
 
         //只要程序在编译期间不报错,添加到容器中的数据的类型是属于泛型的
