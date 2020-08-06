@@ -883,5 +883,86 @@ java.lang.Error以及java.lang.Exception都会拥有顶级的类java.lang.Throwa
   }
   ~~~
 
-  
+
+
+### finally
+
+try和finally可以搭配使用
+
+**try和catch以及finally搭配使用**
+
+***finally中的代码是无论try中的代码是否出现了异常,finally块中的代码都会执行...***
+
+防止有的昂贵的资源在程序出现异常的时候,没有得到及时的释放和清理.
+
+
+
+#### 坑问题
+
+finally代码块中对结果进行修改,是否会影响方法的返回值.
+
+~~~java
+ try{
+   int i = 0;
+   return;//结束整个方法的呀!
+ }finally {
+   System.out.println("finally...");
+ }
+~~~
+
+当try中出现了return语句[结束整个方法的] - 请问finally中的代码执行否?
+
+return语句是在finally语句之后执行的.
+
+
+
+finally -> 基本数据类型进行修改.
+
+~~~java
+public static int test01(){
+  int i = 0;
+  try{
+    ++i;
+    return i;
+  }finally {
+    ++i;
+  }
+}
+//结果是1
+~~~
+
+~~~java
+public static int test02(){
+  int i = 0;
+  try{
+    ++i;
+    return i;
+  }finally {
+    return ++i; // finally中一旦出现了return语句,会对局部变量表存储的i产生影响了.
+  }
+}
+//结果是2
+~~~
+
+
+
+finally->对对象类型进行修改
+
+~~~java
+ /**
+     * finally块中修改对象类型是否会影响呢? - 产生了影响了.
+     * @return
+     */
+public static Book test03(){
+  Book b1 = new Book(1,"1001","java");
+
+  try{
+    b1.setBookName("python");
+    return b1;
+  }finally {
+    b1.setBookName("web签单");
+  }
+}
+Book{id=1, isbn='1001', bookName='web签单', price=0.0, author='null', publishDate=null}
+~~~
 

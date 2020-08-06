@@ -35,10 +35,17 @@ public class TryCatchDemo {
         System.out.println("===end===");
 
         try {
+            //申请了一个昂贵的资源对象
             InputStream in = new FileInputStream("src/tech/aistar/day13/Sup.java");
             Class.forName("tech.aistar.day03.User");
+
+
         } catch (FileNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();
+        }finally {
+            //释放资源,关闭资源,清理空间...
+            //无论try中是否出现了异常,finally中的代码都会执行.
+            System.out.println("我都会执行...!!!");
         }
 
         System.out.println("===");
