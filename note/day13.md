@@ -370,6 +370,244 @@ class TestObjectFactory{
 
 
 
+~~~java
+package tech.aistar.day13;
+
+
+import tech.aistar.day10.homework.book.Book;
+
+/**
+ * 本类用来演示:泛型类派生出来的子类
+ *
+ * @author: success
+ * @date: 2020/8/6 10:48 上午
+ */
+public abstract class Sup<T> {
+    public abstract T get(T t);
+}
+//**子类不明确泛型类的类型参数变量**
+class Sub<T> extends Sup<T>{
+
+    @Override
+    public T get(T t) {
+        return t;
+    }
+}
+//**子类明确泛型类的类型参数变量**
+class Sub2<Book> extends Sup<Book>{
+
+    @Override
+    public Book get(Book book) {
+        return book;
+    }
+}
+class TestSup{
+    public static void main(String[] args) {
+        //1. 子类没有明确泛型的类型参数变量
+        Sup<String> sup = new Sub<>();
+        String result= sup.get("ok");
+        System.out.println(result);
+
+        //2. 子类明确泛型类的类型参数变量
+        Sup<Book> sup1 = new Sub<>();
+        System.out.println(sup1.get(new Book()));
+    }
+
+}
+
+~~~
+
+
+
+## 拓展应用
+
+泛型的实际的应用场景.
+
+~~~java
+/**
+ * 本类用来演示:user的接口
+ *
+ * @author: success
+ * @date: 2020/8/6 10:55 上午
+ */
+public interface IUserDao {
+    void save(User user);
+}
+
+/**
+ * 本类用来演示:图书业务接口
+ *
+ * @author: success
+ * @date: 2020/8/6 10:55 上午
+ */
+public interface IBookDao {
+    void save(Book book);
+}
+
+观察这俩个业务接口.
+都存在插入数据的方法 - 唯一的区别,插入的对象类型不一样而已.
+~~~
+
+抽象出一个基础的,顶级的接口出来.
+
+~~~java
+/**
+ * 本类用来演示: 顶级的业务接口
+ *
+ * @author: success
+ * @date: 2020/8/6 10:58 上午
+ */
+public interface IBaseDao<T> {
+    void save(T t);
+    
+    void update(T t);
+    
+    void delById(Integer id);
+}
+~~~
+
+以后写代码,比如使用的是hibernate框架 - YY能力....
+
+hibernate框架属于持久层框架 - 用来使用java代码和DB进行连接并且操作数据库中数据的一套框架.
+
+既然是框架,框架的编程步骤都是一样的.
+
+~~~java
+UserDaoImpl.java
+  
+public void save(User user){
+  Session ses = SessionUtil.openSession();//和db建立一次会话,一次连接.
+  Transaction transction = ses.beginTransaction();//开启使用.
+
+  //保存...
+  ses.save(user);//关键的一步...
+  
+  //提交事务
+  transaction.commit();
+  
+  //关闭session
+  sesssionUtil.close(ses);
+
+}
+
+BookDaoImpl.java
+  
+public void save(Book book){
+  Session ses = SessionUtil.openSession();//和db建立一次会话,一次连接.
+  Transaction transction = ses.beginTransaction();//开启使用.
+
+  //保存...
+  ses.save(book);//关键的一步...
+  
+  //提交事务
+  transaction.commit();
+  
+  //关闭session
+  sesssionUtil.close(ses);
+
+}
+~~~
+
+顶级接口的实现类
+
+~~~java
+package tech.aistar.day13.app;
+
+/**
+ * 本类用来演示:泛型实现类
+ *
+ * @author: success
+ * @date: 2020/8/6 11:04 上午
+ */
+public class BaseDaoImpl<T> implements IBaseDao<T> {
+    @Override
+    public void save(T t) {
+        //get - 所有的实现类的插入数据的步骤都是几乎是一样的
+        //只是类型不一样而已..
+
+        System.out.println("save:"+t);
+        
+//        Session ses = SessionUtil.openSession();//和db建立一次会话,一次连接.
+//        Transaction transction = ses.beginTransaction();//开启使用.
+//
+//        //保存...
+//        ses.save(t);//关键的一步...
+//
+//        //提交事务
+//        transaction.commit();
+//
+//        //关闭session
+//        sesssionUtil.close(ses);
+    }
+
+    @Override
+    public void update(T t) {
+
+    }
+
+    @Override
+    public void delById(Integer id) {
+
+    }
+}
+
+~~~
+
+改造...
+
+~~~java
+public interface IBookDao {
+    //定义自己这个接口中特有的方法...
+    
+    void findBook();
+}
+
+public interface IUserDao {
+    //只要定义特有的方法
+    void findUser();
+}
+~~~
+
+
+
+UserDaoImpl.java
+
+~~~java
+public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
+    @Override
+    public void findUser() {
+        System.out.println("findUser...");
+    }
+}
+~~~
+
+测试:
+
+~~~java
+public class TestUserDaoImpl {
+    public static void main(String[] args) {
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+
+        User user = new User();
+        user.setUsername("admin");
+
+        userDaoImpl.save(user);
+
+        BookDaoImpl bookDao = new BookDaoImpl();
+
+        Book book = new Book();
+
+        book.setBookName("西游记");
+
+        bookDao.save(book);
+    }
+}
+~~~
+
+
+
+
+
 ## 泛型通配符
 
 **?号通配符表示可以匹配任意类型，任意的Java类都可以匹配**.....
