@@ -41,7 +41,10 @@ public class JDK5BeforeDemo {
         list02.add(100L);
         list02.add(200L);
 
+
         System.out.println(list02);
+
+        System.out.println(list02.size());
         
         //jdk7.x以后 - new ArrayList<>中的泛型是可以省略不写的.why???
         List<String> list03 = new ArrayList<>();
