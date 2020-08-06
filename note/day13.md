@@ -622,12 +622,148 @@ public class TestUserDaoImpl {
 
   传递进来的只能是Type或Type的父类
 
-* <? extends Type>
+* **<? extends Type>**
 
-  传进来的只能是Type或者Type的子类
+  **传进来的只能是Type或者Type的子类**
 
+~~~java
+? 泛型的符号,但是比较特殊.
+  
+泛型方法 - 可以使用E或者T
+public <T> t get(T t){
+  return t;
+}
+但是不允许这样写:
+public <?> ? get(? t){
+  return t;
+}
 
+~~~
 
 ## 泛型擦除
 
 泛型是**提供给javac编译器使用的**，它用于限定集合的输入类型，让编译器在源代码级别上，即挡住向集合中插入非法数据。但编译器编译完带有泛形的java程序后，**生成的class文件中将不再带有泛形信息**，以此使程序运行效率不受到影响，这个过程称之为“擦除”。
+
+~~~java
+package tech.aistar.day13;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.DoubleStream;
+
+/**
+ * 本类用来演示:泛型的擦除
+ *
+ * 1. 泛型仅仅在编译期间有效
+ * 2. 泛型在运行期间将会被擦除
+ * 3. 因此泛型没有多态.
+ *
+ * @author: success
+ * @date: 2020/8/6 1:23 下午
+ */
+public class GenericRemoveDemo {
+    public static void main(String[] args) {
+        List<Integer> list01 = new ArrayList<Integer>();
+        List<Integer> list02 = new ArrayList<Integer>();
+
+        //获取运行期间的类型...
+        //获取类的class实例
+
+        //1. 泛型在运行期间将会被擦除.
+        System.out.println(list01.getClass());//class java.util.ArrayList
+        System.out.println(list02.getClass());//class java.util.ArrayList
+
+        //3. 泛型没有多态...
+        //Number n = new Integer(10);//ok
+        //Number m = new Long(10);//ok
+
+        //编译不通过.
+        //List<Number> list03 = new ArrayList<Integer>();
+    }
+}
+
+~~~
+
+
+
+## 泛型K,V
+
+K - 键,V - 值,Map集合.
+
+~~~java
+package tech.aistar.day13;
+
+import tech.aistar.day10.homework.book.Book;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 本类用来演示:
+ *
+ * @author: success
+ * @date: 2020/8/6 1:40 下午
+ */
+public class EntryDemo<K,V> {
+    private K key;
+
+    private V value;
+
+    public EntryDemo() {
+    }
+
+    public EntryDemo(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    private void setKey(K key) {
+        this.key = key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    private void setValue(V value) {
+        this.value = value;
+    }
+
+    public void put(K key,V value){
+        setKey(key);
+        setValue(value);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("EntryDemo{");
+        sb.append("key=").append(key);
+        sb.append(", value=").append(value);
+        sb.append('}');
+        return sb.toString();
+    }
+}
+
+class TestKV{
+    public static void main(String[] args) {
+        EntryDemo<Integer, Book> books = new EntryDemo<Integer, Book>();
+        books.put(1,new Book(1,"1001","java"));
+        books.put(2,new Book(2,"1001","java"));
+
+        System.out.println(books);
+
+        //map集合
+        Map<Integer,String> maps = new HashMap<>();
+        maps.put(10,"1001");
+        maps.put(20,"1002");
+        System.out.println(maps);
+    }
+}
+~~~
+
+
+
