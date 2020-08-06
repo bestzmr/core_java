@@ -347,6 +347,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 * 枚举类型中是可以定义普通属性和普通方法的
 * 枚举类型中的枚举常量都是类型安全的常量.
 * 枚举类型中也是允许存在抽象方法,但是要求每个枚举类型都要重写这个抽象方法 - 了解即可.
+* 枚举类型默认提供的空参构造是私有的,认为设置成public,是不行的.
 
 
 
@@ -534,4 +535,45 @@ public class TestSingleton07 {
 反射技术不会破坏枚举类型的单例形式.
 
 
+
+## 错误版本
+
+~~~java
+package tech.aistar.design.singleton.enums;
+
+/**
+ * 本类用来演示: 依然是可以通过反射技术来创建Singleton08对象.
+ *
+ * @author: success
+ * @date: 2020/8/5 3:44 下午
+ */
+public class Singleton08 {
+
+   static enum EnumDemo{
+
+       INSTANCE;
+
+        private Singleton08 singleton08;
+
+        private EnumDemo(){
+            singleton08 = new Singleton08();
+        }
+
+        public Singleton08 getInstance(){
+            return singleton08;
+        }
+    }
+
+    public static EnumDemo getInstance(){
+       return EnumDemo.INSTANCE;
+    }
+
+    public static void main(String[] args) {
+        Singleton08 s1 = Singleton08.getInstance().getInstance();
+        Singleton08 s2 = Singleton08.getInstance().getInstance();
+        System.out.println(s1 == s2);
+    }
+}
+
+~~~
 

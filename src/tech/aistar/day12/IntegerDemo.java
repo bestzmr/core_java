@@ -83,5 +83,14 @@ public class IntegerDemo {
         System.out.println(Integer.MIN_VALUE);//-2147483648
 
         System.out.println(o1.toString());
+
+        //error Integer是不能自动转换成Long类型
+        //Integer u = 12;
+        //Long nu = u;
+
+        //每个基本类型只能封箱到自己对应的包装类型.
+        //Long g = 100;//error
+
+        //Integer i = 100L;//error
     }
 }
