@@ -767,5 +767,121 @@ class TestKV{
 
 
 
-# 异常
+# 异常和错误
+
+java.lang.Error以及java.lang.Exception都会拥有顶级的类java.lang.Throwable
+
+## Error
+
+* StackOverflowError - 堆栈溢出错误,当应用程序因为递归太深而找不到出口的时候.
+* OutOfMemoryError - 内存溢出,内存泄漏错误.
+
+错误一般都是虚拟机级别的错误,错误一旦发生了,程序员是解决不了的.
+
+
+
+## Exception
+
+简介:所谓的异常就是代表程序在运行的时候,发生了不正常的情况.异常又可以分成两大类.
+
+* 运行时异常 - 未检测异常 - 不需要程序员处理异常
+  1. 编译期间是不会通知程序员手动去处理异常的.
+  2. 可以通过程序的严谨的判断,来避免运行时异常的发生了.
+* 非运行时异常 - 已检测异常 - 需要程序员进行处理.
+  1. 在编译期间就能够检测到程序在运行的时候可能会发生异常
+  2. 因此需要在编译期间就报错,然后通知程序员手动去处理异常,比如使用try..catch..
+
+
+
+### 运行时异常
+
+都是属于java.lang.Runtime的子类.
+
+* java.lang.ClassCastException - 类型转换失败异常
+
+* java.lang.ArithmeticException - 当程序执行10/0,分母0
+
+* java.lang.IllegalArgumentException - 非法参数异常.
+
+  new SimpleDataFormat(String pattern);//pattern -> "success"
+
+* java.lang.IndexOutOfBoundsException - 下标越界异常
+  * java.lang.ArrayIndexOutOfBoundsException - 数组下标越界异常
+  * java.lang.StringIndexOutOfBoundsException - 字符串下标越界异常
+
+* java.util.InputMismatchException - 输入不匹配异常.
+* java.lang.NullPointerException - 空指针异常
+
+
+
+### 非运行时异常
+
+* java.lang.CloneNotSupportedExceptio - 对象不支持clone.
+
+  对象所在的实体类没有去实现一个标记接口java.lang.Cloneable
+
+* java.util.ParseException - 解析失败异常.
+
+* java.util.InterruptedException - 中断异常
+
+* ***java.lang.NoSuchMethodException - 找不到此方法异常***
+
+  ***当通过反射技术来调用一个不存在的构造或者反射调用一个不存在的方法的时候.***
+
+* ***java.lang.IllegalAccessException - 非法访问异常***
+
+  ***当通过反射技术来访问一个私有成员的时候.必须要设置setAccessible(true);***
+
+* ***java.io.IOException - IO(Input/Output)流异常***
+  * ***java.io.FileNotFoundException - 文件不存在异常.***
+
+* ***java.lang.ClassNotFoundException - 类找不到.Class.forName("类的全限定名");***
+
+
+
+## 异常的处理方式
+
+主要针对的还是非运行时异常.
+
+### 积极处理
+
+使用try...catch来进行处理.
+
+* 语法一 - 多个catch块 - 推荐用这个.这种写法可以针对各个异常来进行不同的异常之后的处理.
+
+  ~~~java
+  try{
+    //代码...
+  }catch(异常类型1 对象1){
+    //..
+  }catch(异常类型2 对象2){
+    //...
+  }
+  
+  注意:异常类型存在继承关系的.父类异常类型一定是出现在子类类型异常的下方.
+  ~~~
+
+* 语法二 - jdk7.0开始提供的,使用单个catch块
+
+  ~~~java
+  try{
+    //代码...
+    
+  }catch(异常类型1 | 异常类型2 | 异常类型3 对象){
+    //..
+  }
+  ~~~
+
+* 语法三 - 直接使用Exception - 总的父类
+
+  ~~~java
+  try{
+    //代码...
+    
+  }catch(Exception e){
+    //..
+  }
+  ~~~
+
+  
 
