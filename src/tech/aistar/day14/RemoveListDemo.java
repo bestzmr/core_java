@@ -1,8 +1,7 @@
 package tech.aistar.day14;
 
-import tech.aistar.day10.homework.book.Book;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -26,9 +25,17 @@ public class RemoveListDemo {
         books.add(b4);
         books.add(b5);
 
+        //理解一下集合中的对象
+
+       // Book b6 = new Book(5,"1005","java");
+
+        //删除的是集合中已经存在的对象.
+        //因为Book中提供了hashcode和equals方法,只要认为俩个对象的id的值是一样的,就认为这俩个对象是同一个对象.
+        //books.remove(b6);
+
         //removeByBookName(books,"java");
 
-        unSafeDel(books,"java");
+        safeDel(books,"java");
 
         //可以通过foreach循环来进行遍历.
         for (Book book : books) {
@@ -70,6 +77,28 @@ public class RemoveListDemo {
         for (Book book : list) {//调用迭代器对象
             if(book.getBookName().equals(bookName)){
                 list.remove(book);//直接删除对象...
+            }
+        }
+    }
+
+    private static void safeDel(List<Book> list,String bookName){
+//        Iterator<Book> iter = list.iterator();
+//        while(iter.hasNext()){
+//            Book b = iter.next();
+//            if(b.getBookName().equals(bookName)){
+//                list.remove(b);//并发修改异常...
+//            }
+//        }
+        Iterator<Book> iter = list.iterator();
+
+        while(iter.hasNext()){
+            Book b = iter.next();
+
+            if(b.getBookName().equals(bookName)){
+                //list.remove(b);//并发修改异常...
+
+                //删除正在被迭代到的对象.
+                iter.remove();
             }
         }
     }

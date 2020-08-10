@@ -1,4 +1,4 @@
-package tech.aistar.day10.homework.book;
+package tech.aistar.day14;
 
 import java.util.Date;
 
@@ -86,6 +86,21 @@ public class Book {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return id == book.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override
