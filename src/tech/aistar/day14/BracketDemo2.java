@@ -48,26 +48,12 @@ public class BracketDemo2 {
                     linkedList.push(array[i]);
                     break;
                 case '}':
-                    if (linkedList.isEmpty()) {
-                        return false;
-                    }
-                    if ('{' == linkedList.getFirst()) {
-                        linkedList.pop();
-                    }
-                    break;
                 case ']':
-                    if (linkedList.isEmpty()) {
-                        return false;
-                    }
-                    if ('[' ==  linkedList.getFirst()) {
-                        linkedList.pop();
-                    }
-                    break;
                 case ')':
                     if (linkedList.isEmpty()) {
                         return false;
                     }
-                    if ('(' ==  linkedList.getFirst()) {
+                    if ('{' == linkedList.getFirst()||'(' ==  linkedList.getFirst()||'[' ==  linkedList.getFirst()) {
                         linkedList.pop();
                     }
                     break;
