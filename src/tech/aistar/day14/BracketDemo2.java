@@ -10,7 +10,7 @@ import java.util.LinkedList;
  */
 public class BracketDemo2 {
     public static void main(String[] args) {
-        String str = "[]{}()";
+        String str = ")(";
         System.out.println(match(str));
     }
 
@@ -48,16 +48,25 @@ public class BracketDemo2 {
                     linkedList.push(array[i]);
                     break;
                 case '}':
+                    if (linkedList.isEmpty()) {
+                        return false;
+                    }
                     if ('{' == linkedList.getFirst()) {
                         linkedList.pop();
                     }
                     break;
                 case ']':
+                    if (linkedList.isEmpty()) {
+                        return false;
+                    }
                     if ('[' ==  linkedList.getFirst()) {
                         linkedList.pop();
                     }
                     break;
                 case ')':
+                    if (linkedList.isEmpty()) {
+                        return false;
+                    }
                     if ('(' ==  linkedList.getFirst()) {
                         linkedList.pop();
                     }

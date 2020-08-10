@@ -77,12 +77,12 @@ public class SnakeGame {
             for (int j = 0; j < COLS; j++) {
                 //墙的信息
                 if(i == 0 || i == ROWS-1 || j==0 || j == COLS-1){
-                    arr[i][j] = "*";
+                    arr[i][j] = "#";
                 }else if(snake.contains(i,j)){
                     //i,j对应的坐标就是蛇的身体...
-                    arr[i][j] = "#";
+                    arr[i][j] = "!";
                 }else if(foods.contains(new Node(i,j))){
-                    arr[i][j] = "0";
+                    arr[i][j] = "o";
                 }else{
                     arr[i][j] = " ";
                 }
