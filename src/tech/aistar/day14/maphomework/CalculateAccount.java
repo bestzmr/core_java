@@ -24,7 +24,7 @@ public class CalculateAccount {
         TreeMap<String, Double> treeMap = calculateDiscount(dateMap, dealMoney);
         Set<Map.Entry<String, Double>> set = treeMap.entrySet();
         for (Map.Entry<String, Double> m : set) {
-            System.out.println(m.getKey()+":"+m.getValue());
+            System.out.println(m.getKey() + ":" + m.getValue());
         }
     }
 
@@ -59,7 +59,6 @@ public class CalculateAccount {
             } else if (calendar1.compareTo(calendar) < 0 && dealMoney.get(setEntry.getKey()) < 20000) {
                 discountMap.put(setEntry.getKey(), dealMoney.get(setEntry.getKey()) * 0.05d);
             }
-
         }
         return discountMap;
     }
