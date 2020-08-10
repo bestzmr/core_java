@@ -380,6 +380,47 @@ public E get(int index) {
   }
 ~~~
 
+## 底层剖析 - remove方法
+
+~~~java
+public E remove(int index) {
+  checkElementIndex(index);
+  return unlink(node(index));
+  //return unlink(删除的目标节点Node对象)
+}
+
+ /**
+     * Unlinks non-null node x.
+     */
+E unlink(Node<E> x) {//x是删除目标节点Node
+  // assert x != null;
+  final E element = x.item;//获取目标节点对象中的item - 真实的存储的数据.
+  
+  final Node<E> next = x.next;//获取目标节点的下一个节点
+  final Node<E> prev = x.prev;//获取目标节点的上一个节点
+
+  if (prev == null) {//说明是头结点
+    first = next;
+  } else {
+    prev.next = next;//把目标节点的上一个节点的next指向原先这个目标节点的next对应的节点.
+    x.prev = null;//目的是这样的,尽快的将引用x.pre指向null,目的是为了尽快让GC回收.
+  }
+
+  if (next == null) {//说明是尾节点
+    last = prev;
+  } else {
+    next.prev = prev;//目标节点的下一个节点的pre指向原先节点的上一个节点
+    x.next = null;
+  }
+
+  x.item = null;//目的也是吸引GC注意,及时进行GC回收...
+  size--;
+  modCount++;
+  return element;
+}
+
+~~~
+
 
 
 
