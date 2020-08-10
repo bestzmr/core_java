@@ -1,5 +1,9 @@
 package tech.aistar.day14;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Scanner;
+
 /**
  * 本类用来演示:验证输入的括号是否匹配!
  *
@@ -8,7 +12,15 @@ package tech.aistar.day14;
  */
 public class BracketDemo {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("输入括号:>");
+        String line = sc.nextLine();
 
+        if(match(line)){
+            System.out.println("匹配");
+        }else{
+            System.out.println("不匹配!");
+        }
     }
 
     /**
@@ -33,6 +45,30 @@ public class BracketDemo {
      *
      */
     public static boolean match(String bracket){
-        return false;
+        //1. 将字符串转换成字符数组.
+        char[] arr  = bracket.toCharArray();
+
+        //2. 创建一个LinkedList集合对象
+        LinkedList<Character> list = new LinkedList<>();
+
+        //3. 将数组中的第一个元素压入栈顶.
+        list.push(arr[0]);
+
+        //4. 从arr数组的第二个位置开始遍历
+        for (int i = 1; i < arr.length; i++) {
+            //4-1. 获取当前遍历的元素
+            Character c = arr[i];//jdk5支持的封箱功能.
+            //4-2. 获取栈顶元素
+            Character top = list.getFirst();
+            //5. 判断当前元素和栈顶元素是否匹配
+            if((top.equals('(') && c.equals(')')) || (top.equals('[') && c.equals(']')) || (top.equals('{') && c.equals('}'))){
+                //5-1.如果匹配,弹出栈顶内容
+                list.pop();
+            }else{
+                //5-2. 如果不匹配,继续将当前的元素压入栈顶.
+                list.push(c);
+            }
+        }
+        return list.isEmpty();
     }
 }
