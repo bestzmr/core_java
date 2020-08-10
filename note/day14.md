@@ -245,3 +245,135 @@ public E next() {
 
   
 
+# LinkedList
+
+简介:底层的数据结构,jdk6.x是采用的是双向循环链表.j**dk8.x采用的是双向链表.**
+
+***优势就是在增删效率比较高(只会涉及到相邻节点),但是查询效率会比较慢[底层进行了优化,采用的是二分搜索法]***
+
+
+
+**应用场景:特别适合解决队列(先进先出)和栈列(先进后出)的业务场景** - 贪吃蛇.
+
+
+
+单向链表.
+
+每个节点中拥有element[集合中保存的真正的元素]以及next(指向下一个节点的指针地址)
+
+链表结构特点: 空间上不一定是连续的.物理上可能不连续,但是逻辑上是连续.
+
+但是链表结构相对于数组结构,在内存方面肯定是更加占用更多的内存空间的.
+
+![](imgs/link01.png) 
+
+
+
+单向循环链表
+
+![](imgs/link02.png) 
+
+
+
+***jdk8.x中LinkedList的底层的结构***
+
+***每个节点中包含:***
+
+* ***element - 集合中真正保存的数据***
+* ***pre - 上一个节点的指针地址,头结点,pre指向的是null***
+* ***next - 下一个节点的指针地址,尾节点的next指向的也是null***
+
+![](imgs/link03.png) 
+
+
+
+双向循环链表[jdk6.x]
+
+* 头节点的pre指向的是最后一个节点
+* 最后一个节点的next指向的是头节点.
+
+![](imgs/link04.png) 
+
+
+
+## 底层剖析 - add方法
+
+~~~java
+ private static class Node<E> {//维护的是一个静态内部类Node - 链表结构的节点对象.
+        E item;//真实的保存到集合中的数据.
+        Node<E> next;
+        Node<E> prev;
+
+        Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+----
+public boolean add(E e) {
+  linkLast(e);
+  return true;
+}
+
+transient Node<E> last;//链表的节点 - 最后一个节点.默认值是null
+
+void linkLast(E e) {
+  //第二次进来 l = last = new Node<>(null, e, null);
+
+  final Node<E> l = last;//l = last == null
+  
+  //第一次进来的时候newNode = new Node<>(null, e, null);//双向链表
+  
+  //第二次进来 new Node = new new Node<>(l, e, null);
+  //  //第二次进来 - 带参构造...
+ // Node(Node<E> prev, E element, Node<E> next) {
+   //         this.item = element;
+     //       this.next = next;
+      //      this.prev = prev;
+       // }
+  
+  //新的节点的prev指向的是last节点.
+  final Node<E> newNode = new Node<>(l, e, null);
+  
+  //第二次进来,当前的新的节点作为最后一个节点...
+  last = newNode;//由于是第一次进来,第一个节点同时也是尾节点
+  
+  if (l == null)//第一次进来是成立的.
+    first = newNode;//第一个节点就是头节点.
+  else
+    //把之前的最后一个节点的next也要指向新的节点.
+    l.next = newNode;
+  size++;//统计链表结构的元素的个数.统计节点的个数.
+  modCount++;//判断是否出现并发修改的异常.
+}
+~~~
+
+
+
+## 底层剖析 - 查询效率
+
+~~~java
+
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
