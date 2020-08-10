@@ -1,11 +1,12 @@
 package tech.aistar.day14;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
  * 本类用来演示:验证输入的括号是否匹配!
+ *
+ * 四则运算  - 1 + 2 * 3 + (5-2) = ?
  *
  * @author: success
  * @date: 2020/8/10 1:58 下午
@@ -58,8 +59,17 @@ public class BracketDemo {
         for (int i = 1; i < arr.length; i++) {
             //4-1. 获取当前遍历的元素
             Character c = arr[i];//jdk5支持的封箱功能.
-            //4-2. 获取栈顶元素
-            Character top = list.getFirst();
+
+            //6-1. 判断list中是否存在元素
+            Character top = null;
+
+            if(list.isEmpty()){
+                list.push(c);
+                continue;//跳过本轮循环,继续下一轮新的循环.
+            }else{
+                top = list.getFirst();
+            }
+
             //5. 判断当前元素和栈顶元素是否匹配
             if((top.equals('(') && c.equals(')')) || (top.equals('[') && c.equals(']')) || (top.equals('{') && c.equals('}'))){
                 //5-1.如果匹配,弹出栈顶内容
