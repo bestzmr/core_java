@@ -37,7 +37,14 @@ public class StartSnake {
                     //向上走..
                     snake.steps(SnakeGame.Snake.RIGHT);
                     break;
+                default:
+                    snake.step();
 
+            }
+            if(game.foods.size() == 0){
+                System.out.println("恭喜您!通关了!");
+                game.printGames();
+                break;
             }
         }
 
