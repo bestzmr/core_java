@@ -354,7 +354,30 @@ void linkLast(E e) {
 ## 底层剖析 - 查询效率
 
 ~~~java
-
+public E get(int index) {
+        checkElementIndex(index);
+        return node(index).item;
+    }
+ Node<E> node(int index) {
+    
+   //假设size = 10
+    //假设index = 5
+   //size - 对应的节点的个数 - 对应的集合的大小.
+   
+   //采用的二分搜索法.
+    if (index < (size >> 1)) {//1 0 1 0 >> 1 = 1 0 1 = 5
+      Node<E> x = first;//拿到头结点.
+      for (int i = 0; i < index; i++)
+        x = x.next;//x = x.next = 头结点.next
+      //x = index - 1;
+      return x; // 目标
+    } else {
+      Node<E> x = last;//拿到最后一个节点.
+      for (int i = size - 1; i > index; i--)
+        x = x.prev;
+      return x; // 目标
+    }
+  }
 ~~~
 
 
