@@ -143,26 +143,33 @@ public class SnakeGame {
             //获取蛇头
             Node header = nodes.getFirst();
 
-            int x = header.getX();
-            int y = header.getY();
+            int x = header.getX() + this.dir % 2;
+            int y = header.getY() + this.dir / 2;
 
             //判断移动的方向.
-            switch (this.dir){
-                case UP:
-                    x--;
-                    break;
-                case DOWN:
-                    x++;
-                    break;
-                case LEFT:
-                    y--;
-                    break;
-                case RIGHT:
-                    y++;
-                    break;
-            }
+//            switch (this.dir){
+//                case UP:
+//                    x--;
+//                    break;
+//                case DOWN:
+//                    x++;
+//                    break;
+//                case LEFT:
+//                    y--;
+//                    break;
+//                case RIGHT:
+//                    y++;
+//                    break;
+//            }
 
-            System.out.println("x:"+x+"-y:"+y);
+            //不能撞墙
+            if(x == 0 || x == ROWS -1 || y == 0 || y == COLS - 1){
+                throw new RuntimeException("sorry,撞墙了!");
+            }
+            //不能撞到自己
+            if(contains(x,y)){
+                throw new RuntimeException("sorry,不能撞到自己!");
+            }
 
             //得出一个新的点的坐标
             header = new Node(x,y);
@@ -182,5 +189,4 @@ public class SnakeGame {
             nodes.removeLast();
         }
     }
-
 }
