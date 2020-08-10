@@ -6,16 +6,16 @@ API:java.util.*
 
 * Collection[I]
   * List[I] - 有序可重复
-    * **ArrayList[C]** 
-    * LinkedList[C] - 重点掌握
+    * **ArrayList[C]**  - 底层的数据结构:动态增长的数组
+    * LinkedList[C] - 重点掌握,底层的数据结构 - 双向链表.
     * Vector[C]
   * Set[I] - 无序不可重复
-    * **HashSet[C]**
+    * **HashSet[C]** - 哈希表,底层就是HashMap
     * SortedSet[I]
       * TreeSet[C] - 不可重复但是可以排序.
 
 * Map[I]
-  * **HashMap[C]**
+  * **HashMap[C]** - JDK8.x 桶数组 + 链表 + ***红黑树***
   * Hashtable[C] - 哈希表
     * Properties[C] - 属性类
 
@@ -121,4 +121,127 @@ private void ensureExplicitCapacity(int minCapacity) {
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 ~~~
+
+
+
+# 迭代器
+
+~~~java
+Iterator<Integer> iter = list.iterator();
+while(iter.hasNext()){
+  Integer n = iter.next();
+  System.out.println(n);
+}
+~~~
+
+为什么集合中提供了一种特有的迭代方式 - 迭代器呢?
+
+~~~java
+因为这些集合容器的底层数据结构是不一样的,不同的数据结构查询的方式应该是不一样的.
+既然不一样,那么就有必要去提供一个统一的方式来迭代不同数据结构的集合容器.
+  
+比如:ArrayList.java
+  private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+
+~~~
+
+
+
+# 集合的删除注意点
+
+~~~java
+ /**
+     * 非安全删除...
+     * 增强for循环是一个只读的循环.
+     * 禁止在遍历集合的同时,再去进行删除操作.
+     * 如果执行了这个操作,它会抛出一个并发修改的异常....
+     * @param list
+     * @param bookName
+     */
+    private static void unSafeDel(List<Book> list,String bookName){
+        for (Book book : list) {
+            if(book.getBookName().equals(bookName)){
+                list.remove(book);//直接删除对象...
+            }
+        }
+    }
+抛出一个并发修改的异常 - Exception in thread "main" java.util.ConcurrentModificationException
+~~~
+
+结论1 - 集合中使用增强for循环来进行遍历的时候,增强for循环的遍历的底层实际上还是使用迭代器.
+
+
+
+如何做到"只读"的效果...
+
+~~~java
+public E next() {
+  checkForComodification();//异常报错行...
+  int i = cursor;
+  if (i >= size)
+    throw new NoSuchElementException();
+  Object[] elementData = ArrayList.this.elementData;
+  if (i >= elementData.length)
+    throw new ConcurrentModificationException();
+  cursor = i + 1;
+  return (E) elementData[lastRet = i];
+}
+
+ final void checkForComodification() {
+   if (modCount != expectedModCount)
+     throw new ConcurrentModificationException();//并发修改异常...
+ }
+~~~
+
+* 定位到add方法
+
+  每次执行add方法的时候,**modCount**都会自增1...
+
+  ~~~java
+   protected transient int modCount = 0;
+   
+  private void ensureExplicitCapacity(int minCapacity) {
+          modCount++;
+  
+          // overflow-conscious code
+          if (minCapacity - elementData.length > 0)
+              grow(minCapacity);
+      }
+  ~~~
+
+* 定位到remove方法
+
+  底层也实现了**modCount**++的一个自增..
+
+  ~~~java
+  private void fastRemove(int index) {
+          modCount++;
+          int numMoved = size - index - 1;
+          if (numMoved > 0)
+              System.arraycopy(elementData, index+1, elementData, index,
+                               numMoved);
+          elementData[--size] = null; // clear to let GC do its work
+      }
+  
+  ~~~
+
+* 研究迭代器迭代方法
+
+  ~~~java
+   private class Itr implements Iterator<E> {
+          int cursor;       // index of next element to return
+          int lastRet = -1; // index of last element returned; -1 if no such
+          int expectedModCount = modCount;
+     
+     			//此时此刻modCount的值应该是多少?
+          //添加add方法之后,但是在调用remove方法之前的值.
+     
+          //只要在迭代的过程中,出现了remove语句,那么exexpectedModCount!=modCount
+   }
+  ~~~
+
+  
 
