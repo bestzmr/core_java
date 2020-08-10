@@ -1,11 +1,12 @@
 package tech.aistar.day14;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
  * 本类用来演示:验证输入的括号是否匹配!
+ *
+ * 四则运算  - 1 + 2 * 3 + (5-2) = ?
  *
  * @author: success
  * @date: 2020/8/10 1:58 下午
