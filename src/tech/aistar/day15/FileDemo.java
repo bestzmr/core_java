@@ -9,8 +9,14 @@ import java.io.IOException;
  * @author: success
  * @date: 2020/8/11 2:43 下午
  */
+@SuppressWarnings("all")
 public class FileDemo {
     public static void main(String[] args) {
+
+//        File file = new File("src/tech/aistar","day15");
+//        System.out.println(file.getAbsolutePath());
+
+
         //test01("src/tech/aistar/day15");//相对路径.. 必须从src开始.
 
         //test02("src/tech/aistar/day15/success.txt");
@@ -21,6 +27,7 @@ public class FileDemo {
         test04("C:\\Users\\Merlin\\Desktop\\a\\bb\\c");
 //        File file = new File("C:\\Users\\Merlin\\Desktop\\a\\bb\\c");
 //        System.out.println(file.isDirectory());
+        test08("/Users/admin/Documents/success/d/Program Files/apache-tomcat-8.0.37");
     }
 
     /**
@@ -161,6 +168,58 @@ public class FileDemo {
                //如果是目录,直接输出目录的绝对路径
                 if(f.isDirectory()){
                     System.out.println(f.getAbsolutePath());
+                }else if(f.isFile()){
+                    System.out.println(f.getName());
+                }
+                //如果是文件,直接输出文件的名称
+            }
+        }
+    }
+
+    /**
+     * 获取某个目录下的所有的file
+     * @param path
+     */
+    public static void test07(String path){
+        File file = new File(path);
+
+        //只能获取第一层的子集方法...
+        File[] files = file.listFiles();
+
+        if(null!=files && files.length>0){//递归出口
+            for (File f : files) {
+                //如果是目录,直接输出目录的绝对路径
+                if(f.isDirectory()){
+                    System.out.println(f.getAbsolutePath());
+
+                    //递归调用自己
+                    test07(f.getAbsolutePath());
+                }else if(f.isFile()){
+                    System.out.println(f.getName());
+                }
+                //如果是文件,直接输出文件的名称
+            }
+        }
+    }
+
+    /**
+     * 筛选指定的文件
+     * @param path
+     */
+    public static void test08(String path){
+        File file = new File(path);
+
+        //只能获取第一层的子集方法...
+        File[] files = file.listFiles(new MyFilenameFilter(".gif"));
+
+        if(null!=files && files.length>0){//递归出口
+            for (File f : files) {
+                //如果是目录,直接输出目录的绝对路径
+                if(f.isDirectory()){
+                   //System.out.println(f.getAbsolutePath());
+
+                    //递归调用自己
+                    test08(f.getAbsolutePath());
                 }else if(f.isFile()){
                     System.out.println(f.getName());
                 }

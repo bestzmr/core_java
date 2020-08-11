@@ -43,7 +43,24 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
   * boolean delete();//删除文件或者空目录
 
 * 关于加载项
+
   * File[] listFiles();//只能获取第一级的子集目录
+
+  * File[] listFiles(FilenameFilter filter);//筛选指定的符合规则的文件.
+
+    ~~~java
+    public File[] listFiles(FilenameFilter filter) {//接口
+      String ss[] = list();
+      if (ss == null) return null;
+      ArrayList<File> files = new ArrayList<>();
+      for (String s : ss)
+        if ((filter == null) || filter.accept(this, s))
+          files.add(new File(s, this));
+      return files.toArray(new File[files.size()]);
+    }
+    ~~~
+
+    
 
 
 
