@@ -15,7 +15,7 @@ public class FileDemo {
 
         //test02("src/tech/aistar/day15/success.txt");
 
-        test03("/Users/admin/Documents/aa/bb.txt");
+        test04("D:/aa/bb/cc/dd/ee");
     }
 
     /**
@@ -96,4 +96,32 @@ public class FileDemo {
             System.out.println("sorry,创建失败了!");
         }
     }
+
+    /**
+     * 创建深层次的目录
+     * @param path
+     */
+    public static void test04(String path){
+
+            File file = new File(path);
+
+            if(file.exists()){
+                System.out.println("sorry,目录已经存在了!");
+                return;
+            }
+
+            //判断file是否为目录
+            if(!file.isDirectory()){
+                System.out.println("sorry,不是一个有效的目录路径");
+                return;
+            }
+
+            if(file.mkdirs()){//创建深层次的目录 , 一次只能创建多个.
+                System.out.println(file+",创建成功!");
+            }else{
+                System.out.println("sorry,创建失败了!");
+            }
+
+    }
+
 }
