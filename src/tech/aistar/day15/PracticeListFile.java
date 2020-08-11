@@ -8,15 +8,21 @@ import java.io.File;
  */
 public class PracticeListFile {
     public static void main(String[] args) {
-        File file = new File("D:\\驰星");
+        listFileTest("D:\\驰星");
+
+    }
+
+    public static void listFileTest(String path) {
+        File file = new File(path);
         File[] files = file.listFiles();
         for (File file1 : files) {
             if (file1.isDirectory()) {
-                System.out.println("文件夹地址："+file1.getAbsolutePath());
+
+                System.out.println("文件夹地址：" + file1.getAbsolutePath());
+                listFileTest(file1.getAbsolutePath());
             } else {
                 System.out.println("文件名:"+file1.getName());
             }
         }
     }
-
 }
