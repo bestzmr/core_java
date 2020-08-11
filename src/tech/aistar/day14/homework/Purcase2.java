@@ -6,12 +6,12 @@ import java.util.*;
  * @author: Merlin
  * @time: 2020/8/10 16:27
  */
-public class Purcase {
+public class Purcase2 {
     private String brand; //品牌
     private String name; //产品名
     private double cost; // 费用
 
-    public Purcase() {
+    public Purcase2() {
     }
 
     public String getBrand() {
@@ -40,22 +40,22 @@ public class Purcase {
     }
 
 
-    public Purcase(String brand, String name, double cost) {
+    public Purcase2(String brand, String name, double cost) {
         this.brand = brand;
         this.name = name;
         this.cost = cost;
     }
 
     public static void main(String[] args) {
-        List<Purcase> list = new ArrayList<>();
-        Purcase p1 = new Purcase("宝洁","洗手粉",18.5);
-        Purcase p2 = new Purcase("联合利华","肥皂",4.5);
-        Purcase p3 = new Purcase("宝洁","牙膏",32.5);
-        Purcase p4 = new Purcase("宝洁","毛巾",14.5);
-        Purcase p5 = new Purcase("洁利","洗面奶",26.0);
-        Purcase p6 = new Purcase("好迪","洗发水",27.5);
-        Purcase p7 = new Purcase("多芬","沐浴露",38.5);
-        Purcase p8 = new Purcase("宝洁","洗洁精",3.4);
+        List<Purcase2> list = new ArrayList<>();
+        Purcase2 p1 = new Purcase2("宝洁","洗手粉",18.5);
+        Purcase2 p2 = new Purcase2("联合利华","肥皂",4.5);
+        Purcase2 p3 = new Purcase2("宝洁","牙膏",32.5);
+        Purcase2 p4 = new Purcase2("宝洁","毛巾",14.5);
+        Purcase2 p5 = new Purcase2("洁利","洗面奶",26.0);
+        Purcase2 p6 = new Purcase2("好迪","洗发水",27.5);
+        Purcase2 p7 = new Purcase2("多芬","沐浴露",38.5);
+        Purcase2 p8 = new Purcase2("宝洁","洗洁精",3.4);
 
         list.add(p1);
         list.add(p2);
@@ -68,7 +68,7 @@ public class Purcase {
 
         Map<String, Double> map = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
-            Purcase purcase = list.get(i);
+            Purcase2 purcase = list.get(i);
             if (map.get(purcase.getBrand()) == null) {
                 map.put(purcase.getBrand(), purcase.getCost());
             } else {
