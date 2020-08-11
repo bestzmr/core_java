@@ -423,6 +423,120 @@ E unlink(Node<E> x) {//x是删除目标节点Node
 
 
 
+# HashMap底层
+
+笔试题 - put方法的底层原理和流程
+
+![](imgs/put.png) 
+
+~~~java
+public V put(K key, V value) {
+  return putVal(hash(key), key, value, false, true);
+}
+hash(key) - 哈希算法,这个函数是一个扰动函数.
+  
+static final int hash(Object key) {
+  int h;
+  return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+(h = key.hashCode()) ^ (h >>> 16);
+key的哈希值和key的哈希值的高16位进行异或操作 - 目的就是让计算的得到的哈希值足够散列.
+尽可能减少哈希碰撞[哈希冲突]
+~~~
+
+putVal
+
+补充:jdk8.0之前,hashmap底层的数据结构 - 桶数组 + 链表结构
+
+jdk8.0开始,hashmap底层的数据结构 - 桶数组 + 链表结构(单向链表) + 红黑树[未来由***小强***同学分享]
+
+为什么要有红黑树 - 数组的查询复杂度O(1),增删复杂度O(n).链表结构的最坏查询复杂度O(n),增删O(1).
+
+这两种数据结构都有明显的缺陷和优点.所以JDK8.x引入了红黑树,为了平衡数组和链表俩者之间的缺陷.
+
+平衡空间和时间的问题.查询和增删的复杂度O(logN)
+
+~~~java
+/**
+     * Implements Map.put and related methods
+     *
+     * @param hash hash for key
+     * @param key the key
+     * @param value the value to put
+     * @param onlyIfAbsent if true, don't change existing value
+     * @param evict if false, the table is in creation mode.
+     * @return previous value, or null if none
+     */
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+               boolean evict) {
+  Node<K,V>[] tab; Node<K,V> p; int n, i;
+  //table就是桶数组.
+  if ((tab = table) == null || (n = tab.length) == 0)
+    //resize()扩容操作...
+    //n = 16 , 数组的长度就是16
+    n = (tab = resize()).length;
+  //i = (n - 1) & hash
+  //下标是如何进行计算的
+  //(数组长度-1) & 哈希值(扰动函数)
+  //为了让得到的这个下标要在数组的下标范围之内.
+  if ((p = tab[i = (n - 1) & hash]) == null)
+    //说明计算得到的哈希值并没有产生哈希碰撞
+    //哈希值如果不一样,对象肯定不一样.
+    //直接将新的节点放入到这个位置.
+    tab[i] = newNode(hash, key, value, null);
+  else {//说明hash开始碰撞了 - 从第二次以后
+    Node<K,V> e; K k;
+    //哈希值一样还不能说明是同一个对象,所以它会继续调用equals方法.
+    if (p.hash == hash &&
+        ((k = p.key) == key || (key != null && key.equals(k))))
+      e = p;//p是产生哈希碰撞的那个位置的Node节点[旧节点]
+    
+    else if (p instanceof TreeNode)//判断是否为红黑树结构
+      e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+    else {//哈希值一样,但是key不一样.
+      //转成了一个链表结构
+      for (int binCount = 0; ; ++binCount) {
+        if ((e = p.next) == null) {//找到最后一个节点
+          //把新的节点挂到最后一个节点上.
+          p.next = newNode(hash, key, value, null);
+          //当binCount>=7,当链表挂的数量达到第8个的时候,就按照红黑树的形式进行插入.
+          if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+            treeifyBin(tab, hash);
+          break;
+        }
+        //也许链表结构中的某个节点正好和你想要插入的节点的hash和key都是一样.
+        if (e.hash == hash &&
+            ((k = e.key) == key || (key != null && key.equals(k))))
+          //跳出整个循环.
+          break;
+        p = e;
+      }
+    }
+    //必走...
+    if (e != null) { // existing mapping for key
+      //将e.value旧值赋值给了一个变量oldValue
+      //这一步没有任何影响,仅仅是为了让调用put方法之后能得到一个
+      //返回值[原来的旧值]
+      V oldValue = e.value;
+      if (!onlyIfAbsent || oldValue == null)
+        //e[旧的节点].value = value[新值]
+        e.value = value;//仅仅是覆盖了value,key仍然保持不变
+      afterNodeAccess(e);
+      return oldValue;
+    }
+  }
+  ++modCount;
+  if (++size > threshold)
+    resize();//扩容...
+  afterNodeInsertion(evict);
+  return null;
+}
+~~~
+
+![](imgs/map2.png) 
+
+
+
 
 
 
