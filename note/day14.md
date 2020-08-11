@@ -499,28 +499,35 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
         if ((e = p.next) == null) {//找到最后一个节点
           //把新的节点挂到最后一个节点上.
           p.next = newNode(hash, key, value, null);
+          //当binCount>=7,当链表挂的数量达到第8个的时候,就按照红黑树的形式进行插入.
           if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
             treeifyBin(tab, hash);
           break;
         }
+        //也许链表结构中的某个节点正好和你想要插入的节点的hash和key都是一样.
         if (e.hash == hash &&
             ((k = e.key) == key || (key != null && key.equals(k))))
+          //跳出整个循环.
           break;
         p = e;
       }
     }
     //必走...
     if (e != null) { // existing mapping for key
+      //将e.value旧值赋值给了一个变量oldValue
+      //这一步没有任何影响,仅仅是为了让调用put方法之后能得到一个
+      //返回值[原来的旧值]
       V oldValue = e.value;
       if (!onlyIfAbsent || oldValue == null)
-        e.value = value;
+        //e[旧的节点].value = value[新值]
+        e.value = value;//仅仅是覆盖了value,key仍然保持不变
       afterNodeAccess(e);
       return oldValue;
     }
   }
   ++modCount;
   if (++size > threshold)
-    resize();
+    resize();//扩容...
   afterNodeInsertion(evict);
   return null;
 }
