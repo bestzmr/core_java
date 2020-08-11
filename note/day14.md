@@ -512,7 +512,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
         p = e;
       }
     }
-    //必走...
+    
     if (e != null) { // existing mapping for key
       //将e.value旧值赋值给了一个变量oldValue
       //这一步没有任何影响,仅仅是为了让调用put方法之后能得到一个
@@ -537,7 +537,42 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
 
 
+put流程
 
+* 每次添加key-value键值对到map集合的时候,先根据key进行hash(key) ^ hash(key) >>> 16
+
+  得到一个哈希值,哈希值就是对应桶数组的下标.
+
+* 桶数组的默认初始大小是16个.
+
+* (p = tab[i = (n - 1) & hash]) == null,根据key得到的哈希值对应的这个位置上的值如果为null,说明这个位置
+
+  还没有被占用,没有被占用那么就直接放入即可 - tab[i] = newNode(hash, key, value, null);
+
+* 哈希产生了碰撞,哈希产生了冲突
+
+  * hash和key高度保持一致 -  e = p;//p肯定是不为null,p是桶数组中的旧节点.
+
+    把旧节点p临时存储到变量e中 - e其实就是旧节点.
+
+  * hash值一样,但是key值不一样
+
+    * 如果旧节点p[链表结构中的第一个节点]属于红黑树,就按照红黑树的方式进行插入
+
+    * 如果旧节点p属于链表结构.在遍历的过程中
+
+      * 如果链表结构的某个节点正好和插入的节点的hash和key又是高度保持一致
+
+        直接可以跳出循环了,旧值覆盖新值
+
+      * 如果插入的新的节点匹配不到任何一个旧的链表上的节点,肯定就可以走到链表的尾部.
+
+        直接将新节点挂到链表结构的尾端.
+
+        * 如果链表结构开始超过8个长度,那么链表结构就会转换成红黑树
+        * 当然,如果执行删除的时候,红黑树少于6个节点的时候,开始转换成链表结构了.
+
+  
 
 
 
