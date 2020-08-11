@@ -11,18 +11,16 @@ import java.io.IOException;
  */
 public class FileDemo {
     public static void main(String[] args) {
-
-
         //test01("src/tech/aistar/day15");//相对路径.. 必须从src开始.
 
-        //test02("/Users/admin/Documents/aa/bb/12.txt");
-
-        //File file = new File("/Users/admin/Documents/aa/bb/tt.txt");
-        //System.out.println(file.isFile());
+        //test02("src/tech/aistar/day15/success.txt");
 
         //test05("/Users/admin/Documents/aa/bb/12.txt");
 
         test06("/Users/admin/Documents/success/d/Program Files/apache-tomcat-8.0.37");
+        test04("C:\\Users\\Merlin\\Desktop\\a\\bb\\c");
+//        File file = new File("C:\\Users\\Merlin\\Desktop\\a\\bb\\c");
+//        System.out.println(file.isDirectory());
     }
 
     /**
