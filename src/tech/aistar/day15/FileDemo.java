@@ -11,11 +11,18 @@ import java.io.IOException;
  */
 public class FileDemo {
     public static void main(String[] args) {
+
+
         //test01("src/tech/aistar/day15");//相对路径.. 必须从src开始.
 
-        //test02("src/tech/aistar/day15/success.txt");
+        //test02("/Users/admin/Documents/aa/bb/12.txt");
 
-        test04("D:/aa/bb/cc/dd/ee");
+        //File file = new File("/Users/admin/Documents/aa/bb/tt.txt");
+        //System.out.println(file.isFile());
+
+        //test05("/Users/admin/Documents/aa/bb/12.txt");
+
+        test06("/Users/admin/Documents/success/d/Program Files/apache-tomcat-8.0.37");
     }
 
     /**
@@ -111,17 +118,56 @@ public class FileDemo {
             }
 
             //判断file是否为目录
-            if(!file.isDirectory()){
-                System.out.println("sorry,不是一个有效的目录路径");
-                return;
-            }
+//        System.out.println(file.isFile());
+//            if(file.isFile()){
+//                System.out.println("sorry,不是一个有效的目录路径");
+//                return;
+//            }
 
             if(file.mkdirs()){//创建深层次的目录 , 一次只能创建多个.
                 System.out.println(file+",创建成功!");
             }else{
                 System.out.println("sorry,创建失败了!");
             }
-
     }
 
+    /**
+     * 删除空目录或者文件
+     * @param path
+     */
+    public static void test05(String path){
+        File file = new File(path);
+
+        if(!file.exists()){
+            System.out.println("sorry,目录不存在!");
+            return;
+        }
+        //如果file是文件,直接删除
+        //如果file是空目录,直接删除
+        //如果file是非空目录,则删除失败
+        if(file.delete()){
+            System.out.println(file+"删除成功!");
+        }else{
+            System.out.println("删除失败!");
+        }
+    }
+
+    public static void test06(String path){
+        File file = new File(path);
+
+        //只能获取第一层的子集方法...
+        File[] files = file.listFiles();
+
+        if(null!=files && files.length>0){
+            for (File f : files) {
+               //如果是目录,直接输出目录的绝对路径
+                if(f.isDirectory()){
+                    System.out.println(f.getAbsolutePath());
+                }else if(f.isFile()){
+                    System.out.println(f.getName());
+                }
+                //如果是文件,直接输出文件的名称
+            }
+        }
+    }
 }

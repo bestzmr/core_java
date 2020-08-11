@@ -1,4 +1,13 @@
+第0个作业
 键盘输入字母abcdeafdfdwddf
 然后统计每个字母的个数
 按照字母的个数升序排
 当字母个数一样的时候,继续按照字母本身降序.
+
+第1个作业
+
+//递归操作...
+public static void delFolder(String path){//path肯定是一个已经存在的路径 - 非空目录
+
+}
+
