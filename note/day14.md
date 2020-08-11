@@ -537,7 +537,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
 
 
-put流程
+***put流程***
 
 * 每次添加key-value键值对到map集合的时候,先根据key进行hash(key) ^ hash(key) >>> 16
 
@@ -573,6 +573,151 @@ put流程
         * 当然,如果执行删除的时候,红黑树少于6个节点的时候,开始转换成链表结构了.
 
   
+
+## 扩容机制 - 暂时了解 - 冲刺
+
+~~~java
+final Node<K,V>[] resize() {
+  //table默认是null,oldTab也是null,默认的table赋值给了oldTab
+  Node<K,V>[] oldTab = table;
+  //第一次进来oldCap = 0
+  int oldCap = (oldTab == null) ? 0 : oldTab.length;
+  //oldThr = 0,旧的阀值.
+  int oldThr = threshold;
+  //新的容量,新的阀值
+  int newCap, newThr = 0;
+  
+  //第一次进入,不走
+  if (oldCap > 0) {
+    if (oldCap >= MAXIMUM_CAPACITY) {
+      threshold = Integer.MAX_VALUE;
+      return oldTab;
+    }
+    else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+             oldCap >= DEFAULT_INITIAL_CAPACITY)
+      newThr = oldThr << 1; // double threshold
+  }
+  //第一次进来也是不走...
+  else if (oldThr > 0) // initial capacity was placed in threshold
+    newCap = oldThr;
+  else {    
+    // 第一次进来进行新的容量,新的阀值的初始化
+    newCap = DEFAULT_INITIAL_CAPACITY;//16
+    //阀值 = 0.75f*16
+    //0.75 - 扩容因子(试验得到的,空间和时间上的平衡)
+    //扩容阀值 = 扩容因子 * 数组容量.
+    newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+  }
+  if (newThr == 0) {
+    float ft = (float)newCap * loadFactor;
+    newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+              (int)ft : Integer.MAX_VALUE);
+  }
+  //threshold = 扩容阀值
+  threshold = newThr;
+  @SuppressWarnings({"rawtypes","unchecked"})
+  //底层初始化的桶数组Node-Node<K,V>[] newTab = (Node<K,V>[])new Node[16];
+  Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+  table = newTab;
+  if (oldTab != null) {
+    for (int j = 0; j < oldCap; ++j) {
+      Node<K,V> e;
+      if ((e = oldTab[j]) != null) {
+        oldTab[j] = null;
+        if (e.next == null)
+          newTab[e.hash & (newCap - 1)] = e;
+        else if (e instanceof TreeNode)
+          ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+        else { // preserve order
+          Node<K,V> loHead = null, loTail = null;
+          Node<K,V> hiHead = null, hiTail = null;
+          Node<K,V> next;
+          do {
+            next = e.next;
+            if ((e.hash & oldCap) == 0) {
+              if (loTail == null)
+                loHead = e;
+              else
+                loTail.next = e;
+              loTail = e;
+            }
+            else {
+              if (hiTail == null)
+                hiHead = e;
+              else
+                hiTail.next = e;
+              hiTail = e;
+            }
+          } while ((e = next) != null);
+          if (loTail != null) {
+            loTail.next = null;
+            newTab[j] = loHead;
+          }
+          if (hiTail != null) {
+            hiTail.next = null;
+            newTab[j + oldCap] = hiHead;
+          }
+        }
+      }
+    }
+  }
+  return newTab;
+}
+~~~
+
+
+
+# 周六周日笔试题作业
+
+* **ArrayList和LinkedList的区别**
+* ArrayList和Vector的区别
+* List和Set集合有什么区别
+* ArrayList和HashSet区别
+* **HashSet和HashMap有什么区别**
+* **HashMap和Hashtable有什么区别**
+* 进大厂 - ConcurrentHashMap
+* HashSet和TreeSet有什么区别
+* TreeSet和TreeMap有什么区别
+* TreeMap和HashMap有什么区别
+* Collections[工具类]和Collection区别
+
+
+
+# 集合的细节操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
