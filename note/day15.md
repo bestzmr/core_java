@@ -25,11 +25,12 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
 * 关于获取的方法
   * String getName();//获取file的名称.
   * String getAbsolutePath();//获取file的绝对路径
+  * long length();//获取文件的大小.单位是b
 
 * 关于判断的方法
   * boolean exists();//判断file是否存在.
-  * boolean isDirectory();//判断file是否为目录
-  * boolean isFile();//判断file是否为文件
+  * boolean isDirectory();//判断file是否为目录 - 只能存在的
+  * boolean isFile();//判断file是否为文件 - 只能判断存在的
 
 * 关于创建的
 
@@ -37,3 +38,16 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
 
   * boolean mkdir();//创建单层次的目录
   * boolean mkdirs();//创建深层次的目录
+
+* 关于删除的
+  * boolean delete();//删除文件或者空目录
+
+* 关于加载项
+  * File[] listFiles();//只能获取第一级的子集目录
+
+
+
+## 随堂练习
+
+给定一个目录路径,输出这个目录下的所有的file,如果是文件,则输出名称,如果是目录,输出绝对路径.
+
