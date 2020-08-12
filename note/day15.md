@@ -293,6 +293,24 @@ void writeObject(Object obj);
 
 
 
+## 细节操作
+
+FileOutputStream - 两参构造
+
+name - 路径
+
+append - 是否追加写入,默认是false,追加 - true
+
+~~~java
+public FileOutputStream(String name, boolean append)
+        throws FileNotFoundException
+    {
+        this(name != null ? new File(name) : null, append);
+    }
+~~~
+
+分批次进行插入的时候,反序列化的时候,只能反序列化第一次保存 - 因此不能设置append为true.
+
 
 
 
