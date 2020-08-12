@@ -3,6 +3,7 @@ package tech.aistar.day15.io;
 import java.io.*;
 
 /**
+ * 不推荐使用
  * 本类用来演示:第一个demo - 性能最低 - 单个字节单个字节进行读取和写入的
  *
  * @author: success
