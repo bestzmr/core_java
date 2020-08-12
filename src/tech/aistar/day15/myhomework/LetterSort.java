@@ -1,7 +1,6 @@
 package tech.aistar.day15.myhomework;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 
 /**
  * @author: Merlin
@@ -12,7 +11,6 @@ public class LetterSort {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         letterSort(str);
-
     }
 
     public static void letterSort(String str) {
@@ -29,18 +27,11 @@ public class LetterSort {
         map.forEach((character, counter) -> {
             characterDTOS.add(new CharacterDTO(character, counter));
         });
-        characterDTOS.stream().sorted(new Comparator<CharacterDTO>() {
-            @Override
-            public int compare(CharacterDTO o1, CharacterDTO o2) {
-                if (o1.getCount() == o2.getCount()) {
-                    return Character.compare(o2.getLetters(), o1.getLetters());
-                }
-                return Integer.compare(o1.getCount(), o2.getCount());
+        characterDTOS.stream().sorted(((o1, o2) -> {
+            if (o1.getCount() == o2.getCount()) {
+                return Character.compare(o2.getLetters(), o1.getLetters());
             }
-        }).forEach(x -> System.out.println(x.getLetters()+":"+x.getCount()));
-
-
-
+            return Integer.compare(o1.getCount(), o2.getCount());
+        })).forEach(x -> System.out.println(x.getLetters() + ":" + x.getCount()));
     }
-
 }
