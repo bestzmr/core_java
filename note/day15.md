@@ -160,9 +160,136 @@ java.io.OutputStream[C] - 抽象类 - 所有的字节输出流顶级的抽象父
 
 # 具体编程步骤
 
+~~~java
+package tech.aistar.day15.io;
+
+import java.io.*;
+
+/**
+ * 本类用来演示:第一个demo - 性能最低 - 单个字节单个字节进行读取和写入的
+ *
+ * @author: success
+ * @date: 2020/8/12 9:33 上午
+ */
+public class InputStreamDemo {
+    public static void main(String[] args) {
+        copy("src/tech/aistar/day15/FileDemo.java","src/tech/aistar/day15/FileDemo_副本.txt");
+    }
+
+    /**
+     * 文件的拷贝操作 - FileInputStream/FileOutputStream
+     * 路径可是绝对或者相对路径(src开头)
+     * @param src 原文件的位置
+     * @param target 目标文件的位置
+     */
+    public static void copy(String src,String target){
+        //1. 确定流对象
+
+        InputStream in = null;
+        OutputStream out = null;
+
+        //2. 确定文件输入流 - 确定源头
+        try {
+            in = new FileInputStream(src);
+
+            out = new FileOutputStream(target);
+
+            //3. 单个字节单个字节进行读取.
+            //定义一个变量 - 用来保存每次读取到的内容
+            int len = -1;
+
+            //循环读取
+            while(true){
+                //如果已经到达流的尾部,in.read()返回-1
+                len = in.read();
+
+                //循环退出的条件
+                if(len == -1)
+                    break;
+
+                //System.out.print((char)len);
+                //将内容写到out输入流中
+                out.write(len);
+            }
+            System.out.println("文件拷贝成功!");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {//IO异常是总的父类异常.
+            e.printStackTrace();
+        } finally {
+            //专门进行一些释放资源的操作的.
+            if(null!=in){
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if(null!=out){
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+~~~
 
 
 
+
+
+# 作业
+
+* 写一个程序,实现文件夹的拷贝! - 递归.
+
+
+
+# 序列化和反序列化
+
+* 序列化的过程 - 将内存中的对象写入到磁盘中的过程
+* 反序列化的过程 - 将曾经写入到磁盘中的对象读取到JVM内存中.
+
+
+
+可以序列化单个Java对象,序列化java中的对象数组,序列化java中的集合对象
+
+* 序列化单个对象 - 对象所在类必须要实现可序列化接口***java.io.Serializable***[标记接口]
+
+  如果这个单个对象中还关联了其他对象,这些关联的对象也要实现这个标记接口.
+
+* 序列化数组 - 数组中的每个元素对象所在类也要实现这个标记接口
+
+* 序列化一个集合对象 - 集合中的每个元素对象所在类也要实现这个标记接口.
+
+***反之则会抛出一个java.io.NotSerializableException不可被序列化异常***
+
+# ObjectInputStream/ObjectOutputStream
+
+操作对象类型的字节输入流/字节输出流,这俩个流不属于基础流,不属于节点流.
+
+这个流不具备真正的读写文件的能力.真正具备读写能力的流FileInputStream/FileOutputStream
+
+构建一个能够读取/写入对象类型的文件字节输入流/输出流 - **必须以节点流作为"支撑"**
+
+ObjectInputStream(InputStream in);
+
+~~~java
+ObjectInputStream in = new ObjectInputStream(new FileInputStream("路径"));
+ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("路径"));
+~~~
+
+~~~java
+//读对象
+Object readObject();//读取对象
+
+//写对象
+void writeObject(Object obj);
+~~~
 
 
 
