@@ -254,9 +254,12 @@ public class InputStreamDemo {
   使用这个流来保存id的值.
 
   ~~~java
-  public Book(){
-    this.id = XXX.readId();
-  }
+  Book b1 = new Book('1001','java');
+  b1.getId();// -> 100
+  Book b2 = new Book('1001','java');
+  b2.getId();// -> 101
+  Book b3 = new Book('1001','java');
+  b3.getId();// -> 102
   ~~~
 
 # 序列化和反序列化
