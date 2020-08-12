@@ -4,6 +4,7 @@ import tech.aistar.day10.homework.book.Book;
 import tech.aistar.day15.prj.IBookDao;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,22 +17,24 @@ public class BookDaoImpl implements IBookDao {
 
     @Override
     public List<Book> findAll() {
-        File file = new File("");
+        File file = new File("src/tech/aistar/day15/prj/abc.txt");
         try {
             if (!file.exists()) {//判断文件是否存在
+                System.out.println("文件不存在！");
                 return null;
             }
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(""));
-            if (objectInputStream.read() == -1) {//判断文件内容是否为空
-                return null;
-            }
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/tech/aistar/day15/prj/abc.txt"));
+            List<Book> list = null;
             try {
-                objectInputStream.readObject();//判断文件的流是否合法
+                list = (List<Book>) objectInputStream.readObject();//判断文件的流是否合法
+                if (list == null) {
+                    System.out.println("文件内容为空！");
+                }
             } catch (StreamCorruptedException e) {
+                System.out.println("文件内容不合法！");
                 return null;
             }
-            List<Book> list = (List<Book>) objectInputStream.readObject();
-            list.forEach(x-> System.out.println(x));
+            list.forEach(x -> System.out.println(x));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -43,7 +46,7 @@ public class BookDaoImpl implements IBookDao {
     @Override
     public void delById(int id) {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(""));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/tech/aistar/day15/prj/abc.txt"));
             List<Book> list = (List<Book>) objectInputStream.readObject();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getId() == id) {
@@ -51,7 +54,7 @@ public class BookDaoImpl implements IBookDao {
                     break;
                 }
             }
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(""));
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/tech/aistar/day15/prj/abc.txt"));
             objectOutputStream.writeObject(list);
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,17 +62,28 @@ public class BookDaoImpl implements IBookDao {
             e.printStackTrace();
         }
     }
+
     @Override
     public void save(Book b) {
+        List<Book> list = null;
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(""));
-            List<Book> list = (List<Book>) objectInputStream.readObject();
+
+            try {
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/tech/aistar/day15/prj/abc.txt"));
+                list = (List<Book>) objectInputStream.readObject();
+            } catch (EOFException e) {
+                e.printStackTrace();
+                System.out.println("-----------");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (list == null) {
+                list = new ArrayList<>();
+            }
             list.add(b);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(""));
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/tech/aistar/day15/prj/abc.txt"));
             objectOutputStream.writeObject(list);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

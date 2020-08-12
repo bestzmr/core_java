@@ -1,5 +1,6 @@
 package tech.aistar.day10.homework.book;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author: success
  * @date: 2020/8/3 8:39 上午
  */
-public class Book {
+public class Book implements Serializable {
     private int id;//对象的标志,不属于对象的属性
 
     //图书编号

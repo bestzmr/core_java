@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class DataStreamDemo {
     public static void main(String[] args) {
-//        writeIds();
+//        writeIds();//往文件中写入id数据，写入完成后，改行注释
         Book book1 = new Book("java", 100.0d);
         Book book2 = new Book("python", 100.0d);
         Book book3 = new Book("web", 100.0d);
