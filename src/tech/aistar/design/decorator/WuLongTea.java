@@ -7,10 +7,9 @@ package tech.aistar.design.decorator;
  * @date: 2020/8/12 2:34 下午
  */
 public class WuLongTea extends Batching{
-    private MilkTea milkTea;
 
     public WuLongTea(MilkTea milkTea){
-        this.milkTea = milkTea;
+        super(milkTea);
     }
 
     @Override
