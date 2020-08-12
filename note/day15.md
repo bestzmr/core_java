@@ -359,7 +359,36 @@ public FileOutputStream(String name, boolean append)
 
   
 
+# BufferedInputStream/BufferedOutputStream
 
+利用IO流的装饰器思想.属于过滤流,包装流,拓展流 - 都不具备真正的读写能力,仅仅是为了提高读写的性能的.
+
+
+
+构建一个带缓存功能的文件的字节输入流/输出流
+
+~~~java
+BufferedInputStream in = new BufferedInputStream(new FileInputStream("路径"));
+~~~
+
+底层:在创建BufferedInputStream对象的时候,底层初始化byte[] buf = new byte[8*1024];
+
+~~~java
+private static int DEFAULT_BUFFER_SIZE = 8192;
+
+public BufferedInputStream(InputStream in) {
+  this(in, DEFAULT_BUFFER_SIZE);
+}
+
+public BufferedInputStream(InputStream in, int size) {
+  super(in);
+  if (size <= 0) {
+    throw new IllegalArgumentException("Buffer size <= 0");
+  }
+  buf = new byte[size];//构建该流对象的同时初始化了一个内存数组
+}
+
+~~~
 
 
 
