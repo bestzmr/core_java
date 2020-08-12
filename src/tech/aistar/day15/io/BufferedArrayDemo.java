@@ -47,7 +47,6 @@ public class BufferedArrayDemo {
                     break;
                 }
 
-
                 out.write(buf,0,len);
             }
 

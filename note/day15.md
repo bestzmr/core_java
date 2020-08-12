@@ -363,8 +363,6 @@ public FileOutputStream(String name, boolean append)
 
 利用IO流的装饰器思想.属于过滤流,包装流,拓展流 - 都不具备真正的读写能力,仅仅是为了提高读写的性能的.
 
-
-
 构建一个带缓存功能的文件的字节输入流/输出流
 
 ~~~java
@@ -392,7 +390,25 @@ public BufferedInputStream(InputStream in, int size) {
 
 
 
+# 字符流
 
+只能操作字符文件,不能操作二进制文件.
+
+* java.io.Reader - 字符输入流
+
+  * java.io.InputStreamReader - 桥接器
+
+    笔试题:请你获取键盘输入,but不允许使用Scanner.
+
+    * java.io.FileReader - 节点流 - 真正具备读写字符文件
+
+  * java.io.BufferedReader - 带缓冲功能的字符输入流.
+
+* java.io.Writer - 字符串输出流
+
+  * java.io.**PrintWriter - 自带缓冲功能**
+  * java.io.OutputStreamReader
+    * java.io.**FileWriter -** 文件字符输出流.
 
 
 
