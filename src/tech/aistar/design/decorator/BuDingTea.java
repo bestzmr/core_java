@@ -8,10 +8,8 @@ package tech.aistar.design.decorator;
  */
 public class BuDingTea extends Batching{
 
-    private MilkTea milkTea;
-
     public BuDingTea(MilkTea milkTea){
-        this.milkTea = milkTea;
+        super(milkTea);
     }
 
     @Override

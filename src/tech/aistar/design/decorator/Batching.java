@@ -10,8 +10,6 @@ public abstract class Batching implements MilkTea{
 
     private MilkTea milkTea;//"依赖倒置原则"
 
-    public Batching() {
-    }
 
     public Batching(MilkTea milkTea){//面向接口编程
         this.milkTea = milkTea;

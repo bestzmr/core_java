@@ -349,6 +349,16 @@ public FileOutputStream(String name, boolean append)
 
 
 
+## 组装功能更加强大的流
+
+* 带缓存功能的能够读取对象类型的文件字节输入流.
+
+  ~~~java
+  ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("路径")));
+  ~~~
+
+  
+
 
 
 
