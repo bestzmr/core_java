@@ -40,8 +40,9 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
   * boolean mkdirs();//创建深层次的目录
 
 * 关于删除的
-  * boolean delete();//删除文件或者空目录
-
+  
+* boolean delete();//删除文件或者空目录
+  
 * 关于加载项
 
   * File[] listFiles();//只能获取第一级的子集目录
@@ -84,12 +85,12 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
 
 * 按照流的方向 - **参照物是JVM内存.**
 
-  * 输入流 - 将外部文件的数据读入JVM内存
-  * 输出流 - 把JVM内存中的数据写出到外部的文件.
+  * **输入流** - 将外部文件的数据读入**JVM内存**
+  * *输出流* - 把**JVM内存中的数据**写出到外部的文件.
 
 * 流的读写单位
 
-  * **字节流** - 可以按照最小字节单位进行读取和写入.是直接连接到**输入源**[**数据源**,"管道"]的流
+  * **字节流** - 可以**按照最小字节单位**进行读取和写入.是直接连接到**输入源**[**数据源**,"管道"]的流
 
     按照(1个字节8bit的二进制)为单位.一次可能会读取多个字节.
 
@@ -97,7 +98,7 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
 
   * **字符流**
 
-    是以字符为单位进行数据处理的IO流,通常是使用字符流来**读取纯文本文件.**
+    **是以字符**为单位进行数据处理的IO流,通常是使用字符流来**读取纯文本文件.**
 
     一次读入或者写出16位二进制
 
@@ -109,9 +110,67 @@ java.io.**File** 文件类,作用 - 就是把磁盘上的文件读取到JVM内�
 
     * ***FileInputStream/FileOutputStream***
 
-  * ByteArrayInputStream/ByteArrayOutputStream
-
   * **包装流** - "装饰器模式" - "拓展流"
 
     本身是不具备读写功能的.使用包装流,一定是使用节点流来构建的.
+
+
+
+## 字节流的层次结构
+
+**java.io.InputStream[C] - 抽象类 - 所有的字节输入流的顶级的抽象父类**
+
+* **FileInputStream[C] - 操作文件的字节输入流**,该流是基础流,节点流,这个流才是真正具备读写能力.
+* **ObjectInputStream - 操作对象类型的字节输入流**
+* FilterInputStream
+  * DataInputStream - 操作基本类型(包装类型)的字节输入流
+  * **BufferedInputStream - 带缓存区功能的字节输入流**
+
+
+
+java.io.OutputStream[C] - 抽象类 - 所有的字节输出流顶级的抽象父类
+
+* **FileOutputStream[C] - 操作文件的字节输出流**,该流是基础流,节点流,这个流才是真正具备读写能力.
+* **ObjectOutputStream - 操作对象类型的字节输出流**
+* FilterOutputStream
+  * DataOutputStream - 操作基本类型(包装类型)的字节输出流
+  * BufferedOutputStream - 带缓存区功能的字节输输出流
+
+
+
+# InputStream
+
+* void close();//关闭流,流是一个昂贵的资源对象,使用完毕之后,一定要关闭.
+* abstract int read();//一个字节一个字节进行读取
+* ***int read(byte[] buf);//从输入流中读取一定的字节放入到缓冲区数组buf中.***
+
+
+
+# Outputstream
+
+* void close();//关闭流
+
+* void flush();//刷新缓存.
+
+* **void write(byte[] buf,int off,int len);**//
+
+  因为之前已经将读取到的数据存储到buf数组中了,写入也是应该从buf中获取数据,从off下标处开始获取,写出len个.
+
+
+
+# 具体编程步骤
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
