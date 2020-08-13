@@ -34,7 +34,7 @@ public class DataStreamDemo {
 
     public static void writeIds() {
         try {
-            DataOutputStream da = new DataOutputStream(new FileOutputStream("src\\tech\\aistar\\day15\\io\\abc.txt"));
+            DataOutputStream da = new DataOutputStream(new FileOutputStream("src\\tech\\aistar\\day15\\io\\abc.txt",true));
             for (int i = 100; i < 150; i++) {
                 da.writeInt(i);
                 da.flush();
