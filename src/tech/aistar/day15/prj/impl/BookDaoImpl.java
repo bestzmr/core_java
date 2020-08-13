@@ -1,11 +1,12 @@
 package tech.aistar.day15.prj.impl;
 
-import tech.aistar.day10.homework.book.Book;
+import tech.aistar.day15.io.Book;
 import tech.aistar.day15.prj.IBookDao;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * 本类用来演示:
@@ -15,74 +16,78 @@ import java.util.List;
  */
 public class BookDaoImpl implements IBookDao {
 
+    //模拟数据库 - 文件
+    private static final String PATH = "src/tech/aistar/day15/prj/db/books.dat";
+
+    /**
+     * 如果文件存在,但是文件内容为空,抛出java.io.EOFException
+     * 已经到达文件的末尾
+     * @return
+     */
     @Override
     public List<Book> findAll() {
-        File file = new File("src/tech/aistar/day15/prj/abc.txt");
-        try {
-            if (!file.exists()) {//判断文件是否存在
-                System.out.println("文件不存在！");
-                return null;
-            }
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/tech/aistar/day15/prj/abc.txt"));
-            List<Book> list = null;
-            try {
-                list = (List<Book>) objectInputStream.readObject();//判断文件的流是否合法
-                if (list == null) {
-                    System.out.println("文件内容为空！");
-                }
-            } catch (StreamCorruptedException e) {
-                System.out.println("文件内容不合法！");
-                return null;
-            }
-            list.forEach(x -> System.out.println(x));
+        List<Book> books = null;
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(PATH))){
+            books = (List<Book>) in.readObject();
+        } catch (FileNotFoundException e) {
+            books = null;
+            //e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            books = null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return books;
     }
 
     @Override
     public void delById(int id) {
-        try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/tech/aistar/day15/prj/abc.txt"));
-            List<Book> list = (List<Book>) objectInputStream.readObject();
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getId() == id) {
-                    list.remove(i);
-                    break;
-                }
+        List<Book> oldList = findAll();
+        if(null!=oldList && oldList.size()>0){
+//           oldList.removeIf(new Predicate<Book>() {
+//               @Override
+//               public boolean test(Book book) {
+//                   //如果返回true,则剔除.返回false则保留.
+//                   return false;
+//               }
+//           });
+            oldList.removeIf((b) ->{return id == b.getId();});
+
+            //再次写入
+
+            try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(PATH))){
+                out.writeObject(oldList);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/tech/aistar/day15/prj/abc.txt"));
-            objectOutputStream.writeObject(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+
+        }else{
+            System.out.println("sorry,不存在!");
         }
     }
 
     @Override
     public void save(Book b) {
-        List<Book> list = null;
-        try {
+        //1. 先判断文件中是否已经存在曾经序列化过的对象
+        List<Book> oldList = findAll();
 
-            try {
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/tech/aistar/day15/prj/abc.txt"));
-                list = (List<Book>) objectInputStream.readObject();
-            } catch (EOFException e) {
-                e.printStackTrace();
-                System.out.println("-----------");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            if (list == null) {
-                list = new ArrayList<>();
-            }
-            list.add(b);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/tech/aistar/day15/prj/abc.txt"));
-            objectOutputStream.writeObject(list);
+        //新建一个新的集合对象 - 用来为此次保存服务
+        List<Book> newList = new ArrayList<>();
+
+        //2. 判断
+        if(null!=oldList && oldList.size()>0){
+            //将oldList中的所有的数据全部转移到newList集合中去哈
+            newList.addAll(oldList);
+        }
+        newList.add(b);
+
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(PATH))){
+            out.writeObject(newList);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
