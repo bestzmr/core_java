@@ -17,8 +17,8 @@ public class TestBookDao {
     public static void main(String[] args) {
         IBookDao bookDao = new BookMapper();
 
-        Book b1 = new Book(1,"1001","java");
-        Book b2 = new Book(2,"1002","python");
+        Book b1 = new Book("1001","java");
+        Book b2 = new Book("1002","python");
 
 //        List<Book> books = new ArrayList<>();
 //       books.add(b1);
@@ -31,7 +31,7 @@ public class TestBookDao {
 //        books.forEach(e-> System.out.println(e));
 
         //测试保存...
-        bookDao.save(b2);
+        bookDao.save(b1);
 
       //  bookDao.delById(1);
 //

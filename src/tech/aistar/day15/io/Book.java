@@ -1,5 +1,7 @@
 package tech.aistar.day15.io;
 
+import tech.aistar.day15.prj.IdWorker;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +26,12 @@ public class Book implements Serializable {
     private Date publishDate;//出版时间
 
     public Book() {
+    }
+
+    public Book(String isbn, String bookName) {
+        this.id = (int) IdWorker.read();
+        this.isbn = isbn;
+        this.bookName = bookName;
     }
 
     public Book(int id, String isbn, String bookName) {

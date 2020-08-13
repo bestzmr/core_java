@@ -12,7 +12,7 @@ import java.io.*;
 @SuppressWarnings("all")
 public class BufferedArrayDemo {
     public static void main(String[] args) {
-        copy("src/tech/aistar/day15/FileDemo.java","src/tech/aistar/day15/FileDemo_副本3.txt");
+        copy("src/tech/aistar/day15/io/001.jpg","src/tech/aistar/day15/io/001_copy.jpg");
     }
 
     /**
