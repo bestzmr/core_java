@@ -22,31 +22,24 @@ public class FolderCopyDemo {
     public static void copyFolder(String src,String target){
         //构建原文件的路径
         File file = new File(src);
-        //获取原根目录下的所有的第一级子目录
-        File[] files = file.listFiles();
-        if(null!=files && files.length>0){
 
-            for (File f : files) {
-                if(f.isFile()){
-                    //如果是文件,直接调用拷贝的方法
-                    copyFile(src,target);
-                }else if(f.isDirectory()){
-                    //构建目标的file - 文件夹的拷贝 - 文件夹的创建
-                    File fileb = new File(target);
-                    if(!fileb.exists()){
-                        fileb.mkdirs();
-                    }
-                    String[] names = file.list();//获取File下面的所有的第一级的子目录的名称
-                    //递归调用自己
-                    for (String name : names) {
-                        copyFolder(src+"/"+name,target+"/"+name);
-                    }
-                }
+        if(file.isFile()){
+            //如果是文件,直接调用拷贝的方法
+            copyFile(src,target);
+        }else if(file.isDirectory()){
+            //构建目标的file - 文件夹的拷贝 - 文件夹的创建
+            File fileb = new File(target);
+            if(!fileb.exists()){
+                fileb.mkdirs();
             }
-            System.out.println("目录拷贝成功!");
+            String[] names = file.list();//获取File下面的所有的第一级的子目录的名称
+            //递归调用自己
+            for (String name : names) {
+                copyFolder(src+"/"+name,target+"/"+name);
+            }
         }
-
     }
+
 
     /**
      * 文件的拷贝
