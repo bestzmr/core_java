@@ -15,7 +15,7 @@ public class Book implements Serializable {
     private int id;//对象的标志,不属于对象的属性
 
     //图书编号
-    private String isbn;
+    private transient String isbn;
 
     private String bookName;
 
