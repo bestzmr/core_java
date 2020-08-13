@@ -15,10 +15,8 @@ public class VolatileDemo {
         }
         if (x == 5) {
             System.out.println("----stopped-----");
-
         }
     }
-
     public static void main(String[] args) {
         VolatileDemo v = new VolatileDemo();
         Thread t1 = new Thread(() -> v.writeX());
