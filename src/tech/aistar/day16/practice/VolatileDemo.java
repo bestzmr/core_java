@@ -14,7 +14,7 @@ public class VolatileDemo {
             System.out.println();
         }
         if (x == 5) {
-            System.out.println("----stoped-----");
+            System.out.println("----stopped-----");
 
         }
     }
