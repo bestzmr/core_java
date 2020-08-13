@@ -3,9 +3,6 @@ package tech.aistar.day16.thread;
 /**
  * 本类用来演示: join方法
  *
- * 哪个线程调用join方法,那么哪个线程就会暂时进入阻塞态.
- * 然后等到其他线程执行完毕之后,自己从阻塞态->运行态.
- *
  * @author: success
  * @date: 2020/8/13 2:51 下午
  */
@@ -24,10 +21,14 @@ class FatherThread extends Thread{
         System.out.println("BaBa正在烧饭...");
         System.out.println("发现酱油没有了...");
 
+        //创建了儿子线程对象
         Thread son = new SonThread();
         try {
-            son.join();
-            son.start();
+            son.start();//启动儿子线程
+            son.join();//调用儿子线程join方法
+            //在一个线程父亲执行的时候,调用了另外一个线程儿子的join方法,导致
+            //父亲线程进入阻塞等待状态,直到儿子线程执行结束,那么父亲线程才会继续执行.
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
