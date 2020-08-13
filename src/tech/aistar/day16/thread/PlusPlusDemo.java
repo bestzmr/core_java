@@ -1,18 +1,7 @@
 package tech.aistar.day16.thread;
 
 /**
- * 本类用来演示:volatile关键字
- *
- * 没有它的时候 - JVM底层进行指令优化重排操作
- *
- * 正常的步骤:
- * 1. 申请空间
- * 2. 初始化
- * 3. 内存地址赋值给引用
- *
- * 重排之后的指令
- * 1 - 3 - 2
- *
+ * synchronized可以保证可见性和原子性
  * @author: success
  * @date: 2020/8/13 3:13 下午
  */
