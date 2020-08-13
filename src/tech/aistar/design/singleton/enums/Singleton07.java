@@ -1,7 +1,7 @@
 package tech.aistar.design.singleton.enums;
 
 /**
- * 本类用来演示:
+ * 本类用来演示: 枚举单例
  *
  * @author: success
  * @date: 2020/8/5 3:44 下午
