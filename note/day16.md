@@ -334,3 +334,17 @@ ExecutorService是Java提供的用于管理线程池的类。该类的两个作�
 * Executors.newScheduledThreadPool(int n)：创建一个定长线程池，支持定时及周期性任务执行
 * Executors.newSingleThreadExecutor()：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
 
+
+
+# 作业
+
+Account类 - id,name,balance=100.
+
+AccountBiz类 - 模拟取钱,每次只能取10元钱.
+
+开启俩个线程老公,小三 -> 同时取钱,保证线程的同步.
+
+老公取钱,剩余90元.
+
+小三取钱,剩余80元.
+
