@@ -1,5 +1,7 @@
 package tech.aistar.design.singleton.singleton04;
 
+import java.io.Serializable;
+
 /**
  * 本类用来演示:单例模式 - 懒汉模式(线程安全) - 双重检测
  * 类加载进内存的时候,不会立即对该类进行初始化工作
