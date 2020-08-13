@@ -15,7 +15,7 @@ public class RunableDemo01 implements Runnable{
 
     @Override
     public void run() {
-        for (int i = 10; i >10 ; i++) {
+        for (int i = 10; i >0 ; i--) {
             if(ticket>0) {
                 System.out.println(Thread.currentThread().getName() + "->剩余:" + (--ticket));
                 try {
