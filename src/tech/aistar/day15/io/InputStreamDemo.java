@@ -11,7 +11,7 @@ import java.io.*;
  */
 public class InputStreamDemo {
     public static void main(String[] args) {
-        copy("src/tech/aistar/day15/FileDemo.java","src/tech/aistar/day15/FileDemo_副本.txt");
+        copy("src/tech/aistar/day15/io/001.jpg","src/tech/aistar/day15/io/001_副本.jpg");
     }
 
     /**
