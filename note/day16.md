@@ -99,7 +99,7 @@
 
 * **继承Thread类 - 抽象类**
 * **实现Runable接口**
-* Callable和Future组合或者Callable和FutureTask组合[了解]
+* Callable和Future组合或者Callable和FutureTask组合[了解] - jdk5.0开始提供的新的特性
 
 
 
