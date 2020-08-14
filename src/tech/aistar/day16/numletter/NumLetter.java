@@ -34,7 +34,7 @@ public class NumLetter {
     }
 
     public synchronized void printNum(){
-        for (int i=1; i <=26 ; i++) {
+        for (int i=1; i <=26 ; i+=2) {
             if(flag ==  false){
                 try {
                     wait();
@@ -43,7 +43,7 @@ public class NumLetter {
                 }
             }
 
-            System.out.print(i);
+            System.out.print(i+" "+(i+1));
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
