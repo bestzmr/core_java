@@ -20,6 +20,7 @@ package tech.aistar.day16.thread;
 public class VolatileDemo {
     //volatile - 具备可见性.
     private volatile int x = 0;
+    //private int x = 0;
 
     //写
     private void writeX(){
