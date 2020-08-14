@@ -99,7 +99,7 @@
 
 * **继承Thread类 - 抽象类**
 * **实现Runable接口**
-* Callable和Future组合或者Callable和FutureTask组合[了解] - jdk5.0开始提供的新的特性
+* Callable和Future组合或者***Callable和FutureTask组合***[了解] - jdk5.0开始提供的新的特性
 
 
 
@@ -121,8 +121,10 @@
 
   ​				//然后继续向下执行.
 
-* void yield();//线程之间的礼让
+* void yield();//相同等级之间的线程之间的礼让.当一个线程正在执行的时候,突然调用yield方法.那么会导致
 
+  当前线程进入等待阻塞状态,让其他线程先执行.但是并不是每次调用都一定能够实现礼让的效果.
+  
   
 
 ## 同步关键字volatile
@@ -461,6 +463,7 @@ java.lang.Object
   * ***按照顺序依次输出a1b2c3d4,俩个线程,负责输出字母,一个负责输出数字.***
   * a12b34c56d78
   * abcABC123abcABC123abcABC123 - 三个线程依次执行...
+  * 请你使用线程来统计一个特别大的数组,把数组中的每个数字进行计算求得总和.
 
 
 
@@ -586,7 +589,7 @@ public class LockDemo extends Thread{
 
 
 
-# 四种常见的线程池
+# 四种常见的线程池 - 必考
 
 线程池的返回值ExecutorService简介
 
@@ -610,4 +613,8 @@ AccountBiz类 - 模拟取钱,每次只能取10元钱.
 老公取钱,剩余90元.
 
 小三取钱,剩余80元.
+
+
+
+使用Lock来完成生产者和消费者.
 
