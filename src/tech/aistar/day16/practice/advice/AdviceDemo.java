@@ -6,7 +6,14 @@ package tech.aistar.day16.practice.advice;
  */
 public class AdviceDemo {
     public static void main(String[] args) {
+        Box box = new Box();
+        Thread t1 = new Producer(box);
+        Thread t2 = new Customer(box);
 
+        t1.setName("p");
+        t2.setName("c");
+        t1.start();
+        t2.start();
     }
 
 }
@@ -45,7 +52,7 @@ class Box{
 class Producer extends Thread {
     private Box box;
 
-    private Producer(Box box) {
+    public Producer(Box box) {
         this.box = box;
     }
     private int i;
