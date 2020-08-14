@@ -99,7 +99,7 @@
 
 * **继承Thread类 - 抽象类**
 * **实现Runable接口**
-* Callable和Future组合或者Callable和FutureTask组合[了解] - jdk5.0开始提供的新的特性
+* Callable和Future组合或者***Callable和FutureTask组合***[了解] - jdk5.0开始提供的新的特性
 
 
 
@@ -121,8 +121,10 @@
 
   ​				//然后继续向下执行.
 
-* void yield();//线程之间的礼让
+* void yield();//相同等级之间的线程之间的礼让.当一个线程正在执行的时候,突然调用yield方法.那么会导致
 
+  当前线程进入等待阻塞状态,让其他线程先执行.但是并不是每次调用都一定能够实现礼让的效果.
+  
   
 
 ## 同步关键字volatile
