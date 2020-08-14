@@ -34,7 +34,7 @@ public class NumLetter {
     }
 
     public synchronized void printNum(){
-        for (int i=1; i <=26 ; i+=2) {
+        for (int i=1; i <=52 ; i+=2) {
             if(flag ==  false){
                 try {
                     wait();
