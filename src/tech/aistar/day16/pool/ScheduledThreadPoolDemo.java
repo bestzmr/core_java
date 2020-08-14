@@ -20,12 +20,12 @@ public class ScheduledThreadPoolDemo {
          *                                                   long period(周期),
          *                                                   TimeUnit unit);
          */
-        for (int i = 0; i < 10; i++) {
-          executorService.scheduleAtFixedRate(()->{
-              System.out.println(Thread.currentThread().getName());
-          },5,2, TimeUnit.SECONDS);
+
+        executorService.scheduleAtFixedRate(() -> {
+            System.out.println(Thread.currentThread().getName());
+        }, 5, 2, TimeUnit.SECONDS);
 
 
-        //executorService.shutdown();
+        executorService.shutdown();
     }
 }
