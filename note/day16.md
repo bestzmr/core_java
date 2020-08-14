@@ -464,13 +464,97 @@ java.lang.Object
 
 
 
-# Lock
+# Lock - 同步代码
 
 简介:它是一个接口,下面有很多实现类,***笔试题lock和synchronized的区别!***
 
 * lock是接口,synchronized它是一个关键字
 * **lock锁是一个显示**锁(手动申请锁,手动释放锁),synchronized隐式锁(自动释放锁)
 * lock手动申请锁**(对象锁)**
+* lock是锁代码块
+* lock出现异常的时候,是不会主动释放资源的.
+
+
+
+### java.util.concurrent
+
+笔试题:谈谈你对java.util.concurrent包下的接口或者实现类的认识.
+
+
+
+## 实现类ReentrantLock
+
+构造
+
+~~~java
+ public ReentrantLock() {
+   sync = new NonfairSync();//默认申请的非公平锁.
+ }
+
+ AbstractQueuedSynchronizer - AQS
+ package tech.aistar.day16.locks;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * 本类用来演示: lock - 高并发下,性能优于synchronized
+ *
+ * @author: success
+ * @date: 2020/8/14 2:06 下午
+ */
+public class LockDemo extends Thread{
+
+    private Lock lock = new ReentrantLock();
+
+    public void add(){
+        //出现异常的时候是不会释放锁的.
+        //显示锁 - 手动申请锁以及手动释放锁[finally]
+
+
+        //对象锁
+        lock.lock();//开始申请锁.
+        //同步代码 - 某个时刻只能由一个线程进入执行,然后直到运行unlock才会主动释放锁.
+        try {
+            System.out.println(Thread.currentThread().getName()+":"+1);
+
+            Thread.sleep(1000);
+
+            System.out.println(Thread.currentThread().getName()+":"+2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            lock.unlock();//手动释放锁
+        }
+    }
+
+    public static void main(String[] args) {
+        LockDemo demo = new LockDemo();
+        Thread t1 = new Thread(()->{
+            demo.add();
+        });
+        t1.setName("one");
+        Thread t2 = new Thread(()->{
+            demo.add();
+        });
+        t2.setName("two");
+
+        t1.start();
+
+        t2.start();
+    }
+}
+
+~~~
+
+
+
+### 公平锁和非公平锁
+
+非公平锁高于公平锁.
+
+* 公平锁 - 老的线程在等待队列上排队,新的线程过来,新的线程也会依次排队进行等待.不会和老的线程争抢锁的.FIFO,先到先得
+* 非公平锁 - 新来的线程不会乖乖一直在等待队列上进行排队,有可能直接去和老线程去争抢锁资源.
 
 
 
