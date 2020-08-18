@@ -25,6 +25,14 @@ public class Point {
         System.out.println("Point空参构造...");
     }
 
+    /**
+     * 多参构造
+     * @param x
+     */
+    public Point(int x,String y){
+        System.out.println("x:"+x+",y:"+y);
+    }
+
     public void test(){
         System.out.println("test()...");
     }
