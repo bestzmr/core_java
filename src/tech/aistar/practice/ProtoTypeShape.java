@@ -64,29 +64,35 @@ class Square implements Shape {
         System.out.println("该正方形的面积" + a * a + "\n");
     }
 
-    class ProtoTypeManager {
-        private HashMap<String, Shape> ht = new HashMap<>();
-        public ProtoTypeManager() {
-            ht.put("Circle", new Circle());
-            ht.put("Square", new Square());
 
-        }
 
-        public void addShape(String key, Shape object) {
-            ht.put(key, object);
-        }
-
-        public Shape getShape(String key) {
-            Shape temp = ht.get(key);
-            return (Shape) temp.clone();
-        }
-
+}
+class ProtoTypeManager {
+    private HashMap<String, Shape> ht = new HashMap<>();
+    public ProtoTypeManager() {
+        ht.put("Circle", new Circle());
+        ht.put("Square", new Square());
 
     }
+
+    public void addShape(String key, Shape object) {
+        ht.put(key, object);
+    }
+
+    public Shape getShape(String key) {
+        Shape temp = ht.get(key);
+        return (Shape) temp.clone();
+    }
+
 
 }
 public class ProtoTypeShape {
     public static void main(String[] args) {
+        ProtoTypeManager pm = new ProtoTypeManager();
+        Shape obj1 = (Circle) pm.getShape("Circle");
+        obj1.countArea();
+        Shape obj2 = (Shape) pm.getShape("Square");
+        obj2.countArea();
 
     }
 }
