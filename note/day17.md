@@ -408,10 +408,6 @@ public class UserDaoImpl implements IUserDao{
 }
 ~~~
 
-
-
-
-
 ## 静态代理
 
 **就是代理类需要真实提供,并且真实生成.java文件和一个.class文件**,它的效率是高于动态代理的方式.
@@ -420,8 +416,6 @@ public class UserDaoImpl implements IUserDao{
 
 目标对象和代理对象都应该实现同一个接口.
 
-
-
 缺点:会产生大量的代理类.
 
 
@@ -429,3 +423,10 @@ public class UserDaoImpl implements IUserDao{
 ## 动态代理
 
 简介:J***DK的动态代理 - 只能代理接口***.CGLIB代理 - 既可以代理接口,代理实现类.
+
+在程序的运行期间,在内存中生成这么一个代理对象.然后我们可以获取这个对象.
+
+~~~java
+
+~~~
+
