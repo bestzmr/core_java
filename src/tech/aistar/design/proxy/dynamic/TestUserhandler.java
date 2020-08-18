@@ -41,7 +41,8 @@ public class TestUserhandler {
         ITeacherDao proxy = (ITeacherDao) Proxy.newProxyInstance(teacherDao.getClass().getClassLoader(),teacherDao.getClass().getInterfaces(),v);
 
         //4. 代理对象来调用方法
-        proxy.find(10);
+        int s = proxy.find(10);
+        System.out.println(s);
 
         //class com.sun.proxy.$Proxy1
         //System.out.println(proxy.getClass());

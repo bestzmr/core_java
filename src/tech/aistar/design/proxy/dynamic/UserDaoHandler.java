@@ -33,15 +33,15 @@ public class UserDaoHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
 //        if(method.getName().startsWith("remove")){
-//            throw new UnsupportedOperationException("不支持的操作!");
+//            throw new Unsu pportedOperationException("不支持的操作!");
 //        }
 
         System.out.println("log之前...");
 
         //反射调用目标对象中的方法
-        method.invoke(obj,args);//核心的业务方法的...
+        Object result = method.invoke(obj,args);//核心的业务方法的...
 
         System.out.println("log之后...");
-        return null;
+        return result;
     }
 }

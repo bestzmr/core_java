@@ -8,8 +8,9 @@ package tech.aistar.design.proxy.dynamic;
  */
 public class TeacherDaoImpl implements ITeacherDao{
     @Override
-    public void find(int id) {
+    public int find(int id) {
         System.out.println("find:"+id);
+        return id;
     }
 
     @Override

@@ -8,7 +8,7 @@ package tech.aistar.design.proxy.dynamic;
  */
 public interface ITeacherDao {
 
-    void find(int id);
+    int find(int id);
 
     void remove(int id);
 }
