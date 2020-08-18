@@ -476,3 +476,98 @@ public class UserDaoHandler implements InvocationHandler {
 }
 ~~~
 
+
+
+# 注解
+
+简介:框架的配置有两种方式,一种是基于传统的xml,properties,yml[新的]配置文件的配置方式.另外一种就是基于注解的配置方式 - 推荐使用,方便.每个注解背后都会有java作为支撑.
+
+## jdk中内置的注解
+
+* @SuppressWarnings("all") - 抑制警告.
+
+  ~~~java
+  @SuppressWarnings({“unused”,“rawtypes”})
+  ~~~
+
+* @Deprecated - 标注过时
+
+* @FunactionInterface - jdk8.0开始提供的,函数式接口[只能定义一个抽象方法]
+
+* @Override - 方法的重写
+
+
+
+## 自定义注解
+
+* 使用@Interface关键字来定义.
+
+* @Target - 告诉编译器,该注解可以被加在哪里!
+
+* @Retention - 注解可以被保存到哪里.
+
+  ~~~java
+  {
+      /**
+       * Annotations are to be discarded by the compiler.
+       
+       只能保留在原文件中 - .java文件.
+       */
+      SOURCE,
+  
+      /**
+       * 注解一直可以保留到.class文件中.
+       */
+      CLASS,
+  
+      /**
+       * 在程序的运行期间,可以通过反射的技术来得到这个注解的一切信息.
+       */
+      RUNTIME
+  }
+  ~~~
+
+* 注解中只有属性的概念,没有方法的概念.
+
+  默认的属性的名称叫value;
+
+
+
+## java.lang.annotation.ElementType
+
+枚举类型,规定了注解可以被放入到的位置.
+
+
+
+## java.lang.annotation.RetentionPolicy
+
+注解的保留策略.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
