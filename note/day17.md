@@ -333,3 +333,99 @@ public class ArrayDemo {
 # 笔试题
 
 给定某个类的全限定名.统计每个类型的字段的个数,降序排.
+
+
+
+# 代理模式
+
+简介:静态代理和动态代理(***jdk动态代理和cglib动态代理***)
+
+什么时候需要使用到代理模式.
+
+目标对象 - 真正的对象,真正的核心功能的对象.
+
+代理对象 - 拓展目标对象功能的对象.
+
+
+
+***目的:都是为了在不修改目标对象的前提之下,能够拓展目标对象的功能.***
+
+
+
+## 在没有使用代理之前
+
+~~~java
+public interface IUserDao{
+  void add();
+  
+  void test();
+}
+public class UserDaoImpl implements IUserDao{
+  @Override
+  public void add(){
+    //核心业务功能
+    System.out.println("add...");
+  }
+  
+  @Override
+  public void test(){
+    //核心业务功能
+     System.out.println("test...");
+  }
+}
+~~~
+
+核心的业务功能完成之后,突然项目中需要给每个dao方法加入日志功能.
+
+只能对UserDaoImpl进行直接的修改操作,**但是不符合"开闭原则".不利于程序的拓展性和维护**
+
+会使核心的类变得非常***"臃肿"***,把大量的核心功能和大量的非核心功能全部耦合在一块儿了.
+
+~~~java
+public class UserDaoImpl implements IUserDao{
+  @Override
+  public void add(){
+    //与业务无关的核心功能 - 日志
+    System.out.println("log之前...");
+    
+    //核心业务功能
+    System.out.println("add...");
+    
+    //与业务无关的核心功能 - 日志
+    System.out.println("log之后...");
+  }
+  
+  @Override
+  public void test(){
+    //与业务无关的核心功能 - 日志
+    System.out.println("log之前...");
+    //核心业务功能
+     System.out.println("test...");
+    
+    //与业务无关的核心功能 - 日志
+    System.out.println("log之后...");
+  }
+}
+~~~
+
+
+
+
+
+## 静态代理
+
+**就是代理类需要真实提供,并且真实生成.java文件和一个.class文件**,它的效率是高于动态代理的方式.
+
+在项目中,应用程序的功能归类为与业务相关的核心功能和与业务核心无关的功能[事务,***日志***]
+
+目标对象和代理对象都应该实现同一个接口.
+
+
+
+缺点:会产生大量的代理类.
+
+
+
+## 动态代理
+
+简介:J***DK的动态代理 - 只能代理接口***.CGLIB代理 - 既可以代理接口,代理实现类.
