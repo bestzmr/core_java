@@ -21,6 +21,42 @@ public class Point {
 //    //公开的是1
 //    public int z;
 
+    public Point(){
+        System.out.println("Point空参构造...");
+    }
+
+    /**
+     * 多参构造
+     * @param x
+     */
+    public Point(int x,String y){
+        System.out.println("x:"+x+",y:"+y);
+    }
+
+    public void test(){
+        System.out.println("test()...");
+    }
+
+    public void test(int x){
+        System.out.println("x:"+x);
+    }
+
+    public void test(int x,String y){
+        System.out.println("x:"+x+",y:"+y);
+    }
+
+    public static void testStatic(){
+        System.out.println("static...");
+    }
+
+    private void testPrivate(){
+        System.out.println("private...");
+    }
+
+    public String getResult(){
+        return "ok";
+    }
+
 
     @Override
     public String toString() {

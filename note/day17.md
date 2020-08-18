@@ -27,6 +27,10 @@
 * Field getDeclaredField(String fieldName);//根据属性的名称来获取这个属性对应的Field对象,但是包括私有的属性.
 * String getName();//获取类的全限定名
 * String getSimpleName();//获取类的简称.
+* Method[] getMethods();//获取类中所有的公共方法.
+* Method[] getDeclaredMethods();//获取类中所有的方法,包括私有的.
+* Method getMethod(String methodName);//根据方法的名称来获取这个属性对应的方法对象.但是也是公开的.
+* Method getDeclaredMethod(String methodName);//根据方法的名称来获取这个属性对应的method对象,但是包括私有的属性.
 
 
 
@@ -102,3 +106,230 @@ spring框架属于IOC容器 - 控制反转 - 将bean的生命周期[创建]的�
 
 
 
+# Method
+
+~~~java
+package tech.aistar.day17;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+/**
+ * 本类用来演示:
+ *
+ * @author: success
+ * @date: 2020/8/18 9:55 上午
+ */
+public class MethodDemo {
+    public static void main(String[] args) {
+        //1. 获取class实例
+        try {
+            Class<?> c = Class.forName("tech.aistar.day17.Point");
+            Method[] methods = c.getDeclaredMethods();
+            System.out.println(methods.length);
+
+            for (Method method : methods) {
+                //System.out.println(method);
+
+                //获取方法的元信息
+                //1. 获取方法的修饰符
+                System.out.print(Modifier.toString(method.getModifiers())+" ");
+
+                //2. 获取方法的返回类型
+                System.out.print(method.getReturnType().getSimpleName()+" ");
+
+                //3. 获取方法的名称
+                System.out.print(method.getName()+"(");
+
+                //4. 获取方法的形参列表
+                Class<?>[] types = method.getParameterTypes();
+
+                for (int i = 0; i < types.length; i++) {
+                    System.out.print((i!=types.length-1)?(types[i].getSimpleName()+","):(types[i].getSimpleName()));
+                }
+                System.out.println(")");
+
+                System.out.println("===获取指定的方法===");
+                //反射创建Point对象
+                Point p = (Point) c.newInstance();
+
+                //1. 获取空参的test方法
+                Method m1 = c.getDeclaredMethod("test");
+                //1-1. 反射调用
+                m1.invoke(p);
+
+                //2. 反射调用一参test方法
+                Method m2 = c.getDeclaredMethod("test",int.class);
+                m2.invoke(p,100);
+
+                //3. 反射调用两参test方法
+                Method m3 = c.getDeclaredMethod("test",int.class,String.class);
+                m3.invoke(p,200,"tom");
+
+                //4. 调用静态方法
+                Method m4 = c.getDeclaredMethod("testStatic");
+                m4.invoke(null);
+
+                //5. 调用私有的方法 - 反射可以破坏封装性.
+                Method m5 = c.getDeclaredMethod("testPrivate");
+                m5.setAccessible(true);
+                m5.invoke(p);
+
+                //6. 调用带有返回类型的方法
+                Method m6 = c.getDeclaredMethod("getResult");
+                String result = (String) m6.invoke(p);
+                System.out.println(result);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+~~~
+
+
+
+# Constructor
+
+简介:反射调用构造.
+
+~~~java
+package tech.aistar.day17;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
+/**
+ * 本类用来演示:反射调用构造方法
+ *
+ * @author: success
+ * @date: 2020/8/18 10:38 上午
+ */
+public class ConstructorDemo {
+    public static void main(String[] args) {
+        //获取class实例
+        Class<?> c = Point.class;
+
+        //获取所有的构造
+        Constructor<?>[] constructors = c.getDeclaredConstructors();
+
+        for (Constructor<?> constructor : constructors) {
+            //System.out.println(constructor);
+            System.out.print(Modifier.toString(constructor.getModifiers())+" ");
+            System.out.print(constructor.getName()+"(");
+
+            Class<?>[] types = constructor.getParameterTypes();
+
+            for (int i = 0; i < types.length; i++) {
+                System.out.print((i!=types.length-1)?(types[i].getSimpleName()+","):(types[i].getSimpleName()));
+            }
+
+            System.out.println(")");
+
+            System.out.println("===反射调用构造==");
+            //1. 调用空参构造有两种方式
+            //a. 直接通过java.lang.Class<T>中提供的newInstance();
+            try {
+                Point p = (Point) c.newInstance();
+
+            //b. 通过java.lang.reflect.Constructor提供的newInstance
+            Constructor<?> c1 = c.getDeclaredConstructor();
+            Point p2 = (Point) c1.newInstance();
+
+            //2. 调用带参构造只有一种
+            Constructor<?> c2 = c.getDeclaredConstructor(int.class,String.class);
+            Point p3 = (Point) c2.newInstance(200,"java");
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+~~~
+
+
+
+# Array
+
+java.lang.reflect.Array - 反射技术操作数组.
+
+笔试题:Array和Arrays有什么区别.
+
+~~~java
+package tech.aistar.day17;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+/**
+ * 本类用来演示:反射技术操作数组
+ *
+ * @author: success
+ * @date: 2020/8/18 10:48 上午
+ */
+public class ArrayDemo {
+    public static void main(String[] args) {
+        int[] arr1 = {10,20,30,40};
+
+        String[] arr2 = {"java","python","php"};
+
+        //对上面的数组进行扩容操作.
+        int[] temp = (int[]) exchange(arr1);
+        System.out.println(Arrays.toString(temp));
+
+        String[] temp2 = (String[]) exchange(arr2);
+        System.out.println(Arrays.toString(temp2));
+    }
+
+    /**
+     * 反射的技术来操作数组 - 完成数组的扩容操作.
+     * @param arr
+     */
+    private static Object exchange(Object arr) {
+        //1. 确定一个新的数组,首先要先确定新的数组的元素类型以及数组的长度
+        int len = Array.getLength(arr);
+
+        //2. 反射获取数组的组件类型 - 元素类型
+        Class<?> type = arr.getClass().getComponentType();
+
+        //3. 通过反射的技术来构建新的数组
+        Object temp = Array.newInstance(type,len<<1);
+
+        //4. 遍历arr,然后将arr中的原始的数据放入到反射创建出来的新的数组temp中.
+        for (int i = 0; i < len; i++) {
+            //4-1. 依然通过下标来获取原始数组对应下标的数据
+            Object value = Array.get(arr,i);
+
+            //4-2. 将value这个数据存放到temp数组中去
+            //反射设置数组的值
+            Array.set(temp,i,value);
+        }
+        return temp;
+    }
+}
+
+~~~
+
+
+
+# 笔试题
+
+给定某个类的全限定名.统计每个类型的字段的个数,降序排.
