@@ -46,3 +46,59 @@
 
 
 
+# 反射在框架中的应用
+
+~~~java
+public interface IUserDao{
+  
+}
+//dao层 - 专门和DB交互[jdbc技术,mybatis技术.].
+public class UserDaoImpl implements IUserDao{
+    //CRUD操作.
+}
+
+public interface IUserSerivce{
+  
+}
+
+//业务逻辑层 - 进行数据统计,数据归来,数据分析,数据处理.
+//业务逻辑层首先调用dao层.
+public class UserServiceImpl implements IUserService{
+    //需要维护一个dao对象
+    //传统的写法 -
+    //弊端 - 突然哪天实现类换掉了.代码是需要重新编译的.
+    //谁使用组件,还必须需要程序自己去创建组件.
+    //将对象的创建和对象的使用耦合在一块儿.
+    //主动寻找方式 - 哪里使用,哪里new
+    //private IUserDao userDao = new UserDaoImpl();
+    
+    //使用了spring框架之后,被动接受组件.
+  	private IUserDao userDao;
+  
+    
+}
+~~~
+
+spring框架属于IOC容器 - 控制反转 - 将bean的生命周期[创建]的权利交给了spring框架.
+
+降低各个组件之间的耦合性.
+
+~~~xml
+俩个bean - 俩个组件.
+等同于反射创建了一个UserDaoImpl对象.
+<bean id="userDao" class="tech.aistar.dao.UserDaoImpl">
+
+</bean>
+
+<bean id="userDao2" class="tech.aistar.dao.UserDaoImpl2">
+
+</bean>
+
+反射创建了UserServiceImpl对象.
+<bean id="userService" class="tech.aistar.service.UserServiceImpl">
+	  <property name="userDao" ref="userDao2"/>
+</bean>
+~~~
+
+
+
