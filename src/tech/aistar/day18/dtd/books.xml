@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE SYSTEM 'book.dtd'>
+<books>
+    <book id="1001">
+        <name></name>
+        <author></author>
+        <price></price>
+        <bookinfo>
+            <publish_house></publish_house>
+            <publish_date></publish_date>
+            <pages></pages>
+            <description></description>
+        </bookinfo>
+    </book>
+</books>
