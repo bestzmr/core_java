@@ -545,6 +545,19 @@ public class UserDaoHandler implements InvocationHandler {
 
 
 
+## 配置
+
+~~~xml
+<select id="findCustomerById" parameterType="Integer" resultType="com.itheima.po.Customer">
+  SELECT * FROM t_customer WHERE id = #{id}
+</select>
+~~~
+
+~~~java
+@Select("select * from message where messageid = #{messageId}")
+public Message getMessageById(@Param("messageId")String messageId)throws SQLException;
+~~~
+
 
 
 
