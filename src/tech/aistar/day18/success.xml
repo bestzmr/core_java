@@ -18,7 +18,7 @@
 <!--格式良好的xml-->
 <moniters>
 <!--    标签可以拥有属性,允许拥有多个不同名的属性-->
-    <moniter isbn="1001">
+    <moniter isbn="1001" isfree="yes">
         <id>1001</id>
         <name>tom</name>
     </moniter>
@@ -28,3 +28,5 @@
     </moniter>
 <!--结束标记-->
 </moniters>
+
+<!--格式良好的xml不一定代表是合法的xml-->
