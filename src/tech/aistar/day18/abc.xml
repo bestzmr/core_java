@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<students>
+	<student id="1">
+		<name>merlin1</name>
+		<no>1</no>
+		<birthday>2020-08-19</birthday>
+		<address>
+			<province>江苏省</province>
+			<city>苏州市</city>
+		</address>
+	</student>
+	<student id="2">
+		<name>merlin2</name>
+		<no>2</no>
+		<birthday>2020-08-19</birthday>
+		<address>
+			<province>江苏省</province>
+			<city>苏州市</city>
+		</address>
+	</student>
+	<student id="3">
+		<name>merlin3</name>
+		<no>3</no>
+		<birthday>2020-08-19</birthday>
+		<address>
+			<province>江苏省</province>
+			<city>苏州市</city>
+		</address>
+	</student>
+</students>
