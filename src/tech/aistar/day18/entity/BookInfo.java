@@ -22,6 +22,16 @@ public class BookInfo implements Serializable {
 
     private String description;
 
+    public BookInfo() {
+    }
+
+    public BookInfo(String publishHouse, Date publishDate, int pages, String description) {
+        this.publishHouse = publishHouse;
+        this.publishDate = publishDate;
+        this.pages = pages;
+        this.description = description;
+    }
+
     public String getPublishHouse() {
         return publishHouse;
     }
