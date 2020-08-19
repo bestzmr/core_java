@@ -289,7 +289,7 @@ Schema的出现是为了替代DTD,它修复了DTD的所有缺点,并且可以满
 
 * 导入dom4j.jar
 * 右击jar-add as library
-* 官方api - https://tool.oschina.net/apidocs/apidoc?api=dom4j1.6.1%2Fapidocs
+* 官方api - https://www.oschina.net/uploads/doc/dom4j-1.6.1/index.html
 
 
 
