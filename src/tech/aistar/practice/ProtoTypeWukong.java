@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 class SunWuKun extends JPanel implements Cloneable, Serializable {
     public SunWuKun() {
-        JLabel l1 = new JLabel(new ImageIcon("src/WuKong.jpg"));
+        JLabel l1 = new JLabel(new ImageIcon("src/tech/aistar/practice/WuKong.jpg"));
         this.add(l1);
     }
 

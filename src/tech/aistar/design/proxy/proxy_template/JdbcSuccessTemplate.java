@@ -21,7 +21,7 @@ public class JdbcSuccessTemplate {
 
         //获取DB连接
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/j08?useSSL=false","root","root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/j08?useSSL=false","root","123456");
 
             //才是最核心的吧!!!!
 //            pst = conn.prepareStatement("delete from Book where id = ?");
