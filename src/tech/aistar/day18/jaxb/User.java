@@ -10,6 +10,7 @@ import java.io.Serializable;
  *
  * @author: success
  * @date: 2020/8/19 4:22 下午
+ *
  */
 @XmlRootElement
 public class User implements Serializable {
